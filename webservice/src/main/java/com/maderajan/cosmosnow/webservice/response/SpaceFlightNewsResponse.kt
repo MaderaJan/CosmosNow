@@ -4,12 +4,12 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ArticleResponseWrapper(
-    val results: List<ArticleResponse>
+data class SpaceFlightNewsResponseWrapper(
+    val results: List<SpaceFlightNewsResponse>
 )
 
 @Serializable
-data class ArticleResponse(
+data class SpaceFlightNewsResponse(
     val id: Long,
     val title: String,
     val url: String,

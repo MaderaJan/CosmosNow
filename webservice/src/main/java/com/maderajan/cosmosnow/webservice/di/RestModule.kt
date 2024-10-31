@@ -1,6 +1,6 @@
 package com.maderajan.cosmosnow.webservice.di
 
-import com.maderajan.cosmosnow.webservice.api.ArticleApi
+import com.maderajan.cosmosnow.webservice.api.SpaceFlightsNewsApi
 import com.maderajan.cosmosnow.webservice.util.OkHttpUtil
 import com.maderajan.cosmosnow.webservice.util.RetrofitUtil
 import dagger.Module
@@ -15,7 +15,7 @@ object RestModule {
 
     @Provides
     @Singleton
-    internal fun provideArticleApi(okHttpUtil: OkHttpUtil, retrofitUtil: RetrofitUtil): ArticleApi =
+    internal fun provideArticleApi(okHttpUtil: OkHttpUtil, retrofitUtil: RetrofitUtil): SpaceFlightsNewsApi =
         retrofitUtil.createRetrofit(okHttpUtil.provideHttpClient())
-            .create(ArticleApi::class.java)
+            .create(SpaceFlightsNewsApi::class.java)
 }

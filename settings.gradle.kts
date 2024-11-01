@@ -22,4 +22,6 @@ dependencyResolutionManagement {
 rootProject.name = "CosmosNow"
 include(":app")
 include(":webservice")
-include(":data")
+include(":data:model")
+include(":data:repository")
+include(":domain")

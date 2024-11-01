@@ -29,7 +29,8 @@ android {
 }
 
 dependencies {
-    api(project(":data:repository"))
+    implementation(project(":data:repository"))
+    api(project(":data:model"))
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)

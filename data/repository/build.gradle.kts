@@ -30,7 +30,7 @@ android {
 
 dependencies {
     implementation(project(":webservice"))
-    api(project(":data:model"))
+    implementation(project(":data:model"))
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)

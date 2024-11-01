@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.maderajan.cosmosnow.core.designsystem.CosmosTheme
 
 @Composable
 fun CosmosNewsListScreen(
@@ -19,7 +20,10 @@ fun CosmosNewsListScreen(
         modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
         news.forEach {
-            Text(text = it.title)
+            Text(
+                text = it.title,
+                color = CosmosTheme.colors.blue500
+            )
         }
     }
 }

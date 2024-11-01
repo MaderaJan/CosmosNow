@@ -44,7 +44,7 @@ fun CosmosNowBottomNavigation(navController: NavController) {
                 onClick = {
                     selectedItem.intValue = index
 
-                    navController.navigate(item.screen)
+                    navController.navigate(item.screen) // TODO replace with navigation flow router strategy
                 },
                 icon = {
                     Icon(

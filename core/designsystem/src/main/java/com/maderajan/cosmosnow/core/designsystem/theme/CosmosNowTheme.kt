@@ -1,4 +1,4 @@
-package com.maderajan.cosmosnow.core.designsystem
+package com.maderajan.cosmosnow.core.designsystem.theme
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme

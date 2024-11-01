@@ -11,29 +11,30 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.navigation.compose.NavHost
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.maderajan.cosmosnow.feature.news.COSMOS_NEWS_ROUTE
-import com.maderajan.cosmosnow.feature.news.cosmosNewsScreen
 import com.maderajan.cosmosnow.navigation.BottomNavigationItems
+import com.maderajan.cosmosnow.navigation.CosmosNowNavHost
 
 @Composable
 fun CosmosNowMain() {
+    val navController = rememberNavController()
+
     Scaffold(
         bottomBar = {
-            CosmosNowBottomNavigation()
+            CosmosNowBottomNavigation(navController)
         }
     ) { paddingValues ->
         Box(
             modifier = Modifier.padding(paddingValues)
         ) {
-            CosmosNowNavHost()
+            CosmosNowNavHost(navController)
         }
     }
 }
 
 @Composable
-fun CosmosNowBottomNavigation() {
+fun CosmosNowBottomNavigation(navController: NavController) {
     val selectedItem = rememberSaveable { mutableIntStateOf(0) }
 
     NavigationBar {
@@ -43,7 +44,7 @@ fun CosmosNowBottomNavigation() {
                 onClick = {
                     selectedItem.intValue = index
 
-                    //  TODO do something with navigation
+                    navController.navigate(item.screen)
                 },
                 icon = {
                     Icon(
@@ -56,15 +57,3 @@ fun CosmosNowBottomNavigation() {
     }
 }
 
-// TODO časem možná přesunout
-@Composable
-fun CosmosNowNavHost() {
-    val navController = rememberNavController()
-
-    NavHost(
-        navController = navController,
-        startDestination = COSMOS_NEWS_ROUTE
-    ) {
-        cosmosNewsScreen()
-    }
-}

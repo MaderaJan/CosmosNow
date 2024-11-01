@@ -1,22 +1,17 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.hilt.plugin)
     alias(libs.plugins.org.jetbrains.kotlin.plugin.serialization)
 }
 
 android {
-    namespace = "com.maderajan.cosmosnow"
-    compileSdk = 35
+    namespace = "com.maderajan.cosmosnow.feature.search"
+    compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.maderajan.cosmosnow"
         minSdk = 24
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -24,7 +19,6 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
@@ -43,24 +37,19 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:news"))
-    implementation(project(":feature:search"))
-
-    implementation(project(":core:designsystem"))
+    implementation(project(":domain"))
     implementation(project(":core:navigation"))
-
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.kotlinx.serialization.json)
-
-    val composeBom = platform("androidx.compose:compose-bom:2024.09.03")
-    implementation(composeBom)
-    implementation(libs.androidx.compose.material3)
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     ksp(libs.androidx.hilt.compiler)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.navigation.compose)
+
+
+    val composeBom = platform("androidx.compose:compose-bom:2024.09.03")
+    implementation(composeBom)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 }

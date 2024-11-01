@@ -1,11 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.org.jetbrains.kotlin.plugin.serialization)
 }
 
 android {
-    namespace = "com.maderajan.cosmosnow.core.designsystem"
+    namespace = "com.maderajan.cosmosnow.core.navigation"
     compileSdk = 34
 
     defaultConfig {
@@ -26,16 +26,8 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
-    }
 }
 
 dependencies {
-    val composeBom = platform("androidx.compose:compose-bom:2024.09.03") // TODo
-    implementation(composeBom)
-    implementation(libs.androidx.compose.material3)
+    implementation(libs.kotlinx.serialization.json)
 }

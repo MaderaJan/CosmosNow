@@ -2,22 +2,22 @@ package com.maderajan.cosmosnow.navigation
 
 import androidx.annotation.DrawableRes
 import com.maderajan.cosmosnow.R
-import com.maderajan.cosmosnow.feature.news.COSMOS_NEWS_ROUTE
+import com.maderajan.cosmosnow.core.navigation.CosmosScreens
 
 enum class BottomNavigationItems(
     @DrawableRes val iconRes: Int,
-    val route: String
+    val screen: CosmosScreens
 ) {
     NEWS(
         iconRes = R.drawable.ic_news_paper,
-        route = COSMOS_NEWS_ROUTE
+        screen = CosmosScreens.CosmosNews
     ),
     SEARCH(
         iconRes = R.drawable.ic_search,
-        route = "// TODO"
+        screen = CosmosScreens.SearchNews
     ),
     BOOKMARKS(
         iconRes = R.drawable.ic_bookmarks,
-        route = "// TODO"
+        screen = CosmosScreens.Bookmarks
     )
 }

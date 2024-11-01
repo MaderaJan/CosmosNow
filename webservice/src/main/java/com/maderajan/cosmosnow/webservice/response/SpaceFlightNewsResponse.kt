@@ -16,5 +16,5 @@ data class SpaceFlightNewsResponse(
     @SerialName("image_url")
     val imageUrl: String,
     @SerialName("news_site")
-    val newsSize: String
+    val newsSite: String
 )

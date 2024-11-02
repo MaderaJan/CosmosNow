@@ -4,6 +4,7 @@ data class CosmosNews(
     val id: Long,
     val title: String,
     val type: CosmosNewsType,
-    val newsSize: String
+    val newsSite: String,
+    val imageUrl: String,
+    val publishedAt: String
 )
-

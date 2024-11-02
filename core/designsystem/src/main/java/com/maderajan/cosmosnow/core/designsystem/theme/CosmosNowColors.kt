@@ -40,13 +40,13 @@ data class CosmosNowColors(
 internal val lightBasicPalette = lightColorScheme(
     primary = blue500,
     onSurface = Color.Black,
-    surfaceVariant = grey500,
+    onSurfaceVariant = grey500,
     background = Color.White,
 )
 
 internal val darkBasicPalette = darkColorScheme(
     primary = blue500,
     onSurface = Color.Black, // TODO dark
-    surfaceVariant = grey500, // TODO dark
+    onSurfaceVariant = grey500, // TODO dark
     background = Color.Black,
 )

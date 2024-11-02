@@ -16,5 +16,7 @@ fun SpaceFlightNewsResponse.toData(type: CosmosNewsType) =
         id = this.id,
         title = this.title,
         type = type,
-        newsSize = this.newsSite,
+        newsSite = this.newsSite,
+        imageUrl = this.imageUrl,
+        publishedAt = this.publishedAt
     )

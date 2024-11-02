@@ -49,4 +49,14 @@ dependencies {
     implementation(composeBom)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.compose.constraintlayout)
+
+    implementation("io.coil-kt.coil3:coil-compose:3.0.0-rc02") // TODO
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.0-rc02") // TODO
+
+//    implementation("io.coil-kt.coil3:coil-network:3.0.0-rc02") // TODO
+
+    // Android Studio Preview support
+    implementation(libs.androidx.ui.tooling.preview)
+    debugImplementation(libs.androidx.ui.tooling)
 }

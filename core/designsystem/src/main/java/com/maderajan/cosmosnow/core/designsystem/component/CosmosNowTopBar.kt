@@ -19,19 +19,26 @@ fun CosmosNowTopBar(
     date: String?
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                top = MaterialTheme.spacing.medium,
+                bottom = MaterialTheme.spacing.small,
+                start = MaterialTheme.spacing.medium,
+                end = MaterialTheme.spacing.medium,
+            )
     ) {
         Text(
             text = title,
             color = MaterialTheme.colorScheme.primary,
             fontWeight = FontWeight.ExtraBold,
-            fontSize = 24.sp
+            fontSize = 36.sp
         )
 
         if (date != null) {
             Text(
                 text = date,
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = MaterialTheme.spacing.extraSmall)
             )

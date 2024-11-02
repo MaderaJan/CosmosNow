@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -70,15 +71,21 @@ fun CosmosNewsListScreen(
     dispatchAction: (CosmosNewsListUiAction) -> Unit
 ) {
     Scaffold(
+        contentWindowInsets = WindowInsets(0.dp),
         topBar = {
             CosmosNowTopBar(
                 title = stringResource(id = R.string.news_title),
                 date = System.currentTimeMillis().toWeekdayMonthReadableDate()
             )
-        }
+        },
+        bottomBar = {}
     ) { paddingValues ->
         Box(
-            contentAlignment = Alignment.Center,
+            contentAlignment = if (uiState is CosmosNewsListUiState.Success) {
+                Alignment.TopStart
+            } else {
+                Alignment.Center
+            },
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
@@ -90,14 +97,16 @@ fun CosmosNewsListScreen(
 
                 CosmosNewsListUiState.Error -> {
                     NoContent(
-                        noContentData = NoContentDefaults.default(onButtonClick = {
-                            dispatchAction(CosmosNewsListUiAction.TryAgain)
-                        })
+                        noContentData = NoContentDefaults.default(
+                            onButtonClick = {
+                                dispatchAction(CosmosNewsListUiAction.TryAgain)
+                            },
+                        ),
                     )
                 }
 
                 is CosmosNewsListUiState.Success -> {
-                    LazyColumn {
+                    LazyColumn{
                         item {
                             TopNewsListItem(
                                 news = uiState.news.first(),
@@ -138,46 +147,48 @@ fun CosmosNewsListScreen(
 
 @Preview
 @Composable
-fun CosmosNewsListScreenPreview() {
-    CosmosNewsListScreen(
-        uiState = CosmosNewsListUiState.Success(
-            news = listOf(
-                CosmosNews(
-                    id = 123L,
-                    title = "Top News Title",
-                    type = CosmosNewsType.ARTICLE,
-                    newsSite = "News Site",
-                    imageUrl = null,
-                    publishedAt = "2024-11-01T22:34:26Z"
-                ),
-                CosmosNews(
-                    id = 123L,
-                    title = "News Title",
-                    type = CosmosNewsType.ARTICLE,
-                    newsSite = "News Site",
-                    imageUrl = null,
-                    publishedAt = "2024-11-01T22:34:26Z"
-                ),
-                CosmosNews(
-                    id = 123L,
-                    title = "News Title",
-                    type = CosmosNewsType.ARTICLE,
-                    newsSite = "News Site",
-                    imageUrl = null,
-                    publishedAt = "2024-11-01T22:34:26Z"
-                ),
-                CosmosNews(
-                    id = 123L,
-                    title = "News Title",
-                    type = CosmosNewsType.ARTICLE,
-                    newsSite = "News Site",
-                    imageUrl = null,
-                    publishedAt = "2024-11-01T22:34:26Z"
+fun CosmosNewsListScreenSuccessPreview() {
+    CosmosNowTheme {
+        CosmosNewsListScreen(
+            uiState = CosmosNewsListUiState.Success(
+                news = listOf(
+                    CosmosNews(
+                        id = 123L,
+                        title = "Top News Title",
+                        type = CosmosNewsType.ARTICLE,
+                        newsSite = "News Site",
+                        imageUrl = null,
+                        publishedAt = "2024-11-01T22:34:26Z"
+                    ),
+                    CosmosNews(
+                        id = 123L,
+                        title = "News Title",
+                        type = CosmosNewsType.ARTICLE,
+                        newsSite = "News Site",
+                        imageUrl = null,
+                        publishedAt = "2024-11-01T22:34:26Z"
+                    ),
+                    CosmosNews(
+                        id = 123L,
+                        title = "News Title",
+                        type = CosmosNewsType.ARTICLE,
+                        newsSite = "News Site",
+                        imageUrl = null,
+                        publishedAt = "2024-11-01T22:34:26Z"
+                    ),
+                    CosmosNews(
+                        id = 123L,
+                        title = "News Title",
+                        type = CosmosNewsType.ARTICLE,
+                        newsSite = "News Site",
+                        imageUrl = null,
+                        publishedAt = "2024-11-01T22:34:26Z"
+                    ),
                 ),
             ),
-        ),
-        dispatchAction = {}
-    )
+            dispatchAction = {}
+        )
+    }
 }
 
 @Composable
@@ -259,7 +270,7 @@ fun NewsListItem(
         )
 
         Icon(
-            painter = painterResource(id = R.drawable.ic_bookmark), // TODO FILE
+            painter = painterResource(id = R.drawable.ic_bookmark),
             contentDescription = null,
             modifier = Modifier
                 .clickable(onClick = {
@@ -388,7 +399,7 @@ fun TopNewsListItem(
         )
 
         Icon(
-            painter = painterResource(id = R.drawable.ic_bookmark), // TODO FILE
+            painter = painterResource(id = R.drawable.ic_bookmark),
             contentDescription = null,
             modifier = Modifier
                 .padding(top = MaterialTheme.spacing.small)

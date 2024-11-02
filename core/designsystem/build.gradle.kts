@@ -35,9 +35,11 @@ android {
 }
 
 dependencies {
-    val composeBom = platform("androidx.compose:compose-bom:2024.09.03") // TODo
-    implementation(composeBom)
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.material3)
+
+    implementation(libs.coil.compose)
+    implementation(libs.coil.test)
 
     // Android Studio Preview support
     implementation(libs.androidx.ui.tooling.preview)

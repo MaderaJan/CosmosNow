@@ -1,6 +1,7 @@
 package com.maderajan.cosmosnow
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -11,6 +12,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.maderajan.cosmosnow.navigation.BottomNavigationItems
@@ -26,7 +28,8 @@ fun CosmosNowMain() {
         }
     ) { paddingValues ->
         Box(
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier
+                .padding(paddingValues)
         ) {
             CosmosNowNavHost(navController)
         }
@@ -37,7 +40,9 @@ fun CosmosNowMain() {
 fun CosmosNowBottomNavigation(navController: NavController) {
     val selectedItem = rememberSaveable { mutableIntStateOf(0) }
 
-    NavigationBar {
+    NavigationBar(
+        modifier = Modifier.height(86.dp)
+    ) {
         BottomNavigationItems.entries.forEachIndexed { index, item ->
             NavigationBarItem(
                 selected = selectedItem.intValue == index,

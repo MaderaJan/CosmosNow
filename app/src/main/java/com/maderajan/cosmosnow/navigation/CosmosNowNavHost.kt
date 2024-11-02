@@ -10,7 +10,6 @@ import com.maderajan.cosmosnow.feature.search.SearchNewsScreen
 
 @Composable
 fun CosmosNowNavHost(navController: NavHostController) {
-
     NavHost(
         navController = navController,
         startDestination = CosmosScreens.CosmosNews

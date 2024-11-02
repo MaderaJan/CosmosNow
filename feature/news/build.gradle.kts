@@ -46,16 +46,13 @@ dependencies {
     ksp(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    val composeBom = platform("androidx.compose:compose-bom:2024.09.03")
-    implementation(composeBom)
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.compose.constraintlayout)
 
-    implementation("io.coil-kt.coil3:coil-compose:3.0.0-rc02") // TODO
-    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.0-rc02") // TODO
-
-//    implementation("io.coil-kt.coil3:coil-network:3.0.0-rc02") // TODO
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network)
 
     // Android Studio Preview support
     implementation(libs.androidx.ui.tooling.preview)

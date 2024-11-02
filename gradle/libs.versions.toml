@@ -19,6 +19,8 @@ hiltAndroid = "2.51.1"
 hiltCompiler = "1.2.0"
 constraintlayoutCompose = "1.1.0"
 turbine = "1.1.0"
+androidxJunit = "1.2.1"
+espressoCoreVersion = "3.6.1"
 
 [libraries]
 androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
@@ -46,6 +48,8 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompiler" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCoreVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

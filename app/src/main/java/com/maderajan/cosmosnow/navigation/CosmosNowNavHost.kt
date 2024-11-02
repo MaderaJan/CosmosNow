@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.maderajan.cosmosnow.core.navigation.CosmosScreens
-import com.maderajan.cosmosnow.feature.news.CosmosNewsListScreen
+import com.maderajan.cosmosnow.feature.news.CosmosNewsListRoute
 import com.maderajan.cosmosnow.feature.search.SearchNewsScreen
 
 @Composable
@@ -16,7 +16,7 @@ fun CosmosNowNavHost(navController: NavHostController) {
         startDestination = CosmosScreens.CosmosNews
     ) {
         composable<CosmosScreens.CosmosNews> {
-            CosmosNewsListScreen()
+            CosmosNewsListRoute()
         }
 
         composable<CosmosScreens.SearchNews> {

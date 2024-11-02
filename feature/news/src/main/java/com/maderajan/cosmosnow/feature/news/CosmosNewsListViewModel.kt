@@ -1,7 +1,8 @@
 package com.maderajan.cosmosnow.feature.news
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.maderajan.cosmosnow.core.viewmodel.BaseViewModel
+import com.maderajan.cosmosnow.core.viewmodel.UiAction
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import com.maderajan.cosmosnow.domain.cosmosnews.CosmosNewsListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CosmosNewsListViewModel @Inject constructor(
     cosmosNewsListUseCase: CosmosNewsListUseCase
-) : ViewModel() {
+) : BaseViewModel<CosmosNewsListUiAction>() {
 
     val uiState: StateFlow<CosmosNewsListUiState> =
         cosmosNewsListUseCase.getSortedNews()
@@ -32,4 +33,26 @@ class CosmosNewsListViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(),
                 initialValue = CosmosNewsListUiState.Loading,
             )
+
+    override fun handleAction(action: CosmosNewsListUiAction) {
+        when (action) {
+            is CosmosNewsListUiAction.BookMarkNews -> {
+                // TODO BOOKMARK NEWS
+            }
+
+            is CosmosNewsListUiAction.OpenNews -> {
+                // TODO OPEN NEWS
+            }
+
+            is CosmosNewsListUiAction.TryAgain -> {
+                // TODO TRY AGAIN
+            }
+        }
+    }
+}
+
+sealed interface CosmosNewsListUiAction : UiAction {
+    data object TryAgain : CosmosNewsListUiAction
+    data class OpenNews(val cosmosNews: CosmosNews) : CosmosNewsListUiAction
+    data class BookMarkNews(val cosmosNews: CosmosNews) : CosmosNewsListUiAction
 }

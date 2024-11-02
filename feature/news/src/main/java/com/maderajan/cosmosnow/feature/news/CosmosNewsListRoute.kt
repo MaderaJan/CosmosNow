@@ -40,11 +40,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil3.compose.AsyncImage
-import coil3.imageLoader
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import coil3.request.placeholder
-import coil3.util.DebugLogger
 import com.maderajan.cosmosnow.core.designsystem.R
 import com.maderajan.cosmosnow.core.designsystem.component.CosmosNowTopBar
 import com.maderajan.cosmosnow.core.designsystem.component.NoContent
@@ -57,11 +55,20 @@ import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
 
 @Composable
-fun CosmosNewsListScreen(
-    newsListViewModel: CosmosNewsListViewModel = hiltViewModel()
+fun CosmosNewsListRoute(
+    viewModel: CosmosNewsListViewModel = hiltViewModel()
 ) {
-    val uiState = newsListViewModel.uiState.collectAsState().value
+    CosmosNewsListScreen(
+        uiState = viewModel.uiState.collectAsState().value,
+        dispatchAction = viewModel::dispatch
+    )
+}
 
+@Composable
+fun CosmosNewsListScreen(
+    uiState: CosmosNewsListUiState,
+    dispatchAction: (CosmosNewsListUiAction) -> Unit
+) {
     Scaffold(
         topBar = {
             CosmosNowTopBar(
@@ -84,7 +91,7 @@ fun CosmosNewsListScreen(
                 CosmosNewsListUiState.Error -> {
                     NoContent(
                         noContentData = NoContentDefaults.default(onButtonClick = {
-                            // TODO FETCH AGAIN
+                            dispatchAction(CosmosNewsListUiAction.TryAgain)
                         })
                     )
                 }
@@ -95,10 +102,10 @@ fun CosmosNewsListScreen(
                             TopNewsListItem(
                                 news = uiState.news.first(),
                                 onNewsClick = {
-                                    // TODO
+                                    dispatchAction(CosmosNewsListUiAction.OpenNews(it))
                                 },
                                 onBookmarkClick = {
-                                    // TODO
+                                    dispatchAction(CosmosNewsListUiAction.BookMarkNews(it))
                                 }
                             )
                         }
@@ -112,10 +119,10 @@ fun CosmosNewsListScreen(
                                 NewsListItem(
                                     news = item,
                                     onNewsClick = {
-                                        // TODO
+                                        dispatchAction(CosmosNewsListUiAction.OpenNews(it))
                                     },
                                     onBookmarkClick = {
-                                        // TODO
+                                        dispatchAction(CosmosNewsListUiAction.BookMarkNews(it))
                                     }
                                 )
 
@@ -127,6 +134,50 @@ fun CosmosNewsListScreen(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun CosmosNewsListScreenPreview() {
+    CosmosNewsListScreen(
+        uiState = CosmosNewsListUiState.Success(
+            news = listOf(
+                CosmosNews(
+                    id = 123L,
+                    title = "Top News Title",
+                    type = CosmosNewsType.ARTICLE,
+                    newsSite = "News Site",
+                    imageUrl = null,
+                    publishedAt = "2024-11-01T22:34:26Z"
+                ),
+                CosmosNews(
+                    id = 123L,
+                    title = "News Title",
+                    type = CosmosNewsType.ARTICLE,
+                    newsSite = "News Site",
+                    imageUrl = null,
+                    publishedAt = "2024-11-01T22:34:26Z"
+                ),
+                CosmosNews(
+                    id = 123L,
+                    title = "News Title",
+                    type = CosmosNewsType.ARTICLE,
+                    newsSite = "News Site",
+                    imageUrl = null,
+                    publishedAt = "2024-11-01T22:34:26Z"
+                ),
+                CosmosNews(
+                    id = 123L,
+                    title = "News Title",
+                    type = CosmosNewsType.ARTICLE,
+                    newsSite = "News Site",
+                    imageUrl = null,
+                    publishedAt = "2024-11-01T22:34:26Z"
+                ),
+            ),
+        ),
+        dispatchAction = {}
+    )
 }
 
 @Composable
@@ -285,12 +336,7 @@ fun TopNewsListItem(
     ) {
         val (imageRef, titleRef, newsSiteRef, timeRef, bookmarkRef) = createRefs()
 
-        val imageLoader = LocalContext.current.imageLoader.newBuilder()
-            .logger(DebugLogger())
-            .build()
-
         AsyncImage(
-            imageLoader = imageLoader,
             model = ImageRequest.Builder(LocalContext.current)
                 .data(news.imageUrl)
                 .crossfade(true)
@@ -377,7 +423,7 @@ fun NewsListItemPreview() {
                 title = "List item news Title which is loooonger",
                 type = CosmosNewsType.ARTICLE,
                 newsSite = "News Site",
-                imageUrl = "",
+                imageUrl = null,
                 publishedAt = "2024-11-01T22:34:26Z"
             ),
             onNewsClick = {},
@@ -396,7 +442,7 @@ fun TopNewsListItemPreview() {
                 title = "Top News Title",
                 type = CosmosNewsType.ARTICLE,
                 newsSite = "News Site",
-                imageUrl = "",
+                imageUrl = null,
                 publishedAt = "2024-11-01T22:34:26Z"
             ),
             onNewsClick = {},

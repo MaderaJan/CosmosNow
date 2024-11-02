@@ -47,6 +47,8 @@ import coil3.request.placeholder
 import coil3.util.DebugLogger
 import com.maderajan.cosmosnow.core.designsystem.R
 import com.maderajan.cosmosnow.core.designsystem.component.CosmosNowTopBar
+import com.maderajan.cosmosnow.core.designsystem.component.NoContent
+import com.maderajan.cosmosnow.core.designsystem.component.NoContentDefaults
 import com.maderajan.cosmosnow.core.designsystem.theme.CosmosNowTheme
 import com.maderajan.cosmosnow.core.designsystem.theme.spacing
 import com.maderajan.cosmosnow.core.designsystem.util.dayMonthYearReadableDate
@@ -80,7 +82,11 @@ fun CosmosNewsListScreen(
                 }
 
                 CosmosNewsListUiState.Error -> {
-                    // TODO ERROR STATE
+                    NoContent(
+                        noContentData = NoContentDefaults.default(onButtonClick = {
+                            // TODO FETCH AGAIN
+                        })
+                    )
                 }
 
                 is CosmosNewsListUiState.Success -> {
@@ -400,7 +406,7 @@ fun TopNewsListItemPreview() {
 }
 
 fun CosmosNewsType.getPresentableNameRes(): Int =
-    when(this) {
+    when (this) {
         CosmosNewsType.ARTICLE -> R.string.news_type_article
         CosmosNewsType.BLOG -> R.string.news_type_blog
         CosmosNewsType.REPORT -> R.string.news_type_report

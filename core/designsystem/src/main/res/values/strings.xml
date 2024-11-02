@@ -2,4 +2,8 @@
 <resources>
     <string name="news_title">Cosmos Now</string>
     <string name="news_title_date">Today, %s</string>
+
+    <string name="news_type_article">Article</string>
+    <string name="news_type_blog">Blog</string>
+    <string name="news_type_report">Report</string>
 </resources>

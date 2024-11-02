@@ -1,14 +1,21 @@
 package com.maderajan.cosmosnow.feature.news
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -16,6 +23,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -35,6 +43,7 @@ import coil3.compose.AsyncImage
 import coil3.imageLoader
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import coil3.request.placeholder
 import coil3.util.DebugLogger
 import com.maderajan.cosmosnow.core.designsystem.R
 import com.maderajan.cosmosnow.core.designsystem.component.CosmosNowTopBar
@@ -49,7 +58,7 @@ import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
 fun CosmosNewsListScreen(
     newsListViewModel: CosmosNewsListViewModel = hiltViewModel()
 ) {
-    val news = newsListViewModel.news.collectAsState().value
+    val uiState = newsListViewModel.uiState.collectAsState().value
 
     Scaffold(
         topBar = {
@@ -59,42 +68,55 @@ fun CosmosNewsListScreen(
             )
         }
     ) { paddingValues ->
-        if (news.isEmpty()) {
-            return@Scaffold
-        }
-
-        LazyColumn(
-            modifier = Modifier.padding(paddingValues)
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize()
         ) {
-            item {
-                TopNewsListItem(
-                    news = news.first(),
-                    onNewsClick = {
-                        // TODO
-                    },
-                    onBookmarkClick = {
-                        // TODO
-                    }
-                )
-            }
+            when (uiState) {
+                CosmosNewsListUiState.Loading -> {
+                    CircularProgressIndicator()
+                }
 
-            item {
-                NewsDivider(startPadding = MaterialTheme.spacing.medium)
-            }
+                CosmosNewsListUiState.Error -> {
+                    // TODO ERROR STATE
+                }
 
-            items(news.subList(1, news.size)) { item ->
-                Column {
-                    NewsListItem(
-                        news = item,
-                        onNewsClick = {
-                            // TODO
-                        },
-                        onBookmarkClick = {
-                            // TODO
+                is CosmosNewsListUiState.Success -> {
+                    LazyColumn {
+                        item {
+                            TopNewsListItem(
+                                news = uiState.news.first(),
+                                onNewsClick = {
+                                    // TODO
+                                },
+                                onBookmarkClick = {
+                                    // TODO
+                                }
+                            )
                         }
-                    )
 
-                    NewsDivider(startPadding = MaterialTheme.spacing.mediumLarge)
+                        item {
+                            NewsDivider(startPadding = MaterialTheme.spacing.medium)
+                        }
+
+                        items(uiState.news.subList(1, uiState.news.size)) { item ->
+                            Column {
+                                NewsListItem(
+                                    news = item,
+                                    onNewsClick = {
+                                        // TODO
+                                    },
+                                    onBookmarkClick = {
+                                        // TODO
+                                    }
+                                )
+
+                                NewsDivider(startPadding = MaterialTheme.spacing.large)
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -134,6 +156,7 @@ fun NewsListItem(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(news.imageUrl)
                 .crossfade(true)
+                .placeholder(drawableResId = R.drawable.ic_news_placeholder)
                 .build(),
             contentDescription = null,
             contentScale = ContentScale.Crop,
@@ -155,7 +178,6 @@ fun NewsListItem(
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .padding(
-                    top = MaterialTheme.spacing.medium,
                     start = MaterialTheme.spacing.medium,
                     end = MaterialTheme.spacing.medium,
                 )
@@ -166,12 +188,9 @@ fun NewsListItem(
                 }
         )
 
-        Text(
-            text = news.newsSite,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            style = MaterialTheme.typography.titleSmall,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+        NewsSiteAndType(
+            newsSite = news.newsSite,
+            type = news.type,
             modifier = Modifier
                 .padding(start = MaterialTheme.spacing.medium)
                 .constrainAs(newsSiteRef) {
@@ -210,6 +229,41 @@ fun NewsListItem(
 }
 
 @Composable
+private fun NewsSiteAndType(
+    newsSite: String,
+    type: CosmosNewsType,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+    ) {
+        Text(
+            text = newsSite,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.titleSmall,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+
+        Spacer(
+            modifier = Modifier
+                .padding(horizontal = MaterialTheme.spacing.extraSmall)
+                .size(5.dp)
+                .background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f), CircleShape)
+        )
+
+        Text(
+            text = stringResource(id = type.getPresentableNameRes()),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.bodyMedium,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
+}
+
+@Composable
 fun TopNewsListItem(
     news: CosmosNews,
     onNewsClick: (CosmosNews) -> Unit,
@@ -234,6 +288,7 @@ fun TopNewsListItem(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(news.imageUrl)
                 .crossfade(true)
+                .placeholder(drawableResId = R.drawable.ic_news_placeholder)
                 .build(),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
@@ -268,17 +323,14 @@ fun TopNewsListItem(
                 }
         )
 
-        Text(
-            text = news.newsSite,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            style = MaterialTheme.typography.titleSmall,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+        NewsSiteAndType(
+            newsSite = news.newsSite,
+            type = news.type,
             modifier = Modifier
                 .constrainAs(newsSiteRef) {
                     top.linkTo(titleRef.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(timeRef.start)
+                    start.linkTo(titleRef.start)
+                    end.linkTo(parent.end)
                     width = Dimension.fillToConstraints
                 }
         )
@@ -346,3 +398,10 @@ fun TopNewsListItemPreview() {
         )
     }
 }
+
+fun CosmosNewsType.getPresentableNameRes(): Int =
+    when(this) {
+        CosmosNewsType.ARTICLE -> R.string.news_type_article
+        CosmosNewsType.BLOG -> R.string.news_type_blog
+        CosmosNewsType.REPORT -> R.string.news_type_report
+    }

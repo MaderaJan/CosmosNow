@@ -4,7 +4,7 @@ import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 
 interface ICosmosNewsRepository {
 
-    suspend fun getArticles(): List<CosmosNews>
+    suspend fun getArticles(offset: Int): List<CosmosNews>
 
     suspend fun getBlogs(): List<CosmosNews>
 

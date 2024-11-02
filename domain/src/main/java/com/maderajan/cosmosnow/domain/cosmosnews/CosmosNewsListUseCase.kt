@@ -10,10 +10,11 @@ class CosmosNewsListUseCase @Inject constructor(
     private val cosmosNewsRepository: ICosmosNewsRepository
 ) {
 
-    fun getNews(): Flow<List<CosmosNews>> =
-        flow {
-            emit(
-                cosmosNewsRepository.getArticles() + cosmosNewsRepository.getBlogs() + cosmosNewsRepository.getReports()
-            )
-        }
+    fun getSortedNews(offset: Int): Flow<List<CosmosNews>> = flow {
+        val news = cosmosNewsRepository
+            .getArticles(offset)
+            .sortedBy(CosmosNews::publishedAt)
+
+        emit(news)
+    }
 }

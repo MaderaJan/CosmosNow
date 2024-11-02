@@ -7,6 +7,8 @@ import com.maderajan.cosmosnow.domain.cosmosnews.CosmosNewsListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
@@ -15,11 +17,15 @@ class CosmosNewsListViewModel @Inject constructor(
     cosmosNewsListUseCase: CosmosNewsListUseCase
 ) : ViewModel() {
 
-    val news: StateFlow<List<CosmosNews>> =
-        cosmosNewsListUseCase.getNews()
+    val uiState: StateFlow<CosmosNewsListUiState> =
+        cosmosNewsListUseCase.getSortedNews(10)
+            .map<List<CosmosNews>, CosmosNewsListUiState>(CosmosNewsListUiState::Success)
+            .onStart {
+                emit(CosmosNewsListUiState.Loading)
+            }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(),
-                initialValue = emptyList(),
+                initialValue = CosmosNewsListUiState.Loading,
             )
 }

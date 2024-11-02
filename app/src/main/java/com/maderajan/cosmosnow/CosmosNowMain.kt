@@ -14,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navOptions
 import com.maderajan.cosmosnow.navigation.BottomNavigationItems
 import com.maderajan.cosmosnow.navigation.CosmosNowNavHost
 
@@ -49,7 +51,15 @@ fun CosmosNowBottomNavigation(navController: NavController) {
                 onClick = {
                     selectedItem.intValue = index
 
-                    navController.navigate(item.screen) // TODO replace with navigation flow router strategy
+                    val bottomNavigationDestinationOptions = navOptions {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+
+                    navController.navigate(item.screen, bottomNavigationDestinationOptions)
                 },
                 icon = {
                     Icon(

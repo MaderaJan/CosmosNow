@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
@@ -22,15 +21,12 @@ class CosmosNewsListViewModel @Inject constructor(
     val uiState: StateFlow<CosmosNewsListUiState> =
         cosmosNewsListUseCase.getSortedNews()
             .map<List<CosmosNews>, CosmosNewsListUiState>(CosmosNewsListUiState::Success)
-            .onStart {
-                emit(CosmosNewsListUiState.Loading)
-            }
             .catch {
                 emit(CosmosNewsListUiState.Error)
             }
             .stateIn(
                 scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(),
+                started = SharingStarted.WhileSubscribed(5_000),
                 initialValue = CosmosNewsListUiState.Loading,
             )
 

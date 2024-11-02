@@ -12,7 +12,7 @@ class SpaceFlightsNewsApiTest: BaseApiContractTest<SpaceFlightsNewsApi>() {
     @Test
     fun getArticlesTest() {
         runTest {
-            val articles = api.getArticles()
+            val articles = api.getArticles(limit = 1)
             assert(articles.results.isNotEmpty())
         }
     }
@@ -20,7 +20,7 @@ class SpaceFlightsNewsApiTest: BaseApiContractTest<SpaceFlightsNewsApi>() {
     @Test
     fun getBlogsTest() {
         runTest {
-            val blogs = api.getBlogs()
+            val blogs = api.getBlogs(limit = 1)
             assert(blogs.results.isNotEmpty())
         }
     }
@@ -28,7 +28,7 @@ class SpaceFlightsNewsApiTest: BaseApiContractTest<SpaceFlightsNewsApi>() {
     @Test
     fun getReportsTest() {
         runTest {
-            val reports = api.getArticles()
+            val reports = api.getReports(limit = 1)
             assert(reports.results.isNotEmpty())
         }
     }

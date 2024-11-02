@@ -9,15 +9,18 @@ interface SpaceFlightsNewsApi {
 
     @GET("v4/articles")
     suspend fun getArticles(
-        @Query("offset") offset: Int,
-        @Query("limit") limit: Int = 20
+        @Query("limit") limit: Int = 100
     ): SpaceFlightNewsResponseWrapper
 
     @GET("v4/blogs")
-    suspend fun getBlogs(): SpaceFlightNewsResponseWrapper
+    suspend fun getBlogs(
+        @Query("limit") limit: Int = 100
+    ): SpaceFlightNewsResponseWrapper
 
     @GET("v4/reports")
-    suspend fun getReports(): SpaceFlightNewsResponseWrapper
+    suspend fun getReports(
+        @Query("limit") limit: Int = 100
+    ): SpaceFlightNewsResponseWrapper
 
     @GET("v4/info")
     suspend fun getInfo(): SpaceFlightNewsInfoWrapper

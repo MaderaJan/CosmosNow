@@ -11,8 +11,8 @@ class CosmosNewsRepository @Inject constructor(
     private val reportResponseToCosmosNewsMapper: com.maderajan.cosmosnow.data.repository.mapper.ReportResponseToCosmosNewsMapper
 ) : ICosmosNewsRepository {
 
-    override suspend fun getArticles(offset: Int): List<CosmosNews> =
-        spaceFlightsNewsApi.getArticles(offset)
+    override suspend fun getArticles(): List<CosmosNews> =
+        spaceFlightsNewsApi.getArticles()
             .results.map(articleResponseToCosmosNewsMapper::map)
 
     override suspend fun getBlogs(): List<CosmosNews> =

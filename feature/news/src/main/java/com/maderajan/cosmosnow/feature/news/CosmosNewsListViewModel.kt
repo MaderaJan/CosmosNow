@@ -18,7 +18,7 @@ class CosmosNewsListViewModel @Inject constructor(
 ) : ViewModel() {
 
     val uiState: StateFlow<CosmosNewsListUiState> =
-        cosmosNewsListUseCase.getSortedNews(10)
+        cosmosNewsListUseCase.getSortedNews()
             .map<List<CosmosNews>, CosmosNewsListUiState>(CosmosNewsListUiState::Success)
             .onStart {
                 emit(CosmosNewsListUiState.Loading)

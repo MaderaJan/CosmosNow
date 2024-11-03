@@ -30,6 +30,7 @@ android {
 
 dependencies {
     implementation(project(":webservice"))
+    implementation(project(":database"))
     implementation(project(":data:model"))
 
     implementation(libs.hilt.android)

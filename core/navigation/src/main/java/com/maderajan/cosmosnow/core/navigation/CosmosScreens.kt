@@ -1,5 +1,6 @@
 package com.maderajan.cosmosnow.core.navigation
 
+import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import kotlinx.serialization.Serializable
 
 sealed interface CosmosScreens {
@@ -11,7 +12,7 @@ sealed interface CosmosScreens {
     data object SearchNews: CosmosScreens
 
     @Serializable
-    data class CosmosNewsDetail(val title: String): CosmosScreens
+    data class CosmosNewsDetail(val cosmosNews: CosmosNews): CosmosScreens
 
     @Serializable
     data object Bookmarks: CosmosScreens

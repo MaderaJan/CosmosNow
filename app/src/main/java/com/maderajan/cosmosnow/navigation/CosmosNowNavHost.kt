@@ -6,9 +6,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.maderajan.cosmosnow.core.navigation.CosmosScreens
+import com.maderajan.cosmosnow.core.navigation.CustomNavType
+import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import com.maderajan.cosmosnow.feature.news.CosmosNewsListRoute
 import com.maderajan.cosmosnow.feature.newsdetail.CosmosNewsDetailRoute
 import com.maderajan.cosmosnow.feature.search.SearchNewsScreen
+import kotlin.reflect.typeOf
 
 @Composable
 fun CosmosNowNavHost(
@@ -22,9 +25,11 @@ fun CosmosNowNavHost(
             CosmosNewsListRoute()
         }
 
-        composable<CosmosScreens.CosmosNewsDetail> { backStackEntry ->
-            val args = backStackEntry.toRoute<CosmosScreens.CosmosNewsDetail>()
-            CosmosNewsDetailRoute(args.title)
+        composable<CosmosScreens.CosmosNewsDetail>(
+            typeMap = mapOf(typeOf<CosmosNews>() to CustomNavType.cosmosNewsType)
+        ) { backStackEntry ->
+            val cosmosNews = backStackEntry.toRoute<CosmosScreens.CosmosNewsDetail>().cosmosNews
+            CosmosNewsDetailRoute(cosmosNews)
         }
 
         composable<CosmosScreens.SearchNews> {
@@ -32,3 +37,9 @@ fun CosmosNowNavHost(
         }
     }
 }
+
+//composable<NavigationSecondModule.Third>(typeMap = getCustomNavTypeMap(ThirdScreenInfo.serializer())) { backStackEntry ->
+//    val data = backStackEntry.toRoute<NavigationSecondModule.Third>().thirdScreenInfo
+//    val viewModel: SecondModuleViewModel = hiltViewModel()
+//    ThirdScreen(viewModel::navigateToHomeScreen, data.id, data.testString)
+//}

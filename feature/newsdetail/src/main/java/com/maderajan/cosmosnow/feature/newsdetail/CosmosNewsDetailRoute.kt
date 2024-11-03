@@ -2,17 +2,18 @@ package com.maderajan.cosmosnow.feature.newsdetail
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 
 @Composable
 fun CosmosNewsDetailRoute(
-    title: String
+    cosmosNews: CosmosNews
 ) {
-    CosmosNewsDetailScreen(title)
+    CosmosNewsDetailScreen(cosmosNews)
 }
 
 @Composable
 fun CosmosNewsDetailScreen(
-    title: String
+    cosmosNews: CosmosNews
 ) {
-    Text(text = title)
+    Text(text = cosmosNews?.title ?: "was null")
 }

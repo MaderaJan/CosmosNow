@@ -1,7 +1,13 @@
 package com.maderajan.cosmosnow.core.navigation
 
+import android.net.Uri
+import android.os.Bundle
 import androidx.navigation.NavController
+import androidx.navigation.NavType
+import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,31 +41,22 @@ sealed interface NavigationCommand {
     data class NavigateToRoute(val route: CosmosScreens) : NavigationCommand
 }
 
-//class CustomNavType<T : Parcelable>(
-//    private val clazz: Class<T>,
-//    private val serializer: KSerializer<T>,
-//) : NavType<T>(isNullableAllowed = false) {
-//    override fun get(bundle: Bundle, key: String): T? =
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            bundle.getParcelable(key, clazz) as T
-//        } else {
-//            @Suppress("DEPRECATION")
-//            bundle.getParcelable(key)
-//        }
-//
-//    override fun put(bundle: Bundle, key: String, value: T) =
-//        bundle.putParcelable(key, value)
-//
-//    override fun parseValue(value: String): T = Json.decodeFromString(serializer, value)
-//
-//    override fun serializeAsValue(value: T): String = Json.encodeToString(serializer, value)
-//
-//    override val name: String = clazz.name
-//
-//    companion object {
-//        inline fun <reified T : Parcelable> getCustomNavTypeMap(serializer: KSerializer<T>): Map<KType, CustomNavType<T>> =
-//            mapOf(
-//                typeOf<T>() to CustomNavType(T::class.java, serializer),
-//            )
-//    }
-//}
+object CustomNavType {
+
+    val cosmosNewsType = object : NavType<CosmosNews>(isNullableAllowed = false) {
+
+        override fun get(bundle: Bundle, key: String): CosmosNews? {
+            return Json.decodeFromString(bundle.getString(key) ?: return null)
+        }
+
+        override fun serializeAsValue(value: CosmosNews): String =
+            Uri.encode(Json.encodeToString(value))
+
+        override fun parseValue(value: String): CosmosNews =
+            Json.decodeFromString(Uri.decode(value))
+
+        override fun put(bundle: Bundle, key: String, value: CosmosNews) {
+            bundle.putString(key, Json.encodeToString(value))
+        }
+    }
+}

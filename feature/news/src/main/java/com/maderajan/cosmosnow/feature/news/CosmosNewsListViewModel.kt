@@ -41,7 +41,7 @@ class CosmosNewsListViewModel @Inject constructor(
             }
 
             is CosmosNewsListUiAction.OpenNews -> {
-                navigator.navigate(NavigationCommand.NavigateToRoute(CosmosScreens.CosmosNewsDetail(action.cosmosNews.title)))
+                navigator.navigate(NavigationCommand.NavigateToRoute(CosmosScreens.CosmosNewsDetail(action.cosmosNews)))
             }
 
             is CosmosNewsListUiAction.TryAgain -> {

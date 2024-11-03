@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.maderajan.cosmosnow.core.navigation.CosmosScreens
-import com.maderajan.cosmosnow.core.navigation.CustomNavType
+import com.maderajan.cosmosnow.core.navigation.navTypeOf
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import com.maderajan.cosmosnow.feature.news.CosmosNewsListRoute
 import com.maderajan.cosmosnow.feature.newsdetail.CosmosNewsDetailRoute
@@ -26,7 +26,7 @@ fun CosmosNowNavHost(
         }
 
         composable<CosmosScreens.CosmosNewsDetail>(
-            typeMap = mapOf(typeOf<CosmosNews>() to CustomNavType.cosmosNewsType)
+            typeMap = mapOf(typeOf<CosmosNews>() to navTypeOf<CosmosNews>())
         ) { backStackEntry ->
             val cosmosNews = backStackEntry.toRoute<CosmosScreens.CosmosNewsDetail>().cosmosNews
             CosmosNewsDetailRoute(cosmosNews)

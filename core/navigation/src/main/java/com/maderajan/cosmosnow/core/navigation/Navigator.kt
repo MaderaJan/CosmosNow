@@ -4,7 +4,6 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.NavType
-import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -36,27 +35,18 @@ class Navigator @Inject constructor() {
     }
 }
 
-sealed interface NavigationCommand {
-    data object NavigateUp : NavigationCommand
-    data class NavigateToRoute(val route: CosmosScreens) : NavigationCommand
-}
+inline fun <reified T> navTypeOf(
+    isNullableAllowed: Boolean = false,
+    json: Json = Json,
+) = object : NavType<T>(isNullableAllowed = isNullableAllowed) {
+    override fun get(bundle: Bundle, key: String): T? =
+        bundle.getString(key)?.let(json::decodeFromString)
 
-object CustomNavType {
+    override fun parseValue(value: String): T = json.decodeFromString(Uri.decode(value))
 
-    val cosmosNewsType = object : NavType<CosmosNews>(isNullableAllowed = false) {
+    override fun serializeAsValue(value: T): String = Uri.encode(json.encodeToString(value))
 
-        override fun get(bundle: Bundle, key: String): CosmosNews? {
-            return Json.decodeFromString(bundle.getString(key) ?: return null)
-        }
+    override fun put(bundle: Bundle, key: String, value: T) =
+        bundle.putString(key, json.encodeToString(value))
 
-        override fun serializeAsValue(value: CosmosNews): String =
-            Uri.encode(Json.encodeToString(value))
-
-        override fun parseValue(value: String): CosmosNews =
-            Json.decodeFromString(Uri.decode(value))
-
-        override fun put(bundle: Bundle, key: String, value: CosmosNews) {
-            bundle.putString(key, Json.encodeToString(value))
-        }
-    }
 }

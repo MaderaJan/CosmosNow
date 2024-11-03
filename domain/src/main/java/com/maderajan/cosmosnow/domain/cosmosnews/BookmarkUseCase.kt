@@ -6,17 +6,17 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class BookmarkUseCase @Inject constructor(
-    private val bookRepository: IBookmarkRepository
+    private val bookmarkRepository: IBookmarkRepository
 ) {
 
-    suspend fun saveBookmark(cosmosNews: CosmosNews) {
-        bookRepository.saveBookmark(cosmosNews)
-    }
-
     fun getAllBookmarksFlow(): Flow<List<CosmosNews>> =
-        bookRepository.getAllBookmarksFlow()
+        bookmarkRepository.getAllBookmarksFlow()
 
-    suspend fun deleteBookmark(cosmosNews: CosmosNews) {
-        bookRepository.deleteBookmark(cosmosNews.id)
+    suspend fun toggleBookmark(cosmosNews: CosmosNews) {
+        if (cosmosNews.isBookmarked) {
+            bookmarkRepository.deleteBookmark(cosmosNews.id)
+        } else {
+            bookmarkRepository.saveBookmark(cosmosNews)
+        }
     }
 }

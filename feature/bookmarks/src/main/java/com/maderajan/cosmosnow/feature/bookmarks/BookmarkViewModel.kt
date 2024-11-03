@@ -39,7 +39,7 @@ class BookmarkViewModel @Inject constructor(
         when (action) {
             is BookmarkUiAction.BookMarkNews -> {
                 viewModelScope.launch {
-                    bookmarkUseCase.deleteBookmark(action.cosmosNews)
+                    bookmarkUseCase.toggleBookmark(action.cosmosNews)
                 }
             }
 

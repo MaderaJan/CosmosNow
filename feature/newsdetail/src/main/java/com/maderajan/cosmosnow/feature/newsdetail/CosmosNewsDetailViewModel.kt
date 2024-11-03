@@ -25,7 +25,7 @@ class CosmosNewsDetailViewModel @Inject constructor(
 
             is CosmosNewsDetailUiAction.BookmarkNews -> {
                 viewModelScope.launch {
-                    bookmarkUseCase.saveBookmark(action.cosmosNews)
+                    bookmarkUseCase.toggleBookmark(action.cosmosNews)
                 }
             }
 

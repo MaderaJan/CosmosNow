@@ -21,5 +21,6 @@ fun SpaceFlightNewsResponse.toData(type: CosmosNewsType) =
         url = this.url,
         newsSite = this.newsSite,
         imageUrl = this.imageUrl,
-        publishedAt = this.publishedAt
+        publishedAt = this.publishedAt,
+        isBookmarked = false // TODO bookmark
     )

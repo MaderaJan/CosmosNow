@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.maderajan.cosmosnow.core.designsystem.R
+import com.maderajan.cosmosnow.core.designsystem.component.BookmarkIcon
 import com.maderajan.cosmosnow.core.designsystem.theme.spacing
 import com.maderajan.cosmosnow.feature.newsdetail.CosmosNewsDetailUiAction
 import com.maderajan.cosmosnow.feature.newsdetail.CosmosNewsDetailUiState
@@ -69,16 +70,11 @@ fun CosmosNewsDetailToolbar(
                     }
                 )
 
-                IconButton(
+                BookmarkIcon(
+                    isBookmarked = uiState.cosmosNews.isBookmarked,
                     onClick = {
                         dispatchAction(CosmosNewsDetailUiAction.BookmarkNews(uiState.cosmosNews))
                     },
-                    content = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_bookmark),
-                            contentDescription = null
-                        )
-                    }
                 )
             }
         }

@@ -11,13 +11,15 @@ data class CosmosNews(
     val url: String,
     val newsSite: String,
     val imageUrl: String?,
-    val publishedAt: String
+    val publishedAt: String,
+    val isBookmarked: Boolean,
 ) {
     companion object {
         fun fake(
             id: Long = 1,
             title: String = "New Title",
-            publishedAt: String = "2024-11-01T22:34:26Z"
+            publishedAt: String = "2024-11-01T22:34:26Z",
+            isBookmarked: Boolean = false,
         ): CosmosNews = CosmosNews(
             id = id,
             title = title,
@@ -26,7 +28,8 @@ data class CosmosNews(
             newsSite = "News Site",
             url = "",
             imageUrl = null,
-            publishedAt = publishedAt
+            publishedAt = publishedAt,
+            isBookmarked = isBookmarked
         )
     }
 }

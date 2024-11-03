@@ -18,5 +18,6 @@ class CosmosNewsEntityToCosmosNewsMapper @Inject constructor() : Mapper<CosmosNe
             newsSite = from.newsSite,
             imageUrl = from.imageUrl,
             publishedAt = from.publishedAt,
+            isBookmarked = true
         )
 }

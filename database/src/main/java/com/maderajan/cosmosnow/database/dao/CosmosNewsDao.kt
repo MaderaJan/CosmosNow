@@ -16,9 +16,6 @@ interface CosmosNewsDao {
     @Query("SELECT * FROM CosmosNewsEntity")
     fun selectAll(): Flow<List<CosmosNewsEntity>>
 
-    @Query("SELECT * FROM CosmosNewsEntity")
-    fun selectAll2(): List<CosmosNewsEntity>
-
     @Query("DELETE FROM CosmosNewsEntity WHERE id = :id")
     suspend fun deleteById(id: Long)
 }

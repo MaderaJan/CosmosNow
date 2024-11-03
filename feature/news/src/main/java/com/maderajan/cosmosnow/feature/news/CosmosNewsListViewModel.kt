@@ -26,7 +26,7 @@ class CosmosNewsListViewModel @Inject constructor(
 ) : BaseViewModel<CosmosNewsListUiAction>() {
 
     val uiState: StateFlow<CosmosNewsListUiState> =
-        cosmosNewsListUseCase.getSortedNews()
+        cosmosNewsListUseCase.getSortedNewsFlow()
             .map<List<CosmosNews>, CosmosNewsListUiState>(CosmosNewsListUiState::Success)
             .catch {
                 emit(CosmosNewsListUiState.Error)
@@ -41,7 +41,7 @@ class CosmosNewsListViewModel @Inject constructor(
         when (action) {
             is CosmosNewsListUiAction.BookMarkNews -> {
                 viewModelScope.launch {
-                    bookmarkUseCase.saveBookmark(action.cosmosNews)
+                    bookmarkUseCase.toggleBookmark(action.cosmosNews)
                 }
             }
 

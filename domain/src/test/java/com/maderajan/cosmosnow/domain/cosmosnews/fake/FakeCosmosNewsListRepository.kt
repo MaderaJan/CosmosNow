@@ -1,4 +1,4 @@
-package com.maderajan.cosmosnow.domain.cosmosnews
+package com.maderajan.cosmosnow.domain.cosmosnews.fake
 
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import com.maderajan.cosmosnow.data.repository.cosmosnews.ICosmosNewsRepository

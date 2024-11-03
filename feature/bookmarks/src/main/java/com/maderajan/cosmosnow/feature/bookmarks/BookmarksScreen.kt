@@ -71,12 +71,13 @@ fun BookmarksScreen(
                                         newsSite = item.newsSite,
                                         type = stringResource(id = item.type.getPresentableNameRes()),
                                         publishedAt = item.publishedAt,
+                                        isBookmarked = item.isBookmarked,
                                         onItemClicked = {
                                             dispatchAction(BookmarkUiAction.OpenNews(item))
                                         },
                                         onBookmarkClick = {
                                             dispatchAction(BookmarkUiAction.BookMarkNews(item))
-                                        }
+                                        },
                                     )
 
                                     NewsDivider(startPadding = MaterialTheme.spacing.large)

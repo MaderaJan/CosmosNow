@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -36,6 +34,7 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import coil3.request.placeholder
 import com.maderajan.cosmosnow.core.designsystem.R
+import com.maderajan.cosmosnow.core.designsystem.component.BookmarkIcon
 import com.maderajan.cosmosnow.core.designsystem.component.CosmosNewsListItem
 import com.maderajan.cosmosnow.core.designsystem.component.CosmosNowTopBar
 import com.maderajan.cosmosnow.core.designsystem.component.NewsDivider
@@ -115,6 +114,7 @@ fun CosmosNewsListScreen(
                                     newsSite = item.newsSite,
                                     type = stringResource(id = item.type.getPresentableNameRes()),
                                     publishedAt = item.publishedAt,
+                                    isBookmarked = item.isBookmarked,
                                     onItemClicked = {
                                         dispatchAction(CosmosNewsListUiAction.OpenNews(item))
                                     },
@@ -196,7 +196,7 @@ fun TopNewsListItem(
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .padding(
-                    top = MaterialTheme.spacing.small,
+                    top = 12.dp,
                     end = MaterialTheme.spacing.small,
                 )
                 .constrainAs(titleRef) {
@@ -212,18 +212,19 @@ fun TopNewsListItem(
             type = stringResource(id = news.type.getPresentableNameRes()),
             modifier = Modifier
                 .constrainAs(newsSiteRef) {
-                    top.linkTo(titleRef.bottom)
                     start.linkTo(titleRef.start)
                     end.linkTo(parent.end)
+                    bottom.linkTo(timeRef.bottom)
                     width = Dimension.fillToConstraints
                 }
         )
 
-        Icon(
-            painter = painterResource(id = R.drawable.ic_bookmark),
-            contentDescription = null,
+        BookmarkIcon(
+            isBookmarked = news.isBookmarked,
+            onClick = {
+                onBookmarkClick(news)
+            },
             modifier = Modifier
-                .padding(top = MaterialTheme.spacing.small)
                 .clickable(onClick = {
                     onBookmarkClick(news)
                 })
@@ -238,7 +239,7 @@ fun TopNewsListItem(
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.constrainAs(timeRef) {
-                bottom.linkTo(newsSiteRef.bottom)
+                top.linkTo(bookmarkRef.bottom)
                 end.linkTo(parent.end)
             }
         )

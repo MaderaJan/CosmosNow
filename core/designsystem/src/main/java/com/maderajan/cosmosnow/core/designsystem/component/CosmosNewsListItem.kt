@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,6 +37,7 @@ fun CosmosNewsListItem(
     newsSite: String,
     type: String,
     publishedAt: String,
+    isBookmarked: Boolean,
     onItemClicked: () -> Unit,
     onBookmarkClick: () -> Unit
 ) {
@@ -46,7 +45,11 @@ fun CosmosNewsListItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onItemClicked)
-            .padding(MaterialTheme.spacing.medium)
+            .padding(
+                top = MaterialTheme.spacing.medium,
+                end = MaterialTheme.spacing.medium,
+                start = MaterialTheme.spacing.medium,
+            )
     ) {
         val (imageRef, titleRef, newsSiteRef, timeRef, bookmarkRef) = createRefs()
 
@@ -99,13 +102,15 @@ fun CosmosNewsListItem(
                 }
         )
 
-        Icon(
-            painter = painterResource(id = R.drawable.ic_bookmark),
-            contentDescription = null,
+        BookmarkIcon(
+            isBookmarked = isBookmarked,
+            onClick = onBookmarkClick,
             modifier = Modifier
                 .clickable(onClick = onBookmarkClick)
+                .padding(bottom = MaterialTheme.spacing.small)
                 .constrainAs(bookmarkRef) {
-                    bottom.linkTo(imageRef.bottom)
+                    top.linkTo(timeRef.top)
+                    bottom.linkTo(timeRef.bottom)
                     end.linkTo(parent.end)
                 }
         )
@@ -143,11 +148,12 @@ fun NewsDivider(
 fun CosmosNewsListItemPreview() {
     CosmosNowTheme {
         CosmosNewsListItem(
-            title = "Cosmos New Item",
+            title = "Cosmos New Item Cosmos New Item Cosmos New Item Cosmos New Item Cosmos New Item",
             imageUrl = null,
             newsSite = "NASA",
             type = "Blog",
             publishedAt = "2024-11-01T22:34:26Z",
+            isBookmarked = true,
             onItemClicked = {},
             onBookmarkClick = {},
         )

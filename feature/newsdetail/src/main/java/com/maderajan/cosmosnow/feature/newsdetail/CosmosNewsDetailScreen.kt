@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
@@ -33,8 +34,10 @@ import coil3.request.placeholder
 import com.maderajan.cosmosnow.core.designsystem.R
 import com.maderajan.cosmosnow.core.designsystem.component.CosmosNowButton
 import com.maderajan.cosmosnow.core.designsystem.component.NewsInfo
+import com.maderajan.cosmosnow.core.designsystem.theme.CosmosNowTheme
 import com.maderajan.cosmosnow.core.designsystem.theme.spacing
 import com.maderajan.cosmosnow.core.designsystem.util.dayMonthYearReadableDate
+import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import com.maderajan.cosmosnow.feature.newsdetail.components.CosmosNewsDetailToolbar
 
 
@@ -129,6 +132,19 @@ fun CosmosNewsDetailScreen(
             }
         }
     )
+}
+
+@Preview
+@Composable
+fun CosmosNewsDetailScreenPreview() {
+    CosmosNowTheme {
+        CosmosNewsDetailScreen(
+            uiState = CosmosNewsDetailUiState.Success(
+                cosmosNews = CosmosNews.fake(title = "Crew-8 on the Way Home at Last")
+            ),
+            dispatchAction = {}
+        )
+    }
 }
 
 // TODO MOVE

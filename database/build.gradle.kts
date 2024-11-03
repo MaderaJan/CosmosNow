@@ -7,17 +7,6 @@ plugins {
 android {
     namespace = "com.maderajan.cosmosnow.database"
     compileSdk = 34
-//
-//    defaultConfig {
-//        // The schemas directory contains a schema file for each version of the Room database.
-//        // This is required to enable Room auto migrations.
-//        // See https://developer.android.com/reference/kotlin/androidx/room/AutoMigration.
-//        ksp {
-//            arg("room.schemaLocation", "$projectDir/schemas")
-//        }
-//
-//
-//    }
 
     defaultConfig {
         javaCompileOptions {
@@ -36,10 +25,6 @@ android {
     sourceSets {
         getByName("androidTest").assets.srcDirs("$projectDir/schemas")
     }
-
-//    sourceSets.getByName("test") {
-//        assets.srcDir(files("$projectDir/schemas"))
-//    }
 
     defaultConfig {
         minSdk = 24
@@ -70,7 +55,7 @@ dependencies {
     ksp(libs.androidx.hilt.compiler)
 
     androidTestImplementation(libs.androidx.room.testing)
-    androidTestImplementation("androidx.test:runner:1.6.2")
+    androidTestImplementation(libs.androidx.runner)
     androidTestImplementation(libs.turbine)
     androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)

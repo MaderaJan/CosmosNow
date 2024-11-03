@@ -39,6 +39,8 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":core:navigation"))
+    implementation(project(":core:designsystem"))
+    implementation(project(":core:viewmodel"))
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
@@ -50,4 +52,9 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.compose.constraintlayout)
+
+    // Android Studio Preview support
+    implementation(libs.androidx.ui.tooling.preview)
+    debugImplementation(libs.androidx.ui.tooling)
 }

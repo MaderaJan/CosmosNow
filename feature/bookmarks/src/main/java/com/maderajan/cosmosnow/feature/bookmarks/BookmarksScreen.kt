@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.maderajan.cosmosnow.core.designsystem.R
 import com.maderajan.cosmosnow.core.designsystem.component.CosmosNewsListItem
@@ -22,7 +23,9 @@ import com.maderajan.cosmosnow.core.designsystem.component.CosmosNowTopBar
 import com.maderajan.cosmosnow.core.designsystem.component.NewsDivider
 import com.maderajan.cosmosnow.core.designsystem.component.NoContent
 import com.maderajan.cosmosnow.core.designsystem.component.NoContentData
+import com.maderajan.cosmosnow.core.designsystem.theme.CosmosNowTheme
 import com.maderajan.cosmosnow.core.designsystem.theme.spacing
+import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import com.maderajan.cosmosnow.data.model.comosnews.getPresentableNameRes
 
 @Composable
@@ -92,4 +95,15 @@ fun BookmarksScreen(
             }
         }
     )
+}
+
+@Preview
+@Composable
+fun BookmarksScreenPreview() {
+    CosmosNowTheme {
+        BookmarksScreen(
+            uiState = BookmarkUiState.Success(news = listOf(CosmosNews.fake(), CosmosNews.fake(), CosmosNews.fake(), CosmosNews.fake())),
+            dispatchAction = {}
+        )
+    }
 }

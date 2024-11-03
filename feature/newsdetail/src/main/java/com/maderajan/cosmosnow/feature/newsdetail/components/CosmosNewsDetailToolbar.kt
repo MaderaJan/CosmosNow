@@ -71,7 +71,7 @@ fun CosmosNewsDetailToolbar(
 
                 IconButton(
                     onClick = {
-                        dispatchAction(CosmosNewsDetailUiAction.Bookmark)
+                        dispatchAction(CosmosNewsDetailUiAction.BookmarkNews(uiState.cosmosNews))
                     },
                     content = {
                         Icon(

@@ -7,24 +7,43 @@ plugins {
 android {
     namespace = "com.maderajan.cosmosnow.database"
     compileSdk = 34
+//
+//    defaultConfig {
+//        // The schemas directory contains a schema file for each version of the Room database.
+//        // This is required to enable Room auto migrations.
+//        // See https://developer.android.com/reference/kotlin/androidx/room/AutoMigration.
+//        ksp {
+//            arg("room.schemaLocation", "$projectDir/schemas")
+//        }
+//
+//
+//    }
 
     defaultConfig {
-        // The schemas directory contains a schema file for each version of the Room database.
-        // This is required to enable Room auto migrations.
-        // See https://developer.android.com/reference/kotlin/androidx/room/AutoMigration.
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.incremental"] = "true"
+            }
+        }
+
         ksp {
             arg("room.schemaLocation", "$projectDir/schemas")
         }
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    sourceSets.getByName("test") {
-        assets.srcDir(files("$projectDir/schemas"))
+    sourceSets {
+        getByName("androidTest").assets.srcDirs("$projectDir/schemas")
     }
+
+//    sourceSets.getByName("test") {
+//        assets.srcDir(files("$projectDir/schemas"))
+//    }
 
     defaultConfig {
         minSdk = 24
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -42,8 +61,6 @@ android {
 }
 
 dependencies {
-//    implementation(libs.androidx.core.ktx)
-
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
@@ -52,5 +69,9 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     ksp(libs.androidx.hilt.compiler)
 
+    androidTestImplementation(libs.androidx.room.testing)
+    androidTestImplementation("androidx.test:runner:1.6.2")
+    androidTestImplementation(libs.turbine)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
 }

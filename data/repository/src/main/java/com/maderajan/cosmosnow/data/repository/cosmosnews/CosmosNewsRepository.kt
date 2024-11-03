@@ -1,14 +1,17 @@
 package com.maderajan.cosmosnow.data.repository.cosmosnews
 
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
+import com.maderajan.cosmosnow.data.repository.mapper.cosmosnews.ArticleResponseToCosmosNewsMapper
+import com.maderajan.cosmosnow.data.repository.mapper.cosmosnews.BlogResponseToCosmosNewsMapper
+import com.maderajan.cosmosnow.data.repository.mapper.cosmosnews.ReportResponseToCosmosNewsMapper
 import com.maderajan.cosmosnow.webservice.api.SpaceFlightsNewsApi
 import javax.inject.Inject
 
 class CosmosNewsRepository @Inject constructor(
     private val spaceFlightsNewsApi: SpaceFlightsNewsApi,
-    private val articleResponseToCosmosNewsMapper: com.maderajan.cosmosnow.data.repository.mapper.ArticleResponseToCosmosNewsMapper,
-    private val blogResponseToCosmosNewsMapper: com.maderajan.cosmosnow.data.repository.mapper.BlogResponseToCosmosNewsMapper,
-    private val reportResponseToCosmosNewsMapper: com.maderajan.cosmosnow.data.repository.mapper.ReportResponseToCosmosNewsMapper
+    private val articleResponseToCosmosNewsMapper: ArticleResponseToCosmosNewsMapper,
+    private val blogResponseToCosmosNewsMapper: BlogResponseToCosmosNewsMapper,
+    private val reportResponseToCosmosNewsMapper: ReportResponseToCosmosNewsMapper
 ) : ICosmosNewsRepository {
 
     override suspend fun getArticles(): List<CosmosNews> =

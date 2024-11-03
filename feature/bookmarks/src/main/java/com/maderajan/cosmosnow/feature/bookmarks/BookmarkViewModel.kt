@@ -1,6 +1,9 @@
 package com.maderajan.cosmosnow.feature.bookmarks
 
 import androidx.lifecycle.viewModelScope
+import com.maderajan.cosmosnow.core.navigation.CosmosScreens
+import com.maderajan.cosmosnow.core.navigation.NavigationCommand
+import com.maderajan.cosmosnow.core.navigation.Navigator
 import com.maderajan.cosmosnow.core.viewmodel.BaseViewModel
 import com.maderajan.cosmosnow.core.viewmodel.UiAction
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
@@ -11,15 +14,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
-    bookmarkUseCase: BookmarkUseCase
+    private val bookmarkUseCase: BookmarkUseCase,
+    private val navigator: Navigator
 ) : BaseViewModel<BookmarkUiAction>() {
 
     val uiState: StateFlow<BookmarkUiState> =
-        bookmarkUseCase.getAllBookmarks()
+        bookmarkUseCase.getAllBookmarksFlow()
             .map<List<CosmosNews>, BookmarkUiState>(BookmarkUiState::Success)
             .onEmpty {
                 emit(BookmarkUiState.Empty)
@@ -31,7 +36,17 @@ class BookmarkViewModel @Inject constructor(
             )
 
     override fun handleAction(action: BookmarkUiAction) {
-        TODO("Not yet implemented")
+        when (action) {
+            is BookmarkUiAction.BookMarkNews -> {
+                viewModelScope.launch {
+                    bookmarkUseCase.deleteBookmark(action.cosmosNews)
+                }
+            }
+
+            is BookmarkUiAction.OpenNews -> {
+                navigator.navigate(NavigationCommand.NavigateToRoute(CosmosScreens.CosmosNewsDetail(action.cosmosNews)))
+            }
+        }
     }
 }
 

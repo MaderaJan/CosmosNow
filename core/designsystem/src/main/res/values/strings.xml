@@ -14,4 +14,6 @@
     <string name="no_content_network_error_button">Try again</string>
 
     <string name="bookmarks_title">Bookmarks</string>
+    <string name="bookmarks_empty_title">No Bookmarks yet</string>
+    <string name="bookmarks_empty_description">Bookmark you save will be shown here</string>
 </resources>

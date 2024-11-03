@@ -15,7 +15,7 @@ class BookmarkUseCase @Inject constructor(
     }
 
     fun getAllBookmarks(): Flow<List<CosmosNews>> = flow {
-        bookRepository.getAllBookmarks()
+        emit(bookRepository.getAllBookmarks())
     }
 
     suspend fun deleteBookmark(cosmosNews: CosmosNews) {

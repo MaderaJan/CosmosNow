@@ -7,6 +7,7 @@ import com.maderajan.cosmosnow.core.navigation.Navigator
 import com.maderajan.cosmosnow.core.viewmodel.BaseViewModel
 import com.maderajan.cosmosnow.core.viewmodel.UiAction
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
+import com.maderajan.cosmosnow.domain.cosmosnews.BookmarkUseCase
 import com.maderajan.cosmosnow.domain.cosmosnews.CosmosNewsListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,11 +15,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CosmosNewsListViewModel @Inject constructor(
     cosmosNewsListUseCase: CosmosNewsListUseCase,
+    private val bookmarkUseCase: BookmarkUseCase,
     private val navigator: Navigator
 ) : BaseViewModel<CosmosNewsListUiAction>() {
 
@@ -37,7 +40,9 @@ class CosmosNewsListViewModel @Inject constructor(
     override fun handleAction(action: CosmosNewsListUiAction) {
         when (action) {
             is CosmosNewsListUiAction.BookMarkNews -> {
-                // TODO BOOKMARK NEWS
+                viewModelScope.launch {
+                    bookmarkUseCase.saveBookmark(action.cosmosNews)
+                }
             }
 
             is CosmosNewsListUiAction.OpenNews -> {

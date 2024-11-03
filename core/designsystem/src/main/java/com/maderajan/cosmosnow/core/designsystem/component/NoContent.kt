@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,12 +27,14 @@ fun NoContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier,
     ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_no_internet),
-            contentDescription = null,
-            modifier = Modifier.size(64.dp),
-            tint = MaterialTheme.colorScheme.primary
-        )
+        if (noContentData.icon != null) {
+            Icon(
+                painter = noContentData.icon,
+                contentDescription = null,
+                modifier = Modifier.size(64.dp),
+                tint = MaterialTheme.colorScheme.primary
+            )
+        }
 
         Text(
             text = noContentData.title,
@@ -60,6 +63,7 @@ fun NoContent(
 data class NoContentData(
     val title: String,
     val modifier: Modifier = Modifier,
+    val icon: Painter? = null,
     val description: String? = null,
     val buttonText: String? = null,
     val onButtonClick: (() -> Unit)? = null,
@@ -71,6 +75,7 @@ data object NoContentDefaults {
     fun default(onButtonClick: (() -> Unit)): NoContentData =
         NoContentData(
             title = stringResource(id = R.string.no_content_network_error_title),
+            icon = painterResource(id = R.drawable.ic_no_internet),
             description = stringResource(id = R.string.no_content_network_error_description),
             buttonText = stringResource(id = R.string.no_content_network_error_button),
             onButtonClick = onButtonClick

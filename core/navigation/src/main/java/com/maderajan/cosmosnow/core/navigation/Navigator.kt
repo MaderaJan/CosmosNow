@@ -48,5 +48,4 @@ inline fun <reified T> navTypeOf(
 
     override fun put(bundle: Bundle, key: String, value: T) =
         bundle.putString(key, json.encodeToString(value))
-
 }

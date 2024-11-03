@@ -19,7 +19,15 @@ sealed interface CosmosScreens {
     data object Bookmarks : CosmosScreens
 
     companion object {
+        private val topLevelDestination = listOf(
+            "com.maderajan.cosmosnow.core.navigation.CosmosScreens.CosmosNewsList",
+            "com.maderajan.cosmosnow.core.navigation.CosmosScreens.SearchNews",
+            "com.maderajan.cosmosnow.core.navigation.CosmosScreens.Bookmarks"
+        )
+
         fun isTopLevelDestination(destination: NavDestination?): Boolean =
-            destination?.route?.contains("com.maderajan.cosmosnow.core.navigation.CosmosScreens.CosmosNewsDetail") != null
+            topLevelDestination.any {
+                destination?.route?.contains(it) == true
+            }
     }
 }

@@ -48,6 +48,7 @@ dependencies {
     implementation(project(":feature:news"))
     implementation(project(":feature:newsdetail"))
     implementation(project(":feature:search"))
+    implementation(project(":feature:bookmarks"))
 
 
     implementation(project(":core:designsystem"))

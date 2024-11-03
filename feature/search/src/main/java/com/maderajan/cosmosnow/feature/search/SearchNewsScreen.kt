@@ -9,6 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 
 @Composable
+fun SearchNewsRoute() {
+    SearchNewsScreen()
+}
+
+@Composable
 fun SearchNewsScreen() {
     Box(
         contentAlignment = Alignment.Center,

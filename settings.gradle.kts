@@ -37,3 +37,4 @@ include(":feature:news")
 include(":feature:search")
 include(":feature:newsdetail")
 
+include(":feature:bookmarks")

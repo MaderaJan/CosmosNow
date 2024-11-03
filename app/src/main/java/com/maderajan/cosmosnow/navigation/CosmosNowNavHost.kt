@@ -8,9 +8,10 @@ import androidx.navigation.toRoute
 import com.maderajan.cosmosnow.core.navigation.CosmosScreens
 import com.maderajan.cosmosnow.core.navigation.navTypeOf
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
+import com.maderajan.cosmosnow.feature.bookmarks.BookmarksRoute
 import com.maderajan.cosmosnow.feature.news.CosmosNewsListRoute
 import com.maderajan.cosmosnow.feature.newsdetail.CosmosNewsDetailRoute
-import com.maderajan.cosmosnow.feature.search.SearchNewsScreen
+import com.maderajan.cosmosnow.feature.search.SearchNewsRoute
 import kotlin.reflect.typeOf
 
 @Composable
@@ -33,7 +34,11 @@ fun CosmosNowNavHost(
         }
 
         composable<CosmosScreens.SearchNews> {
-            SearchNewsScreen()
+            SearchNewsRoute()
+        }
+
+        composable<CosmosScreens.Bookmarks> {
+            BookmarksRoute()
         }
     }
 }

@@ -55,66 +55,62 @@ fun CosmosNewsDetailToolbar(
                 }
             )
 
-            if (uiState is CosmosNewsDetailUiState.Success) {
-                Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(1f))
 
-                IconButton(
-                    onClick = {
-                        context.shareUrl(uiState.cosmosNews.url)
-                    },
-                    content = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_share),
-                            contentDescription = null
-                        )
-                    }
-                )
+            IconButton(
+                onClick = {
+                    context.shareUrl(uiState.cosmosNews.url)
+                },
+                content = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_share),
+                        contentDescription = null
+                    )
+                }
+            )
 
-                BookmarkIcon(
-                    isBookmarked = uiState.cosmosNews.isBookmarked,
-                    onClick = {
-                        dispatchAction(CosmosNewsDetailUiAction.BookmarkNews(uiState.cosmosNews))
-                    },
-                )
-            }
+            BookmarkIcon(
+                isBookmarked = uiState.cosmosNews.isBookmarked,
+                onClick = {
+                    dispatchAction(CosmosNewsDetailUiAction.BookmarkNews(uiState.cosmosNews))
+                },
+            )
         }
 
-        if (uiState is CosmosNewsDetailUiState.Success) {
-            ConstraintLayout(
+        ConstraintLayout(
+            modifier = Modifier
+                .padding(horizontal = MaterialTheme.spacing.medium)
+                .fillMaxWidth()
+        ) {
+            val (decorationLineRef, titleRef) = createRefs()
+
+            Spacer(
                 modifier = Modifier
-                    .padding(horizontal = MaterialTheme.spacing.medium)
-                    .fillMaxWidth()
-            ) {
-                val (decorationLineRef, titleRef) = createRefs()
-
-                Spacer(
-                    modifier = Modifier
-                        .padding(end = MaterialTheme.spacing.small)
-                        .background(
-                            color = MaterialTheme.colorScheme.primary,
-                            shape = RoundedCornerShape(4.dp)
-                        )
-                        .width(4.dp)
-                        .padding(vertical = MaterialTheme.spacing.small)
-                        .constrainAs(decorationLineRef) {
-                            start.linkTo(parent.start)
-                            top.linkTo(titleRef.top)
-                            bottom.linkTo(titleRef.bottom)
-                            height = Dimension.fillToConstraints
-                        }
-                )
-
-                Text(
-                    text = uiState.cosmosNews.title,
-                    fontSize = 24.sp,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.constrainAs(titleRef) {
-                        start.linkTo(decorationLineRef.end)
-                        end.linkTo(parent.end)
-                        width = Dimension.fillToConstraints
+                    .padding(end = MaterialTheme.spacing.small)
+                    .background(
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = RoundedCornerShape(4.dp)
+                    )
+                    .width(4.dp)
+                    .padding(vertical = MaterialTheme.spacing.small)
+                    .constrainAs(decorationLineRef) {
+                        start.linkTo(parent.start)
+                        top.linkTo(titleRef.top)
+                        bottom.linkTo(titleRef.bottom)
+                        height = Dimension.fillToConstraints
                     }
-                )
-            }
+            )
+
+            Text(
+                text = uiState.cosmosNews.title,
+                fontSize = 24.sp,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.constrainAs(titleRef) {
+                    start.linkTo(decorationLineRef.end)
+                    end.linkTo(parent.end)
+                    width = Dimension.fillToConstraints
+                }
+            )
         }
     }
 }

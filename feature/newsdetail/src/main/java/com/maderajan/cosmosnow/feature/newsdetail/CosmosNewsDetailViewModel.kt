@@ -12,15 +12,25 @@ import javax.inject.Inject
 @HiltViewModel
 class CosmosNewsDetailViewModel @Inject constructor(
     private val navigator: Navigator,
-    private val bookmarkUseCase: BookmarkUseCase
+    private val bookmarkUseCase: BookmarkUseCase,
 ) : BaseViewModel<CosmosNewsDetailUiAction>() {
 
-    val uiState: MutableStateFlow<CosmosNewsDetailUiState> = MutableStateFlow(CosmosNewsDetailUiState.Loading)
+    val uiState = MutableStateFlow(CosmosNewsDetailUiState())
+
+    init {
+        viewModelScope.launch {
+            bookmarkUseCase.getAllBookmarksFlow()
+                .collect { bookmarks ->
+                    val isBookmarked = bookmarks.any { it.id == uiState.value.cosmosNews.id }
+                    uiState.value = uiState.value.copy(cosmosNews = uiState.value.cosmosNews.copy(isBookmarked = isBookmarked))
+                }
+        }
+    }
 
     override fun handleAction(action: CosmosNewsDetailUiAction) {
         when (action) {
             is CosmosNewsDetailUiAction.ProvideData -> {
-                uiState.value = CosmosNewsDetailUiState.Success(action.cosmosNews)
+                uiState.value = uiState.value.copy(cosmosNews = action.cosmosNews)
             }
 
             is CosmosNewsDetailUiAction.BookmarkNews -> {

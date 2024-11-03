@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -38,8 +37,8 @@ import com.maderajan.cosmosnow.core.designsystem.theme.CosmosNowTheme
 import com.maderajan.cosmosnow.core.designsystem.theme.spacing
 import com.maderajan.cosmosnow.core.designsystem.util.dayMonthYearReadableDate
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
+import com.maderajan.cosmosnow.data.model.comosnews.getPresentableNameRes
 import com.maderajan.cosmosnow.feature.newsdetail.components.CosmosNewsDetailToolbar
-
 
 @Composable
 fun CosmosNewsDetailScreen(
@@ -54,81 +53,71 @@ fun CosmosNewsDetailScreen(
             )
         },
         bottomBar = {
-            if (uiState is CosmosNewsDetailUiState.Success) {
-                val context = LocalContext.current
-                val toolbarColor = MaterialTheme.colorScheme.background.toArgb()
+            val context = LocalContext.current
+            val toolbarColor = MaterialTheme.colorScheme.background.toArgb()
 
-                CosmosNowButton(
-                    text = stringResource(id = R.string.news_detail_button_see_read_more),
-                    onClick = {
-                        launchCustomChromeTab(
-                            context = context,
-                            uri = Uri.parse(uiState.cosmosNews.url),
-                            toolbarColor = toolbarColor
-                        )
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(MaterialTheme.spacing.medium)
-                )
-            }
+            CosmosNowButton(
+                text = stringResource(id = R.string.news_detail_button_see_read_more),
+                onClick = {
+                    launchCustomChromeTab(
+                        context = context,
+                        uri = Uri.parse(uiState.cosmosNews.url),
+                        toolbarColor = toolbarColor
+                    )
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(MaterialTheme.spacing.medium)
+            )
         },
         content = { paddingValues ->
-            when (uiState) {
-                CosmosNewsDetailUiState.Loading -> {
-                    CircularProgressIndicator()
+            Column(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .verticalScroll(rememberScrollState())
+            ) {
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(uiState.cosmosNews.imageUrl)
+                        .crossfade(true)
+                        .placeholder(drawableResId = R.drawable.ic_news_placeholder)
+                        .build(),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .padding(
+                            top = MaterialTheme.spacing.medium,
+                            start = MaterialTheme.spacing.medium,
+                            end = MaterialTheme.spacing.medium,
+                            bottom = MaterialTheme.spacing.extraSmall
+                        )
+                        .clip(RoundedCornerShape(16.dp))
+                        .height(200.dp)
+                )
+
+                Row {
+                    NewsInfo(
+                        newsSite = uiState.cosmosNews.newsSite,
+                        type = stringResource(id = uiState.cosmosNews.type.getPresentableNameRes()),
+                        modifier = Modifier.padding(start = MaterialTheme.spacing.medium)
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Text(
+                        text = uiState.cosmosNews.publishedAt.dayMonthYearReadableDate(),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(end = MaterialTheme.spacing.medium)
+                    )
                 }
 
-                is CosmosNewsDetailUiState.Success -> {
-                    Column(
-                        modifier = Modifier
-                            .padding(paddingValues)
-                            .verticalScroll(rememberScrollState())
-                    ) {
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data(uiState.cosmosNews.imageUrl)
-                                .crossfade(true)
-                                .placeholder(drawableResId = R.drawable.ic_news_placeholder)
-                                .build(),
-                            contentDescription = null,
-                            contentScale = ContentScale.FillBounds,
-                            modifier = Modifier
-                                .padding(
-                                    top = MaterialTheme.spacing.medium,
-                                    start = MaterialTheme.spacing.medium,
-                                    end = MaterialTheme.spacing.medium,
-                                    bottom = MaterialTheme.spacing.extraSmall
-                                )
-                                .clip(RoundedCornerShape(16.dp))
-                                .height(200.dp)
-                        )
-
-                        Row {
-                            NewsInfo(
-                                newsSite = uiState.cosmosNews.newsSite,
-                                type = stringResource(id = uiState.cosmosNews.type.getPresentableNameRes()),
-                                modifier = Modifier.padding(start = MaterialTheme.spacing.medium)
-                            )
-
-                            Spacer(modifier = Modifier.weight(1f))
-
-                            Text(
-                                text = uiState.cosmosNews.publishedAt.dayMonthYearReadableDate(),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.padding(end = MaterialTheme.spacing.medium)
-                            )
-                        }
-
-                        Text(
-                            text = uiState.cosmosNews.summary,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            modifier = Modifier.padding(MaterialTheme.spacing.medium)
-                        )
-                    }
-                }
+                Text(
+                    text = uiState.cosmosNews.summary,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(MaterialTheme.spacing.medium)
+                )
             }
         }
     )
@@ -139,15 +128,12 @@ fun CosmosNewsDetailScreen(
 fun CosmosNewsDetailScreenPreview() {
     CosmosNowTheme {
         CosmosNewsDetailScreen(
-            uiState = CosmosNewsDetailUiState.Success(
-                cosmosNews = CosmosNews.fake(title = "Crew-8 on the Way Home at Last")
-            ),
+            uiState = CosmosNewsDetailUiState(cosmosNews = CosmosNews.fake(title = "Crew-8 on the Way Home at Last")),
             dispatchAction = {}
         )
     }
 }
 
-// TODO MOVE
 fun launchCustomChromeTab(
     context: Context,
     uri: Uri,

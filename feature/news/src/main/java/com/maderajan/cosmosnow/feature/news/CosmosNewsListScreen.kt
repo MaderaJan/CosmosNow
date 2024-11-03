@@ -46,7 +46,7 @@ import com.maderajan.cosmosnow.core.designsystem.theme.spacing
 import com.maderajan.cosmosnow.core.designsystem.util.dayMonthYearReadableDate
 import com.maderajan.cosmosnow.core.designsystem.util.toWeekdayMonthReadableDate
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
-import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
+import com.maderajan.cosmosnow.data.model.comosnews.getPresentableNameRes
 
 @Composable
 fun CosmosNewsListScreen(
@@ -257,11 +257,3 @@ fun TopNewsListItemPreview() {
         )
     }
 }
-
-// TODO
-fun CosmosNewsType.getPresentableNameRes(): Int =
-    when (this) {
-        CosmosNewsType.ARTICLE -> R.string.news_type_article
-        CosmosNewsType.BLOG -> R.string.news_type_blog
-        CosmosNewsType.REPORT -> R.string.news_type_report
-    }

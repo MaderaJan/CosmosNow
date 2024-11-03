@@ -4,9 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.maderajan.cosmosnow.core.designsystem.R
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
-import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
 
 @Composable
 fun CosmosNewsDetailRoute(
@@ -22,11 +20,3 @@ fun CosmosNewsDetailRoute(
         dispatchAction = cosmosNewsDetailViewModel::dispatch
     )
 }
-
-// TODO Move
-fun CosmosNewsType.getPresentableNameRes(): Int =
-    when (this) {
-        CosmosNewsType.ARTICLE -> R.string.news_type_article
-        CosmosNewsType.BLOG -> R.string.news_type_blog
-        CosmosNewsType.REPORT -> R.string.news_type_report
-    }

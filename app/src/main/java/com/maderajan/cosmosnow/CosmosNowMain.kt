@@ -16,8 +16,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.maderajan.cosmosnow.core.navigation.CosmosScreens
 import com.maderajan.cosmosnow.core.navigation.Navigator
 import com.maderajan.cosmosnow.navigation.BottomNavigationItems
 import com.maderajan.cosmosnow.navigation.CosmosNowNavHost
@@ -49,33 +51,36 @@ fun CosmosNowMain(
 @Composable
 fun CosmosNowBottomNavigation(navController: NavController) {
     val selectedItem = rememberSaveable { mutableIntStateOf(0) }
+    val navBackStackEntry = navController.currentBackStackEntryAsState().value
 
-    NavigationBar(
-        modifier = Modifier.height(86.dp)
-    ) {
-        BottomNavigationItems.entries.forEachIndexed { index, item ->
-            NavigationBarItem(
-                selected = selectedItem.intValue == index,
-                onClick = {
-                    selectedItem.intValue = index
+    if (CosmosScreens.isTopLevelDestination(navBackStackEntry?.destination)) {
+        NavigationBar(
+            modifier = Modifier.height(86.dp)
+        ) {
+            BottomNavigationItems.entries.forEachIndexed { index, item ->
+                NavigationBarItem(
+                    selected = selectedItem.intValue == index,
+                    onClick = {
+                        selectedItem.intValue = index
 
-                    val bottomNavigationDestinationOptions = navOptions {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+                        val bottomNavigationDestinationOptions = navOptions {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
 
-                    navController.navigate(item.screen, bottomNavigationDestinationOptions)
-                },
-                icon = {
-                    Icon(
-                        painter = painterResource(id = item.iconRes),
-                        contentDescription = item.name,
-                    )
-                }
-            )
+                        navController.navigate(item.screen, bottomNavigationDestinationOptions)
+                    },
+                    icon = {
+                        Icon(
+                            painter = painterResource(id = item.iconRes),
+                            contentDescription = item.name,
+                        )
+                    }
+                )
+            }
         }
     }
 }

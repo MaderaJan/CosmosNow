@@ -2,7 +2,6 @@ package com.maderajan.cosmosnow.domain.cosmosnews
 
 import app.cash.turbine.test
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
-import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -23,9 +22,9 @@ class CosmosNewsListUseCaseTest: BaseUnitTest() {
 
     @Test
     fun areNews_Sorted_ByDescending() {
-        fakeCosmosNewsListRepository.articlesFake = listOf(fakeCosmosNews(id = 1, date = "2023-07-05T22:34:26Z"))
-        fakeCosmosNewsListRepository.blogFake = listOf(fakeCosmosNews(id = 2, date = "2024-07-05T22:34:26Z"))
-        fakeCosmosNewsListRepository.reportsFake = listOf(fakeCosmosNews(id = 3, date = "2025-07-05T22:34:26Z"))
+        fakeCosmosNewsListRepository.articlesFake = listOf(CosmosNews.fake(id = 1, publishedAt = "2023-07-05T22:34:26Z"))
+        fakeCosmosNewsListRepository.blogFake = listOf(CosmosNews.fake(id = 2, publishedAt = "2024-07-05T22:34:26Z"))
+        fakeCosmosNewsListRepository.reportsFake = listOf(CosmosNews.fake(id = 3, publishedAt = "2025-07-05T22:34:26Z"))
 
         testScope.runTest {
             sut.getSortedNews().test {
@@ -35,14 +34,4 @@ class CosmosNewsListUseCaseTest: BaseUnitTest() {
             }
         }
     }
-
-    private fun fakeCosmosNews(id: Long, date: String) =
-        CosmosNews(
-            id = id,
-            title = "",
-            type = CosmosNewsType.ARTICLE,
-            newsSite = "",
-            imageUrl = "",
-            publishedAt = date,
-        )
 }

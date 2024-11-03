@@ -37,9 +37,3 @@ fun CosmosNowNavHost(
         }
     }
 }
-
-//composable<NavigationSecondModule.Third>(typeMap = getCustomNavTypeMap(ThirdScreenInfo.serializer())) { backStackEntry ->
-//    val data = backStackEntry.toRoute<NavigationSecondModule.Third>().thirdScreenInfo
-//    val viewModel: SecondModuleViewModel = hiltViewModel()
-//    ThirdScreen(viewModel::navigateToHomeScreen, data.id, data.testString)
-//}

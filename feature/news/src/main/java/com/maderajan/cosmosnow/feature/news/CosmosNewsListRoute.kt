@@ -1,11 +1,8 @@
 package com.maderajan.cosmosnow.feature.news
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
@@ -46,6 +42,7 @@ import coil3.request.crossfade
 import coil3.request.placeholder
 import com.maderajan.cosmosnow.core.designsystem.R
 import com.maderajan.cosmosnow.core.designsystem.component.CosmosNowTopBar
+import com.maderajan.cosmosnow.core.designsystem.component.NewsInfo
 import com.maderajan.cosmosnow.core.designsystem.component.NoContent
 import com.maderajan.cosmosnow.core.designsystem.component.NoContentDefaults
 import com.maderajan.cosmosnow.core.designsystem.theme.CosmosNowTheme
@@ -106,7 +103,7 @@ fun CosmosNewsListScreen(
                 }
 
                 is CosmosNewsListUiState.Success -> {
-                    LazyColumn{
+                    LazyColumn {
                         item {
                             TopNewsListItem(
                                 news = uiState.news.first(),
@@ -152,38 +149,11 @@ fun CosmosNewsListScreenSuccessPreview() {
         CosmosNewsListScreen(
             uiState = CosmosNewsListUiState.Success(
                 news = listOf(
-                    CosmosNews(
-                        id = 123L,
-                        title = "Top News Title",
-                        type = CosmosNewsType.ARTICLE,
-                        newsSite = "News Site",
-                        imageUrl = null,
-                        publishedAt = "2024-11-01T22:34:26Z"
-                    ),
-                    CosmosNews(
-                        id = 123L,
-                        title = "News Title",
-                        type = CosmosNewsType.ARTICLE,
-                        newsSite = "News Site",
-                        imageUrl = null,
-                        publishedAt = "2024-11-01T22:34:26Z"
-                    ),
-                    CosmosNews(
-                        id = 123L,
-                        title = "News Title",
-                        type = CosmosNewsType.ARTICLE,
-                        newsSite = "News Site",
-                        imageUrl = null,
-                        publishedAt = "2024-11-01T22:34:26Z"
-                    ),
-                    CosmosNews(
-                        id = 123L,
-                        title = "News Title",
-                        type = CosmosNewsType.ARTICLE,
-                        newsSite = "News Site",
-                        imageUrl = null,
-                        publishedAt = "2024-11-01T22:34:26Z"
-                    ),
+                    CosmosNews.fake(title = "Top News Title"),
+                    CosmosNews.fake(),
+                    CosmosNews.fake(),
+                    CosmosNews.fake(),
+                    CosmosNews.fake(),
                 ),
             ),
             dispatchAction = {}
@@ -256,9 +226,9 @@ fun NewsListItem(
                 }
         )
 
-        NewsSiteAndType(
+        NewsInfo(
             newsSite = news.newsSite,
-            type = news.type,
+            type = stringResource(id = news.type.getPresentableNameRes()),
             modifier = Modifier
                 .padding(start = MaterialTheme.spacing.medium)
                 .constrainAs(newsSiteRef) {
@@ -292,41 +262,6 @@ fun NewsListItem(
                     start.linkTo(titleRef.start)
                     bottom.linkTo(imageRef.bottom)
                 }
-        )
-    }
-}
-
-@Composable
-private fun NewsSiteAndType(
-    newsSite: String,
-    type: CosmosNewsType,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-    ) {
-        Text(
-            text = newsSite,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            style = MaterialTheme.typography.titleSmall,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
-
-        Spacer(
-            modifier = Modifier
-                .padding(horizontal = MaterialTheme.spacing.extraSmall)
-                .size(5.dp)
-                .background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f), CircleShape)
-        )
-
-        Text(
-            text = stringResource(id = type.getPresentableNameRes()),
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            style = MaterialTheme.typography.bodyMedium,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
         )
     }
 }
@@ -386,9 +321,9 @@ fun TopNewsListItem(
                 }
         )
 
-        NewsSiteAndType(
+        NewsInfo(
             newsSite = news.newsSite,
-            type = news.type,
+            type = stringResource(id = news.type.getPresentableNameRes()),
             modifier = Modifier
                 .constrainAs(newsSiteRef) {
                     top.linkTo(titleRef.bottom)
@@ -429,14 +364,7 @@ fun TopNewsListItem(
 fun NewsListItemPreview() {
     CosmosNowTheme {
         NewsListItem(
-            news = CosmosNews(
-                id = 123L,
-                title = "List item news Title which is loooonger",
-                type = CosmosNewsType.ARTICLE,
-                newsSite = "News Site",
-                imageUrl = null,
-                publishedAt = "2024-11-01T22:34:26Z"
-            ),
+            news = CosmosNews.fake(title = "List item news Title which is loooonger"),
             onNewsClick = {},
             onBookmarkClick = {}
         )
@@ -448,14 +376,7 @@ fun NewsListItemPreview() {
 fun TopNewsListItemPreview() {
     CosmosNowTheme {
         TopNewsListItem(
-            news = CosmosNews(
-                id = 123L,
-                title = "Top News Title",
-                type = CosmosNewsType.ARTICLE,
-                newsSite = "News Site",
-                imageUrl = null,
-                publishedAt = "2024-11-01T22:34:26Z"
-            ),
+            news = CosmosNews.fake(title = "Top news title"),
             onNewsClick = {},
             onBookmarkClick = {}
         )

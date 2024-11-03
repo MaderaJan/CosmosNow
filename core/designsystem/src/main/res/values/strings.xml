@@ -7,6 +7,8 @@
     <string name="news_type_blog">Blog</string>
     <string name="news_type_report">Report</string>
 
+    <string name="news_detail_button_see_read_more">Read More</string>
+
     <string name="no_content_network_error_title">Something went wrong</string>
     <string name="no_content_network_error_description">Please check your internet connection and try again</string>
     <string name="no_content_network_error_button">Try again</string>

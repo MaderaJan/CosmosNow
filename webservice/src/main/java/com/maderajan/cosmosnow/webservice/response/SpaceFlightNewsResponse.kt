@@ -13,6 +13,7 @@ data class SpaceFlightNewsResponse(
     val id: Long,
     val title: String,
     val url: String,
+    val summary: String,
     @SerialName("image_url")
     val imageUrl: String,
     @SerialName("news_site")

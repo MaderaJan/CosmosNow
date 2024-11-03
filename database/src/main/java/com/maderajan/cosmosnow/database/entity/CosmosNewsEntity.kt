@@ -13,5 +13,5 @@ data class CosmosNewsEntity(
     val url: String,
     val newsSite: String,
     val imageUrl: String?,
-    val publishedAt: String
+    val publishedAt: String,
 )

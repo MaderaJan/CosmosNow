@@ -1,6 +1,9 @@
 package com.maderajan.cosmosnow.feature.news
 
 import androidx.lifecycle.viewModelScope
+import com.maderajan.cosmosnow.core.navigation.CosmosScreens
+import com.maderajan.cosmosnow.core.navigation.NavigationCommand
+import com.maderajan.cosmosnow.core.navigation.Navigator
 import com.maderajan.cosmosnow.core.viewmodel.BaseViewModel
 import com.maderajan.cosmosnow.core.viewmodel.UiAction
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
@@ -15,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CosmosNewsListViewModel @Inject constructor(
-    cosmosNewsListUseCase: CosmosNewsListUseCase
+    cosmosNewsListUseCase: CosmosNewsListUseCase,
+    private val navigator: Navigator
 ) : BaseViewModel<CosmosNewsListUiAction>() {
 
     val uiState: StateFlow<CosmosNewsListUiState> =
@@ -37,7 +41,7 @@ class CosmosNewsListViewModel @Inject constructor(
             }
 
             is CosmosNewsListUiAction.OpenNews -> {
-                // TODO OPEN NEWS
+                navigator.navigate(NavigationCommand.NavigateToRoute(CosmosScreens.CosmosNewsDetail(action.cosmosNews.title)))
             }
 
             is CosmosNewsListUiAction.TryAgain -> {

@@ -1,5 +1,8 @@
 package com.maderajan.cosmosnow.data.model.comosnews
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CosmosNews(
     val id: Long,
     val title: String,

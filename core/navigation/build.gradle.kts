@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.org.jetbrains.kotlin.plugin.serialization)
 }
 
@@ -29,5 +30,12 @@ android {
 }
 
 dependencies {
+    implementation(project(":data:model"))
+
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    ksp(libs.androidx.hilt.compiler)
+
     implementation(libs.kotlinx.serialization.json)
 }

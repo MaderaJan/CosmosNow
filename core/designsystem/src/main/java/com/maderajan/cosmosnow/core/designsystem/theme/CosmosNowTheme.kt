@@ -37,5 +37,5 @@ public fun CosmosNowTheme(
 }
 
 val previewHandler = AsyncImagePreviewHandler {
-    FakeImage(color = 0xFFFF0000.toInt()) // Available in `io.coil-kt.coil3:coil-test`.
+    FakeImage(color = 0xFFFF0000.toInt())
 }

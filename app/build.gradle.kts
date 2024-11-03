@@ -43,8 +43,12 @@ android {
 }
 
 dependencies {
+    implementation(project(":data:model"))
+
     implementation(project(":feature:news"))
+    implementation(project(":feature:newsdetail"))
     implementation(project(":feature:search"))
+
 
     implementation(project(":core:designsystem"))
     implementation(project(":core:navigation"))

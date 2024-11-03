@@ -21,12 +21,19 @@ dependencyResolutionManagement {
 
 rootProject.name = "CosmosNow"
 include(":app")
+
 include(":webservice")
+
 include(":data:model")
 include(":data:repository")
+
 include(":domain")
+
 include(":core:designsystem")
 include(":core:navigation")
+include(":core:viewmodel")
+
 include(":feature:news")
 include(":feature:search")
-include(":core:viewmodel")
+include(":feature:newsdetail")
+

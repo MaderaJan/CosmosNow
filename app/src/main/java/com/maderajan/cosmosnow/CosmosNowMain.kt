@@ -8,6 +8,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
@@ -17,12 +18,19 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.maderajan.cosmosnow.core.navigation.Navigator
 import com.maderajan.cosmosnow.navigation.BottomNavigationItems
 import com.maderajan.cosmosnow.navigation.CosmosNowNavHost
 
 @Composable
-fun CosmosNowMain() {
+fun CosmosNowMain(
+    navigator: Navigator
+) {
     val navController = rememberNavController()
+
+    LaunchedEffect(Unit) {
+        navigator.handleNavigationCommands(navController)
+    }
 
     Scaffold(
         bottomBar = {

@@ -10,7 +10,7 @@ enum class BottomNavigationItems(
 ) {
     NEWS(
         iconRes = R.drawable.ic_news_paper,
-        screen = CosmosScreens.CosmosNews
+        screen = CosmosScreens.CosmosNewsList
     ),
     SEARCH(
         iconRes = R.drawable.ic_search,

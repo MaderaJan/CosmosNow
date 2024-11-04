@@ -9,11 +9,13 @@ import androidx.navigation.toRoute
 import com.maderajan.cosmosnow.core.navigation.CosmosScreens
 import com.maderajan.cosmosnow.core.navigation.navTypeOf
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
+import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
 import com.maderajan.cosmosnow.feature.bookmarks.BookmarksRoute
 import com.maderajan.cosmosnow.feature.news.CosmosNewsListRoute
 import com.maderajan.cosmosnow.feature.newsdetail.CosmosNewsDetailRoute
 import com.maderajan.cosmosnow.feature.search.SearchNewsRoute
-import com.maderajan.cosmosnow.feature.search.filteroptions.LaunchFilterOptionBottomSheetRoute
+import com.maderajan.cosmosnow.feature.search.filteroptions.launch.LaunchFilterOptionBottomSheetRoute
+import com.maderajan.cosmosnow.feature.search.filteroptions.type.CosmosNewsTypeFilterOptionsRoute
 import kotlin.reflect.typeOf
 
 @Composable
@@ -46,10 +48,16 @@ fun CosmosNowNavHost(
         }
 
         dialog<CosmosScreens.SearchNewsFilterLaunch> { backStackEntry ->
-            val hasLaunch = backStackEntry.toRoute<CosmosScreens.SearchNewsFilterLaunch>().launch
-
             LaunchFilterOptionBottomSheetRoute(
-                hasLaunch = hasLaunch
+                hasLaunch = backStackEntry.toRoute<CosmosScreens.SearchNewsFilterLaunch>().launch
+            )
+        }
+
+        dialog<CosmosScreens.SearchNewsFilterCosmosNewsType>(
+            typeMap = mapOf(typeOf<List<CosmosNewsType>>() to navTypeOf<List<CosmosNewsType>>())
+        ) { backStackEntry ->
+            CosmosNewsTypeFilterOptionsRoute(
+                types = backStackEntry.toRoute<CosmosScreens.SearchNewsFilterCosmosNewsType>().types
             )
         }
     }

@@ -12,6 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import com.maderajan.cosmosnow.core.designsystem.theme.CosmosNowTheme
 import com.maderajan.cosmosnow.core.navigation.CosmosScreens
+import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
 import com.maderajan.cosmosnow.feature.search.components.CosmosNowSearchFilterBar
 
 @Composable
@@ -20,8 +21,20 @@ fun SearchNewsRoute(
     viewModel: SearchNewsViewModel = hiltViewModel()
 ) {
     LaunchedEffect(key1 = Unit) {
-        savedStateHandle.getStateFlow<Boolean?>(CosmosScreens.SearchNewsFilterLaunch.RESULT_KEY, initialValue = null).collect {
+        savedStateHandle.getStateFlow<Boolean?>(
+            key = CosmosScreens.SearchNewsFilterLaunch.RESULT_KEY,
+            initialValue = null
+        ).collect {
             viewModel.dispatch(SearchNewsUiAction.LaunchChanged(it))
+        }
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        savedStateHandle.getStateFlow<List<CosmosNewsType>>(
+            key = CosmosScreens.SearchNewsFilterCosmosNewsType.RESULT_KEY,
+            initialValue = emptyList()
+        ).collect {
+            viewModel.dispatch(SearchNewsUiAction.TypesChanged(it))
         }
     }
 

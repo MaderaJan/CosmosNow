@@ -19,7 +19,7 @@ class Navigator @Inject constructor() {
         _commands.tryEmit(command)
     }
 
-    fun navigateUpWithResult(key: String, result: R) {
+    fun <R> navigateUpWithResult(key: String, result: R) {
         _commands.tryEmit(NavigationCommand.NavigateUpWithResult(key = key, result = result))
     }
 

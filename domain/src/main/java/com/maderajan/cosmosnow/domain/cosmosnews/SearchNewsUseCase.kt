@@ -10,7 +10,6 @@ class SearchNewsUseCase @Inject constructor(
     private val cosmosNewsRepository: ICosmosNewsRepository
 ) {
 
-    // TODO TEST
     fun getNewsSitesOrderByName(): Flow<List<String>> = flow {
         emit(cosmosNewsRepository.getInfo().sorted())
     }
@@ -22,7 +21,6 @@ class SearchNewsUseCase @Inject constructor(
             currentTypes.filter { it != type }
         }
 
-    // TODO TEST
     fun modifySelectedSites(isChecked: Boolean, site: String, selectedSites: List<String>): List<String> =
         if (isChecked) {
             selectedSites + listOf(site)

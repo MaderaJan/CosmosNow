@@ -47,7 +47,6 @@ fun CosmosNowSearchFilterBar(
                     vertical = MaterialTheme.spacing.medium,
                 )
         ) {
-
             DropDownChip(
                 text = if (uiState.newsSites.isEmpty()) {
                     stringResource(id = R.string.search_filter_site)

@@ -19,6 +19,10 @@ class Navigator @Inject constructor() {
         _commands.tryEmit(command)
     }
 
+    fun navigateUpWithResult(key: String, result: R) {
+        _commands.tryEmit(NavigationCommand.NavigateUpWithResult(key = key, result = result))
+    }
+
     fun navigateUp() {
         _commands.tryEmit(NavigationCommand.NavigateUp)
     }
@@ -29,9 +33,29 @@ class Navigator @Inject constructor() {
 
     private fun NavController.handleComposeNavigationCommand(navigationCommand: NavigationCommand) {
         when (navigationCommand) {
-            is NavigationCommand.NavigateToRoute -> navigate(navigationCommand.route)
-            NavigationCommand.NavigateUp -> navigateUp()
+            is NavigationCommand.NavigateToRoute -> {
+                navigate(navigationCommand.route)
+            }
+
+            is NavigationCommand.NavigateUpWithResult<*> -> {
+                navUpWithResult(navigationCommand)
+            }
+
+            NavigationCommand.NavigateUp -> {
+                navigateUp()
+            }
         }
+    }
+
+    private fun NavController.navUpWithResult(navigationCommand: NavigationCommand.NavigateUpWithResult<*>) {
+        val backStackEntry = previousBackStackEntry
+
+        backStackEntry?.savedStateHandle?.set(
+            navigationCommand.key,
+            navigationCommand.result,
+        )
+
+        navigateUp()
     }
 }
 

@@ -18,6 +18,14 @@ sealed interface CosmosScreens {
     @Serializable
     data object Bookmarks : CosmosScreens
 
+    @Serializable
+    data class SearchNewsFilterLaunch(val launch: Boolean?) : CosmosScreens {
+
+        companion object {
+            const val RESULT_KEY = "launch"
+        }
+    }
+
     companion object {
         private val topLevelDestination = listOf(
             "com.maderajan.cosmosnow.core.navigation.CosmosScreens.CosmosNewsList",

@@ -18,7 +18,10 @@
     <string name="search_filter_site">Site</string>
     <string name="search_filter_type">Type</string>
     <string name="search_filter_date">Date</string>
+    <string name="search_filter_none">None</string>
     <string name="search_filter_launch">Launch</string>
     <string name="search_filter_launched">Launched</string>
     <string name="search_filter_not_launched">Not Launched</string>
+
+    <string name="search_filter_apply">Apply</string>
 </resources>

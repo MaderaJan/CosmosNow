@@ -10,35 +10,34 @@ import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import com.maderajan.cosmosnow.domain.cosmosnews.BookmarkUseCase
 import com.maderajan.cosmosnow.domain.cosmosnews.CosmosNewsListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CosmosNewsListViewModel @Inject constructor(
-    cosmosNewsListUseCase: CosmosNewsListUseCase,
+    private val navigator: Navigator,
+    private val cosmosNewsListUseCase: CosmosNewsListUseCase,
     private val bookmarkUseCase: BookmarkUseCase,
-    private val navigator: Navigator
 ) : BaseViewModel<CosmosNewsListUiAction>() {
 
-    val uiState: StateFlow<CosmosNewsListUiState> =
-        cosmosNewsListUseCase.getSortedNewsFlow()
-            .map<List<CosmosNews>, CosmosNewsListUiState>(CosmosNewsListUiState::Success)
-            .catch {
-                emit(CosmosNewsListUiState.Error)
-            }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = CosmosNewsListUiState.Loading,
-            )
+    val uiState = MutableStateFlow(CosmosNewsListUiState())
 
     override fun handleAction(action: CosmosNewsListUiAction) {
         when (action) {
+            CosmosNewsListUiAction.Start -> {
+                viewModelScope.launch {
+                    cosmosNewsListUseCase.getSortedNewsFlow()
+                        .catch {
+                            uiState.value = uiState.value.copy(isError = true)
+                        }
+                        .collect { news ->
+                            uiState.value = CosmosNewsListUiState(news = news, isLoading = false, isError = false)
+                        }
+                }
+            }
+
             is CosmosNewsListUiAction.BookMarkNews -> {
                 viewModelScope.launch {
                     bookmarkUseCase.toggleBookmark(action.cosmosNews)
@@ -50,13 +49,14 @@ class CosmosNewsListViewModel @Inject constructor(
             }
 
             is CosmosNewsListUiAction.TryAgain -> {
-                // TODO TRY AGAIN
+                dispatch(CosmosNewsListUiAction.Start)
             }
         }
     }
 }
 
 sealed interface CosmosNewsListUiAction : UiAction {
+    data object Start : CosmosNewsListUiAction
     data object TryAgain : CosmosNewsListUiAction
     data class OpenNews(val cosmosNews: CosmosNews) : CosmosNewsListUiAction
     data class BookMarkNews(val cosmosNews: CosmosNews) : CosmosNewsListUiAction

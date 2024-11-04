@@ -64,7 +64,7 @@ fun CosmosNewsListScreen(
         bottomBar = {}
     ) { paddingValues ->
         Box(
-            contentAlignment = if (uiState is CosmosNewsListUiState.Success) {
+            contentAlignment = if (!uiState.isLoading && !uiState.isError) {
                 Alignment.TopStart
             } else {
                 Alignment.Center
@@ -73,12 +73,12 @@ fun CosmosNewsListScreen(
                 .padding(paddingValues)
                 .fillMaxSize()
         ) {
-            when (uiState) {
-                CosmosNewsListUiState.Loading -> {
+            when {
+                uiState.isLoading -> {
                     CircularProgressIndicator()
                 }
 
-                CosmosNewsListUiState.Error -> {
+                uiState.isError -> {
                     NoContent(
                         noContentData = NoContentDefaults.default(
                             onButtonClick = {
@@ -88,7 +88,7 @@ fun CosmosNewsListScreen(
                     )
                 }
 
-                is CosmosNewsListUiState.Success -> {
+                else ->
                     LazyColumn {
                         item {
                             TopNewsListItem(
@@ -127,7 +127,6 @@ fun CosmosNewsListScreen(
                             }
                         }
                     }
-                }
             }
         }
     }
@@ -138,7 +137,7 @@ fun CosmosNewsListScreen(
 fun CosmosNewsListScreenSuccessPreview() {
     CosmosNowTheme {
         CosmosNewsListScreen(
-            uiState = CosmosNewsListUiState.Success(
+            uiState = CosmosNewsListUiState(
                 news = listOf(
                     CosmosNews.fake(title = "Top News Title"),
                     CosmosNews.fake(),
@@ -146,6 +145,7 @@ fun CosmosNewsListScreenSuccessPreview() {
                     CosmosNews.fake(),
                     CosmosNews.fake(),
                 ),
+                isLoading = false
             ),
             dispatchAction = {}
         )

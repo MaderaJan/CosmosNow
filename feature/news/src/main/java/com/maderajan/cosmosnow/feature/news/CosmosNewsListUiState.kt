@@ -2,11 +2,8 @@ package com.maderajan.cosmosnow.feature.news
 
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 
-sealed interface CosmosNewsListUiState {
-
-    data object Loading : CosmosNewsListUiState
-
-    data object Error : CosmosNewsListUiState
-
-    data class Success(val news: List<CosmosNews>) : CosmosNewsListUiState
-}
+data class CosmosNewsListUiState(
+    val news: List<CosmosNews> = emptyList(),
+    val isLoading: Boolean = true,
+    val isError: Boolean = false,
+)

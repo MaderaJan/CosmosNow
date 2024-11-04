@@ -8,6 +8,7 @@ class FakeCosmosNewsListRepository: ICosmosNewsRepository {
     var articlesFake = emptyList<CosmosNews>()
     var blogFake = emptyList<CosmosNews>()
     var reportsFake = emptyList<CosmosNews>()
+    var sitesFake = emptyList<String>()
 
     override suspend fun getArticles(): List<CosmosNews> =
         articlesFake
@@ -18,7 +19,6 @@ class FakeCosmosNewsListRepository: ICosmosNewsRepository {
     override suspend fun getReports(): List<CosmosNews> =
         reportsFake
 
-    override suspend fun getInfo(): List<String> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getInfo(): List<String> =
+        sitesFake
 }

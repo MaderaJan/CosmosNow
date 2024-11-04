@@ -1,14 +1,22 @@
 package com.maderajan.cosmosnow.domain.cosmosnews
 
+import app.cash.turbine.test
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
+import com.maderajan.cosmosnow.domain.cosmosnews.fake.FakeCosmosNewsListRepository
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
 class SearchNewsUseCaseTest : BaseUnitTest() {
 
     private lateinit var sut: SearchNewsUseCase
+    private lateinit var fakeCosmosNewsListRepository: FakeCosmosNewsListRepository
 
     override fun setup() {
-        sut = SearchNewsUseCase()
+        fakeCosmosNewsListRepository = FakeCosmosNewsListRepository()
+
+        sut = SearchNewsUseCase(
+            cosmosNewsRepository = fakeCosmosNewsListRepository
+        )
     }
 
     @Test
@@ -27,5 +35,34 @@ class SearchNewsUseCaseTest : BaseUnitTest() {
 
         val updatedTypes = sut.modifySelectedTypes(isChecked = false, type = CosmosNewsType.ARTICLE, currentTypes = currentTypes)
         assert(updatedTypes.isEmpty())
+    }
+
+    @Test
+    fun areNewsSitesOrdered_ByName() {
+        fakeCosmosNewsListRepository.sitesFake = listOf("Z", "NASA", "CNBC", "Europa")
+        val expectedList = listOf("CNBC", "Europa", "NASA", "Z")
+
+        testScope.runTest {
+            sut.getNewsSitesOrderByName().test {
+                assert(expectedList == awaitItem())
+                awaitComplete()
+            }
+        }
+    }
+
+    @Test
+    fun isNewsAdded_WhenIsChecked() {
+        val updatedNews = sut.modifySelectedSites(isChecked = true, site = "NASA", selectedSites = emptyList())
+        assert(
+            updatedNews.size == 1 && updatedNews.first() == "NASA"
+        )
+    }
+
+    @Test
+    fun isNewsRemoved_WhenUnChecked() {
+        val updatedNews = sut.modifySelectedSites(isChecked = false, site = "NASA", selectedSites = listOf("NASA"))
+        assert(
+            updatedNews.isEmpty()
+        )
     }
 }

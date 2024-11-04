@@ -7,12 +7,12 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class SearchNewsUseCase @Inject constructor(
-    private val coNewsRepository: ICosmosNewsRepository
+    private val cosmosNewsRepository: ICosmosNewsRepository
 ) {
 
     // TODO TEST
     fun getNewsSitesOrderByName(): Flow<List<String>> = flow {
-        emit(coNewsRepository.getInfo().sorted())
+        emit(cosmosNewsRepository.getInfo().sorted())
     }
 
     fun modifySelectedTypes(isChecked: Boolean, type: CosmosNewsType, currentTypes: List<CosmosNewsType>) =

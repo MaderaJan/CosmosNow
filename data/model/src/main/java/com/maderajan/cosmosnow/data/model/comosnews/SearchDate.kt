@@ -2,7 +2,7 @@ package com.maderajan.cosmosnow.data.model.comosnews
 
 import com.maderajan.cosmosnow.data.model.R
 
-enum class DateSelect {
+enum class SearchDate {
     TODAY, LAST_WEEK, LAST_MOTH;
 
     fun getPresentableName(): Int =

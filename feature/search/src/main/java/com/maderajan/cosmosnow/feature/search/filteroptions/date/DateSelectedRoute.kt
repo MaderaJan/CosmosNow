@@ -11,14 +11,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.maderajan.cosmosnow.core.designsystem.R
 import com.maderajan.cosmosnow.core.designsystem.component.RowRadioButton
 import com.maderajan.cosmosnow.core.designsystem.theme.CosmosNowTheme
-import com.maderajan.cosmosnow.data.model.comosnews.DateSelect
+import com.maderajan.cosmosnow.data.model.comosnews.SearchDate
 import com.maderajan.cosmosnow.feature.search.components.FilterContent
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DateSelectedRoute(
-    date: DateSelect?,
+    date: SearchDate?,
     viewModel: DateSelectedViewModel = hiltViewModel()
 ) {
     LaunchedEffect(key1 = Unit) {
@@ -40,7 +40,7 @@ fun DateSelectedRoute(
 
 @Composable
 fun DateSelectScreen(
-    date: DateSelect?,
+    date: SearchDate?,
     dispatchAction: (DateSelectedUiAction) -> Unit
 ) {
     FilterContent(
@@ -52,7 +52,7 @@ fun DateSelectScreen(
             dispatchAction(DateSelectedUiAction.ApplyFilter)
         },
         content = {
-            DateSelect.entries.map { dateType ->
+            SearchDate.entries.map { dateType ->
                 RowRadioButton(
                     text = stringResource(id = dateType.getPresentableName()),
                     isSelected = date == dateType,
@@ -70,7 +70,7 @@ fun DateSelectScreen(
 fun DateSelectScreenPreview() {
     CosmosNowTheme {
         DateSelectScreen(
-            date = DateSelect.LAST_WEEK,
+            date = SearchDate.LAST_WEEK,
             dispatchAction = {}
         )
     }

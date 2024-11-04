@@ -34,7 +34,7 @@ fun NewsSitesFilterOptionsScreen(
             if (uiState.isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier
-                        .padding(MaterialTheme.spacing.large)
+                        .padding(MaterialTheme.spacing.extraLarge)
                         .align(Alignment.CenterHorizontally)
                 )
             } else {

@@ -17,7 +17,7 @@ import com.maderajan.cosmosnow.core.designsystem.component.SearchField
 import com.maderajan.cosmosnow.core.designsystem.theme.CosmosNowTheme
 import com.maderajan.cosmosnow.core.designsystem.theme.spacing
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
-import com.maderajan.cosmosnow.data.model.comosnews.DateSelect
+import com.maderajan.cosmosnow.data.model.comosnews.SearchDate
 import com.maderajan.cosmosnow.data.model.comosnews.getPresentableNameRes
 import com.maderajan.cosmosnow.feature.search.SearchNewsUiAction
 import com.maderajan.cosmosnow.feature.search.SearchNewsUiState
@@ -114,7 +114,7 @@ fun CosmosNowSearchFilterBarFilledPreview() {
                 searchText = "SearchText",
                 newsSites = listOf("NASA, SpaceX"),
                 types = listOf(CosmosNewsType.ARTICLE),
-                date = DateSelect.LAST_WEEK,
+                date = SearchDate.LAST_WEEK,
                 hasLaunch = true,
             ),
             dispatchAction = {}

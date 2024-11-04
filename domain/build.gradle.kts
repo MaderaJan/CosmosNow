@@ -32,6 +32,8 @@ dependencies {
     implementation(project(":data:repository"))
     api(project(":data:model"))
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0") // TODO
+
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     ksp(libs.androidx.hilt.compiler)

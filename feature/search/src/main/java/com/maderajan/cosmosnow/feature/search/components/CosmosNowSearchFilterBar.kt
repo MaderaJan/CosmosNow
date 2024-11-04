@@ -3,8 +3,10 @@ package com.maderajan.cosmosnow.feature.search.components
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -100,6 +102,12 @@ fun CosmosNowSearchFilterBar(
                     dispatchAction(SearchNewsUiAction.OpenLaunchOptions)
                 },
                 modifier = Modifier.padding(end = MaterialTheme.spacing.small)
+            )
+        }
+
+        if (uiState.isSearching) {
+            LinearProgressIndicator(
+                modifier = Modifier.fillMaxWidth()
             )
         }
     }

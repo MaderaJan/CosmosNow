@@ -27,11 +27,7 @@ class CosmosNewsListUseCase @Inject constructor(
             bookmarkRepository.getAllBookmarksFlow(),
             flow {
                 val news = coroutineScope {
-                    listOf(
-                        async { cosmosNewsRepository.getArticles() },
-                        async { cosmosNewsRepository.getBlogs() },
-                        async { cosmosNewsRepository.getReports() },
-                    ).awaitAll().flatten()
+                    getAllNews(query = null).awaitAll().flatten()
                 }
                 emit(news)
             }, sortAndMapWithBookMarks()
@@ -75,11 +71,7 @@ class CosmosNewsListUseCase @Inject constructor(
     private fun CoroutineScope.getCosmosNewsFlowByQuery(query: SearchQuery, types: List<CosmosNewsType>): List<Deferred<List<CosmosNews>>> =
         when {
             query.hasLaunch == null || types.isEmpty() -> {
-                listOf(
-                    async { cosmosNewsRepository.getArticles(query) },
-                    async { cosmosNewsRepository.getBlogs(query) },
-                    async { cosmosNewsRepository.getReports(query) },
-                )
+                getAllNews(query)
             }
 
             query.hasLaunch == false -> {
@@ -90,6 +82,12 @@ class CosmosNewsListUseCase @Inject constructor(
                 listOfNotNull(getArticlesDeferred(types, query), getBlogDeferred(types, query))
             }
         }
+
+    private fun CoroutineScope.getAllNews(query: SearchQuery?): List<Deferred<List<CosmosNews>>> = listOf(
+        async { cosmosNewsRepository.getArticles(query) },
+        async { cosmosNewsRepository.getBlogs(query) },
+        async { cosmosNewsRepository.getReports(query) },
+    )
 
     private fun CoroutineScope.getArticlesDeferred(types: List<CosmosNewsType>, query: SearchQuery): Deferred<List<CosmosNews>>? =
         if (types.contains(CosmosNewsType.ARTICLE)) {

@@ -5,14 +5,9 @@ import com.maderajan.cosmosnow.core.navigation.CosmosScreens
 import com.maderajan.cosmosnow.core.navigation.NavigationCommand
 import com.maderajan.cosmosnow.core.navigation.Navigator
 import com.maderajan.cosmosnow.core.viewmodel.BaseViewModel
-import com.maderajan.cosmosnow.core.viewmodel.UiAction
-import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
-import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
-import com.maderajan.cosmosnow.data.model.comosnews.SearchDate
 import com.maderajan.cosmosnow.domain.cosmosnews.BookmarkUseCase
 import com.maderajan.cosmosnow.domain.cosmosnews.CosmosNewsListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -20,7 +15,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@OptIn(FlowPreview::class)
 @HiltViewModel
 class SearchNewsViewModel @Inject constructor(
     private val navigator: Navigator,
@@ -89,6 +83,8 @@ class SearchNewsViewModel @Inject constructor(
             }
 
             is SearchNewsUiAction.Search -> {
+                uiState.value = uiState.value.copy(isSearching = true)
+
                 viewModelScope.launch {
                     cosmosNewsUseCase.getSearchSortedNews(
                         searchText = uiState.value.searchText,
@@ -97,7 +93,7 @@ class SearchNewsViewModel @Inject constructor(
                         date = uiState.value.date,
                         hasLaunch = uiState.value.hasLaunch
                     ).collectLatest { news ->
-                        uiState.value = uiState.value.copy(news = news)
+                        uiState.value = uiState.value.copy(news = news, isSearching = false)
                     }
                 }
             }
@@ -114,29 +110,3 @@ class SearchNewsViewModel @Inject constructor(
         }
     }
 }
-
-data class SearchNewsUiState(
-    val searchText: String = "",
-    val newsSites: List<String> = emptyList(),
-    val types: List<CosmosNewsType> = emptyList(),
-    val date: SearchDate? = null,
-    val hasLaunch: Boolean? = null,
-    val news: List<CosmosNews> = emptyList()
-)
-
-sealed interface SearchNewsUiAction : UiAction {
-    data class SearchTextChanged(val text: String) : SearchNewsUiAction
-    data object OpenNewsSiteOptions : SearchNewsUiAction
-    data object OpenNewsTypeOptions : SearchNewsUiAction
-    data class NewsSitesSelected(val newsSites: List<String>) : SearchNewsUiAction
-    data class TypesChanged(val types: List<CosmosNewsType>) : SearchNewsUiAction
-    data class DateSelected(val date: SearchDate?) : SearchNewsUiAction
-    data object OpenDateSelect : SearchNewsUiAction
-    data object OpenLaunchOptions : SearchNewsUiAction
-    data class LaunchChanged(val hasLaunch: Boolean?) : SearchNewsUiAction
-    data object Search : SearchNewsUiAction
-
-    data class OpenNews(val cosmosNews: CosmosNews) : SearchNewsUiAction
-    data class BookMarkNews(val cosmosNews: CosmosNews) : SearchNewsUiAction
-}
-

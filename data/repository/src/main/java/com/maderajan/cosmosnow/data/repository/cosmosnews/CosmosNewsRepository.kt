@@ -24,11 +24,21 @@ class CosmosNewsRepository @Inject constructor(
         ).results.map(articleResponseToCosmosNewsMapper::map)
 
     override suspend fun getBlogs(searchQuery: SearchQuery?): List<CosmosNews> =
-        spaceFlightsNewsApi.getBlogs()
+        spaceFlightsNewsApi.getBlogs(
+            searchText = searchQuery?.searchText,
+            newsSites = searchQuery?.newsSites,
+            dateFrom = searchQuery?.dateFrom,
+            dateTo = searchQuery?.dateTo,
+        )
             .results.map(blogResponseToCosmosNewsMapper::map)
 
     override suspend fun getReports(searchQuery: SearchQuery?): List<CosmosNews> =
-        spaceFlightsNewsApi.getReports()
+        spaceFlightsNewsApi.getReports(
+            searchText = searchQuery?.searchText,
+            newsSites = searchQuery?.newsSites,
+            dateFrom = searchQuery?.dateFrom,
+            dateTo = searchQuery?.dateTo,
+        )
             .results.map(reportResponseToCosmosNewsMapper::map)
 
     override suspend fun getInfo(): List<String> =

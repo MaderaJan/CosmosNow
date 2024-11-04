@@ -16,6 +16,7 @@ import com.maderajan.cosmosnow.feature.newsdetail.CosmosNewsDetailRoute
 import com.maderajan.cosmosnow.feature.search.SearchNewsRoute
 import com.maderajan.cosmosnow.feature.search.filteroptions.date.DateSelectedRoute
 import com.maderajan.cosmosnow.feature.search.filteroptions.launch.LaunchFilterOptionBottomSheetRoute
+import com.maderajan.cosmosnow.feature.search.filteroptions.sites.NewsSitesFilterOptionsRoute
 import com.maderajan.cosmosnow.feature.search.filteroptions.type.CosmosNewsTypeFilterOptionsRoute
 import kotlin.reflect.typeOf
 
@@ -65,6 +66,14 @@ fun CosmosNowNavHost(
         dialog<CosmosScreens.SearchNewsFilterDate> { backStackEntry ->
             DateSelectedRoute(
                 date = backStackEntry.toRoute<CosmosScreens.SearchNewsFilterDate>().date
+            )
+        }
+
+        dialog<CosmosScreens.SearchNewsFilterNewsSites>(
+            typeMap = mapOf(typeOf<List<String>>() to navTypeOf<List<String>>())
+        ) { backStackEntry ->
+            NewsSitesFilterOptionsRoute(
+                newsSites = backStackEntry.toRoute<CosmosScreens.SearchNewsFilterNewsSites>().newsSites
             )
         }
     }

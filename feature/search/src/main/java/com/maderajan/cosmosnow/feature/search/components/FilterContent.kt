@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.maderajan.cosmosnow.core.designsystem.R
 import com.maderajan.cosmosnow.core.designsystem.component.BottomSheetHeader
 import com.maderajan.cosmosnow.core.designsystem.component.CosmosNowButton
@@ -21,25 +22,42 @@ fun FilterContent(
     title: String,
     onCancelClick: () -> Unit,
     onCtaClick: () -> Unit,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
+    isLoading: Boolean = false,
 ) {
-    Column {
-        BottomSheetHeader(
-            title = title,
-            onCancelClick = onCancelClick,
-            modifier = Modifier.padding(bottom = MaterialTheme.spacing.small)
-        )
+    ConstraintLayout {
+        val (contentRef, ctaRef) = createRefs()
 
-        content()
+        Column(
+            modifier = Modifier.constrainAs(contentRef) {
+                top.linkTo(parent.top)
+                bottom.linkTo(ctaRef.top)
+            }
+        ) {
+            BottomSheetHeader(
+                title = title,
+                onCancelClick = onCancelClick,
+                modifier = Modifier
+                    .padding(bottom = MaterialTheme.spacing.small)
+            )
 
-        CosmosNowButton(
-            text = stringResource(id = R.string.search_filter_apply),
-            onClick = onCtaClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(MaterialTheme.spacing.medium)
-        )
+            content()
+        }
+
+        if (!isLoading) {
+            CosmosNowButton(
+                text = stringResource(id = R.string.search_filter_apply),
+                onClick = onCtaClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(MaterialTheme.spacing.medium)
+                    .constrainAs(ctaRef) {
+                        bottom.linkTo(parent.bottom)
+                    }
+            )
+        }
     }
+
 }
 
 @Preview

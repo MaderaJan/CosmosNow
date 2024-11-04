@@ -50,7 +50,7 @@ fun CosmosNowSearchFilterBar(
         ) {
             DropDownChip(
                 text = if (uiState.newsSites.isEmpty()) {
-                    stringResource(id = R.string.search_filter_site)
+                    stringResource(id = R.string.search_filter_sites)
                 } else {
                     uiState.newsSites.joinToString(", ")
                 },

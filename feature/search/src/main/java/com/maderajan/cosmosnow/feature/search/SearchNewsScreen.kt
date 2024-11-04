@@ -31,6 +31,15 @@ fun SearchNewsRoute(
     }
 
     LaunchedEffect(key1 = Unit) {
+        savedStateHandle.getStateFlow<List<String>>(
+            key = CosmosScreens.SearchNewsFilterNewsSites.RESULT_KEY,
+            initialValue = emptyList()
+        ).collect {
+            viewModel.dispatch(SearchNewsUiAction.NewsSitesSelected(it))
+        }
+    }
+
+    LaunchedEffect(key1 = Unit) {
         savedStateHandle.getStateFlow<List<CosmosNewsType>>(
             key = CosmosScreens.SearchNewsFilterCosmosNewsType.RESULT_KEY,
             initialValue = emptyList()

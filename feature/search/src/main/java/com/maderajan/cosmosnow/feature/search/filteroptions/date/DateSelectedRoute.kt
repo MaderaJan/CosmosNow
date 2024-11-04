@@ -11,15 +11,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.maderajan.cosmosnow.core.designsystem.R
 import com.maderajan.cosmosnow.core.designsystem.component.RowRadioButton
 import com.maderajan.cosmosnow.core.designsystem.theme.CosmosNowTheme
-import com.maderajan.cosmosnow.core.navigation.CosmosScreens
-import com.maderajan.cosmosnow.core.navigation.Navigator
-import com.maderajan.cosmosnow.core.viewmodel.BaseViewModel
-import com.maderajan.cosmosnow.core.viewmodel.UiAction
 import com.maderajan.cosmosnow.data.model.comosnews.DateSelect
 import com.maderajan.cosmosnow.feature.search.components.FilterContent
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import javax.inject.Inject
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -81,39 +74,4 @@ fun DateSelectScreenPreview() {
             dispatchAction = {}
         )
     }
-}
-
-@HiltViewModel
-class DateSelectedViewModel @Inject constructor(
-    private val navigator: Navigator,
-) : BaseViewModel<DateSelectedUiAction>() {
-
-    val uiState = MutableStateFlow<DateSelect?>(null)
-
-    override fun handleAction(action: DateSelectedUiAction) {
-        when (action) {
-            is DateSelectedUiAction.ProvideData -> {
-                uiState.value = action.date
-            }
-
-            is DateSelectedUiAction.DateSelected -> {
-                uiState.value = action.date
-            }
-
-            DateSelectedUiAction.ApplyFilter -> {
-                navigator.navigateUpWithResult(CosmosScreens.SearchNewsFilterDate.RESULT_KEY, uiState.value)
-            }
-
-            DateSelectedUiAction.NavigateBack -> {
-                navigator.navigateUp()
-            }
-        }
-    }
-}
-
-sealed interface DateSelectedUiAction : UiAction {
-    data class ProvideData(val date: DateSelect?) : DateSelectedUiAction
-    data class DateSelected(val date: DateSelect) : DateSelectedUiAction
-    data object NavigateBack : DateSelectedUiAction
-    data object ApplyFilter : DateSelectedUiAction
 }

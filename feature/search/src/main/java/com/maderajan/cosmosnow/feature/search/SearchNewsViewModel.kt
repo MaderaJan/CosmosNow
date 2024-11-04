@@ -25,7 +25,11 @@ class SearchNewsViewModel @Inject constructor(
             }
 
             SearchNewsUiAction.OpenNewsSiteOptions -> {
+                navigator.navigate(NavigationCommand.NavigateToRoute(CosmosScreens.SearchNewsFilterNewsSites(uiState.value.newsSites)))
+            }
 
+            is SearchNewsUiAction.NewsSitesSelected -> {
+                uiState.value = uiState.value.copy(newsSites = action.newsSites)
             }
 
             SearchNewsUiAction.OpenNewsTypeOptions -> {
@@ -67,6 +71,7 @@ sealed interface SearchNewsUiAction : UiAction {
     data class SearchTextChanged(val text: String) : SearchNewsUiAction
     data object OpenNewsSiteOptions : SearchNewsUiAction
     data object OpenNewsTypeOptions : SearchNewsUiAction
+    data class NewsSitesSelected(val newsSites: List<String>) : SearchNewsUiAction
     data class TypesChanged(val types: List<CosmosNewsType>) : SearchNewsUiAction
     data class DateSelected(val date: DateSelect?) : SearchNewsUiAction
     data object OpenDateSelect : SearchNewsUiAction

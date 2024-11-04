@@ -44,6 +44,14 @@ sealed interface CosmosScreens {
         }
     }
 
+    @Serializable
+    data class SearchNewsFilterNewsSites(val newsSites: List<String>) : CosmosScreens {
+
+        companion object {
+            const val RESULT_KEY = "news_sites"
+        }
+    }
+
     companion object {
         private val topLevelDestination = listOf(
             "com.maderajan.cosmosnow.core.navigation.CosmosScreens.CosmosNewsList",

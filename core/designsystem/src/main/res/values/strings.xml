@@ -15,7 +15,7 @@
 
     <string name="search_title">Explore</string>
     <string name="search_text_field_placeholder">Title of an article</string>
-    <string name="search_filter_site">Site</string>
+    <string name="search_filter_sites">Sites</string>
     <string name="search_filter_type">Type</string>
     <string name="search_filter_date">Date</string>
     <string name="search_filter_none">None</string>

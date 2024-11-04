@@ -3,4 +3,9 @@
     <string name="news_type_article">Article</string>
     <string name="news_type_blog">Blog</string>
     <string name="news_type_report">Report</string>
+
+    <string name="date_today">Today</string>
+    <string name="date_last_week">Last Week</string>
+    <string name="date_last_month">Last Month</string>
+    <string name="date_custom_range">Custom Range</string>
 </resources>

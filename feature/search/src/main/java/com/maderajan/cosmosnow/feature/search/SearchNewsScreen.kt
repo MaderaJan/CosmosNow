@@ -13,6 +13,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.maderajan.cosmosnow.core.designsystem.theme.CosmosNowTheme
 import com.maderajan.cosmosnow.core.navigation.CosmosScreens
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
+import com.maderajan.cosmosnow.data.model.comosnews.DateSelect
 import com.maderajan.cosmosnow.feature.search.components.CosmosNowSearchFilterBar
 
 @Composable
@@ -35,6 +36,15 @@ fun SearchNewsRoute(
             initialValue = emptyList()
         ).collect {
             viewModel.dispatch(SearchNewsUiAction.TypesChanged(it))
+        }
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        savedStateHandle.getStateFlow<DateSelect?>(
+            key = CosmosScreens.SearchNewsFilterDate.RESULT_KEY,
+            initialValue = null
+        ).collect {
+            viewModel.dispatch(SearchNewsUiAction.DateSelected(it))
         }
     }
 

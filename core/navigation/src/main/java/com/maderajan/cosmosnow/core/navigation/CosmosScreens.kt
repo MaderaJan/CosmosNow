@@ -3,6 +3,7 @@ package com.maderajan.cosmosnow.core.navigation
 import androidx.navigation.NavDestination
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
+import com.maderajan.cosmosnow.data.model.comosnews.DateSelect
 import kotlinx.serialization.Serializable
 
 sealed interface CosmosScreens {
@@ -32,6 +33,14 @@ sealed interface CosmosScreens {
 
         companion object {
             const val RESULT_KEY = "cosmos_news_type"
+        }
+    }
+
+    @Serializable
+    data class SearchNewsFilterDate(val date: DateSelect?) : CosmosScreens {
+
+        companion object {
+            const val RESULT_KEY = "date"
         }
     }
 

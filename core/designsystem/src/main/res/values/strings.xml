@@ -22,6 +22,5 @@
     <string name="search_filter_launch">Launch</string>
     <string name="search_filter_launched">Launched</string>
     <string name="search_filter_not_launched">Not Launched</string>
-
     <string name="search_filter_apply">Apply</string>
 </resources>

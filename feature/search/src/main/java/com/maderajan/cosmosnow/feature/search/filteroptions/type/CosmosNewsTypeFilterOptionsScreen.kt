@@ -2,8 +2,10 @@ package com.maderajan.cosmosnow.feature.search.filteroptions.type
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.maderajan.cosmosnow.core.designsystem.R
 import com.maderajan.cosmosnow.core.designsystem.component.RowCheckbox
+import com.maderajan.cosmosnow.core.designsystem.theme.CosmosNowTheme
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
 import com.maderajan.cosmosnow.data.model.comosnews.getPresentableNameRes
 import com.maderajan.cosmosnow.feature.search.components.FilterContent
@@ -33,4 +35,15 @@ fun CosmosNewsTypeFilterOptionsScreen(
             }
         }
     )
+}
+
+@Preview
+@Composable
+fun CosmosNewsTypeFilterOptionsScreenPreview() {
+    CosmosNowTheme {
+        CosmosNewsTypeFilterOptionsScreen(
+            selectedTypes = listOf(CosmosNewsType.ARTICLE),
+            dispatchAction = {}
+        )
+    }
 }

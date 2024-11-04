@@ -6,6 +6,7 @@ import com.maderajan.cosmosnow.core.navigation.Navigator
 import com.maderajan.cosmosnow.core.viewmodel.BaseViewModel
 import com.maderajan.cosmosnow.core.viewmodel.UiAction
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
+import com.maderajan.cosmosnow.data.model.comosnews.DateSelect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
@@ -36,7 +37,11 @@ class SearchNewsViewModel @Inject constructor(
             }
 
             SearchNewsUiAction.OpenDateSelect -> {
+                navigator.navigate(NavigationCommand.NavigateToRoute(CosmosScreens.SearchNewsFilterDate(uiState.value.date)))
+            }
 
+            is SearchNewsUiAction.DateSelected -> {
+                uiState.value = uiState.value.copy(date = action.date)
             }
 
             SearchNewsUiAction.OpenLaunchOptions -> {
@@ -54,7 +59,7 @@ data class SearchNewsUiState(
     val searchText: String = "",
     val newsSites: List<String> = emptyList(),
     val types: List<CosmosNewsType> = emptyList(),
-    val date: String? = null,
+    val date: DateSelect? = null,
     val hasLaunch: Boolean? = null,
 )
 
@@ -63,6 +68,7 @@ sealed interface SearchNewsUiAction : UiAction {
     data object OpenNewsSiteOptions : SearchNewsUiAction
     data object OpenNewsTypeOptions : SearchNewsUiAction
     data class TypesChanged(val types: List<CosmosNewsType>) : SearchNewsUiAction
+    data class DateSelected(val date: DateSelect?) : SearchNewsUiAction
     data object OpenDateSelect : SearchNewsUiAction
     data object OpenLaunchOptions : SearchNewsUiAction
     data class LaunchChanged(val hasLaunch: Boolean?) : SearchNewsUiAction

@@ -17,6 +17,7 @@ import com.maderajan.cosmosnow.core.designsystem.component.SearchField
 import com.maderajan.cosmosnow.core.designsystem.theme.CosmosNowTheme
 import com.maderajan.cosmosnow.core.designsystem.theme.spacing
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
+import com.maderajan.cosmosnow.data.model.comosnews.DateSelect
 import com.maderajan.cosmosnow.data.model.comosnews.getPresentableNameRes
 import com.maderajan.cosmosnow.feature.search.SearchNewsUiAction
 import com.maderajan.cosmosnow.feature.search.SearchNewsUiState
@@ -74,7 +75,11 @@ fun CosmosNowSearchFilterBar(
             )
 
             DropDownChip(
-                text = uiState.date ?: stringResource(id = R.string.search_filter_date),
+                text = if (uiState.date == null) {
+                    stringResource(id = R.string.search_filter_date)
+                } else {
+                    stringResource(id = uiState.date.getPresentableName())
+                },
                 isActive = uiState.date != null,
                 onClick = {
                     dispatchAction(SearchNewsUiAction.OpenDateSelect)
@@ -109,7 +114,7 @@ fun CosmosNowSearchFilterBarFilledPreview() {
                 searchText = "SearchText",
                 newsSites = listOf("NASA, SpaceX"),
                 types = listOf(CosmosNewsType.ARTICLE),
-                date = "Today",
+                date = DateSelect.LAST_WEEK,
                 hasLaunch = true,
             ),
             dispatchAction = {}

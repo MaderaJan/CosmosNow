@@ -89,7 +89,7 @@ class SearchNewsViewModel @Inject constructor(
                 uiState.value = uiState.value.copy(isSearching = true)
 
                 viewModelScope.launch {
-                    cosmosNewsUseCase.getSearchSortedNews(
+                    cosmosNewsUseCase.getSortedNewsByQuery(
                         searchText = uiState.value.searchText,
                         newsSites = uiState.value.newsSites,
                         types = uiState.value.types,

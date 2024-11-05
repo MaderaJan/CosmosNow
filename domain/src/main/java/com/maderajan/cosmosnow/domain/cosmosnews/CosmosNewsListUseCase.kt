@@ -40,7 +40,7 @@ class CosmosNewsListUseCase @Inject constructor(
             }.sortedByDescending(CosmosNews::publishedAt)
         }
 
-    fun getSearchSortedNews(
+    fun getSortedNewsByQuery(
         searchText: String,
         newsSites: List<String>,
         types: List<CosmosNewsType>,
@@ -70,16 +70,20 @@ class CosmosNewsListUseCase @Inject constructor(
 
     private fun CoroutineScope.getCosmosNewsFlowByQuery(query: SearchQuery, types: List<CosmosNewsType>): List<Deferred<List<CosmosNews>>> =
         when {
-            query.hasLaunch == null || types.isEmpty() -> {
-                getAllNews(query)
+            types.isEmpty() && query.hasLaunch != null -> {
+                listOf(async { cosmosNewsRepository.getArticles(query) }, async { cosmosNewsRepository.getBlogs(query) })
             }
 
-            query.hasLaunch == false -> {
+            types.isNotEmpty() && query.hasLaunch != null -> {
+                listOfNotNull(getArticlesDeferred(types, query), getBlogDeferred(types, query))
+            }
+
+            types.isNotEmpty() -> {
                 listOfNotNull(getArticlesDeferred(types, query), getBlogDeferred(types, query), getReportsDeferred(types, query))
             }
 
             else -> {
-                listOfNotNull(getArticlesDeferred(types, query), getBlogDeferred(types, query))
+                getAllNews(query)
             }
         }
 

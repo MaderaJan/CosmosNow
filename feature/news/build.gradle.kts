@@ -41,6 +41,7 @@ dependencies {
     implementation(project(":core:designsystem"))
     implementation(project(":core:viewmodel"))
     implementation(project(":core:navigation"))
+    implementation(project(":core:common"))
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)

@@ -26,10 +26,10 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import coil3.request.placeholder
+import com.maderajan.cosmosnow.core.common.dayMonthYearReadableDate
 import com.maderajan.cosmosnow.core.designsystem.R
 import com.maderajan.cosmosnow.core.designsystem.theme.CosmosNowTheme
 import com.maderajan.cosmosnow.core.designsystem.theme.spacing
-import com.maderajan.cosmosnow.core.designsystem.util.dayMonthYearReadableDate
 
 @Composable
 fun CosmosNewsListItem(

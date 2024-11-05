@@ -1,10 +1,10 @@
 package com.maderajan.cosmosnow.domain.cosmosnews
 
+import com.maderajan.cosmosnow.core.common.getFromToDateString
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
 import com.maderajan.cosmosnow.data.model.comosnews.SearchDate
 import com.maderajan.cosmosnow.data.model.comosnews.SearchQuery
-import com.maderajan.cosmosnow.data.model.comosnews.getFromToDateString
 import com.maderajan.cosmosnow.data.repository.bookmarks.IBookmarkRepository
 import com.maderajan.cosmosnow.data.repository.cosmosnews.ICosmosNewsRepository
 import kotlinx.coroutines.CoroutineScope

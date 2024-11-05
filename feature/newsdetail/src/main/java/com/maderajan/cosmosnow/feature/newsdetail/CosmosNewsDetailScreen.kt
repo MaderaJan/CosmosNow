@@ -30,12 +30,12 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import coil3.request.placeholder
+import com.maderajan.cosmosnow.core.common.dayMonthYearReadableDate
 import com.maderajan.cosmosnow.core.designsystem.R
 import com.maderajan.cosmosnow.core.designsystem.component.CosmosNowButton
 import com.maderajan.cosmosnow.core.designsystem.component.NewsInfo
 import com.maderajan.cosmosnow.core.designsystem.theme.CosmosNowTheme
 import com.maderajan.cosmosnow.core.designsystem.theme.spacing
-import com.maderajan.cosmosnow.core.designsystem.util.dayMonthYearReadableDate
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import com.maderajan.cosmosnow.data.model.comosnews.getPresentableNameRes
 import com.maderajan.cosmosnow.feature.newsdetail.components.CosmosNewsDetailToolbar

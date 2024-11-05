@@ -1,11 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.maderajan.cosmosnow.domain"
+    namespace = "com.maderajan.cosmosnow.core.common"
     compileSdk = 34
 
     defaultConfig {
@@ -29,15 +28,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":data:repository"))
-    implementation(project(":core:common"))
-    api(project(":data:model"))
+    implementation(project(":data:model"))
 
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
-    ksp(libs.androidx.hilt.compiler)
-
-    testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.turbine)
     testImplementation(libs.junit)
 }

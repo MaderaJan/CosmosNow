@@ -16,7 +16,7 @@ import com.maderajan.cosmosnow.core.designsystem.theme.spacing
 @Composable
 fun NewsSitesFilterOptionsRoute(
     newsSites: List<String>,
-    viewModel: NewsSitesFilterOptionsViewModel = hiltViewModel()
+    viewModel: NewsSitesFilterOptionsMviViewModel = hiltViewModel()
 ) {
     LaunchedEffect(key1 = Unit) {
         viewModel.dispatch(NewsSitesFilterOptionsUiAction.ProvideData(newsSites = newsSites))
@@ -33,6 +33,6 @@ fun NewsSitesFilterOptionsRoute(
                 dispatchAction = viewModel::dispatch
             )
         },
-        modifier = Modifier.padding(top = MaterialTheme.spacing.large)
+        modifier = Modifier.padding(top = MaterialTheme.spacing.extraLarge)
     )
 }

@@ -1,5 +1,6 @@
 package com.maderajan.cosmosnow.feature.search
 
+import com.maderajan.cosmosnow.core.viewmodel.UiState
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
 import com.maderajan.cosmosnow.data.model.comosnews.SearchDate
@@ -13,4 +14,4 @@ data class SearchNewsUiState(
     val news: List<CosmosNews> = emptyList(),
     val isSearching: Boolean = false,
     val isError: Boolean = false,
-)
+): UiState

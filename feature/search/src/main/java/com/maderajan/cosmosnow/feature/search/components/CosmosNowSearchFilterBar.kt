@@ -31,7 +31,7 @@ fun CosmosNowSearchFilterBar(
 ) {
     Column {
         CosmosNowTopBar(
-            title = stringResource(id = R.string.news_title),
+            title = stringResource(id = R.string.search_title),
             date = null
         )
 

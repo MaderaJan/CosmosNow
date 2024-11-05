@@ -3,22 +3,19 @@ package com.maderajan.cosmosnow.feature.search.filteroptions.sites
 import androidx.lifecycle.viewModelScope
 import com.maderajan.cosmosnow.core.navigation.CosmosScreens
 import com.maderajan.cosmosnow.core.navigation.Navigator
-import com.maderajan.cosmosnow.core.viewmodel.BaseViewModel
+import com.maderajan.cosmosnow.core.viewmodel.BaseMviViewModel
 import com.maderajan.cosmosnow.domain.cosmosnews.SearchNewsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NewsSitesFilterOptionsViewModel @Inject constructor(
+class NewsSitesFilterOptionsMviViewModel @Inject constructor(
     private val navigator: Navigator,
     private val searchNewsUseCase: SearchNewsUseCase
-) : BaseViewModel<NewsSitesFilterOptionsUiAction>() {
-
-    val uiState = MutableStateFlow(NewsSitesFilterOptionsUiState())
+) : BaseMviViewModel<NewsSitesFilterOptionsUiState, NewsSitesFilterOptionsUiAction>(NewsSitesFilterOptionsUiState()) {
 
     override fun handleAction(action: NewsSitesFilterOptionsUiAction) {
         when (action) {
@@ -26,13 +23,15 @@ class NewsSitesFilterOptionsViewModel @Inject constructor(
                 viewModelScope.launch {
                     searchNewsUseCase.getNewsSitesOrderByName()
                         .catch {
-                            uiState.value = NewsSitesFilterOptionsUiState(isError = true)
+                            setUiState(NewsSitesFilterOptionsUiState(isError = true))
                         }
                         .collectLatest { allSites ->
-                            uiState.value = NewsSitesFilterOptionsUiState(
-                                selectedSites = action.newsSites,
-                                allSites = allSites,
-                                isLoading = false
+                            setUiState(
+                                NewsSitesFilterOptionsUiState(
+                                    selectedSites = action.newsSites,
+                                    allSites = allSites,
+                                    isLoading = false
+                                )
                             )
                         }
                 }
@@ -40,7 +39,7 @@ class NewsSitesFilterOptionsViewModel @Inject constructor(
 
             is NewsSitesFilterOptionsUiAction.SiteChecked -> {
                 val updatedSelectedSites = searchNewsUseCase.modifySelectedSites(action.isChecked, action.site, uiState.value.selectedSites)
-                uiState.value = uiState.value.copy(selectedSites = updatedSelectedSites)
+                setUiState { copy(selectedSites = updatedSelectedSites) }
             }
 
             NewsSitesFilterOptionsUiAction.ApplyFilter -> {

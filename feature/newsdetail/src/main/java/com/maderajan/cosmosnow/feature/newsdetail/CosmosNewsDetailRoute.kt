@@ -9,7 +9,7 @@ import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 @Composable
 fun CosmosNewsDetailRoute(
     cosmosNews: CosmosNews,
-    cosmosNewsDetailViewModel: CosmosNewsDetailViewModel = hiltViewModel()
+    cosmosNewsDetailViewModel: CosmosNewsDetailMviViewModel = hiltViewModel()
 ) {
     LaunchedEffect(key1 = Unit) {
         cosmosNewsDetailViewModel.dispatch(CosmosNewsDetailUiAction.ProvideData(cosmosNews))

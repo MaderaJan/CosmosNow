@@ -88,7 +88,10 @@ fun SearchNewsScreen(
     Scaffold(
         contentWindowInsets = WindowInsets(0.dp),
         topBar = {
-            CosmosNowSearchFilterBar(uiState, dispatchAction)
+            CosmosNowSearchFilterBar(
+                uiState = uiState,
+                dispatchAction = dispatchAction
+            )
         },
         content = { paddingValues ->
             Box(

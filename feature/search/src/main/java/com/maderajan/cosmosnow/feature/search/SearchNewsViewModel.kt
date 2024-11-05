@@ -4,13 +4,12 @@ import androidx.lifecycle.viewModelScope
 import com.maderajan.cosmosnow.core.navigation.CosmosScreens
 import com.maderajan.cosmosnow.core.navigation.NavigationCommand
 import com.maderajan.cosmosnow.core.navigation.Navigator
-import com.maderajan.cosmosnow.core.viewmodel.BaseViewModel
+import com.maderajan.cosmosnow.core.viewmodel.BaseMviViewModel
 import com.maderajan.cosmosnow.domain.cosmosnews.BookmarkUseCase
 import com.maderajan.cosmosnow.domain.cosmosnews.CosmosNewsListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
@@ -23,9 +22,7 @@ class SearchNewsViewModel @Inject constructor(
     private val navigator: Navigator,
     private val cosmosNewsUseCase: CosmosNewsListUseCase,
     private val bookmarkUseCase: BookmarkUseCase
-) : BaseViewModel<SearchNewsUiAction>() {
-
-    val uiState = MutableStateFlow(SearchNewsUiState())
+) : BaseMviViewModel<SearchNewsUiState, SearchNewsUiAction>(SearchNewsUiState()) {
 
     private val searchQueryTextFlow = MutableSharedFlow<String>()
 
@@ -46,7 +43,7 @@ class SearchNewsViewModel @Inject constructor(
                     searchQueryTextFlow.emit(action.text)
                 }
 
-                uiState.value = uiState.value.copy(searchText = action.text)
+                setUiState { copy(searchText = action.text) }
             }
 
             SearchNewsUiAction.OpenNewsSiteOptions -> {
@@ -54,7 +51,7 @@ class SearchNewsViewModel @Inject constructor(
             }
 
             is SearchNewsUiAction.NewsSitesSelected -> {
-                uiState.value = uiState.value.copy(newsSites = action.newsSites)
+                setUiState { copy(newsSites = action.newsSites) }
                 dispatch(SearchNewsUiAction.Search)
             }
 
@@ -63,7 +60,7 @@ class SearchNewsViewModel @Inject constructor(
             }
 
             is SearchNewsUiAction.TypesChanged -> {
-                uiState.value = uiState.value.copy(types = action.types)
+                setUiState { copy(types = action.types) }
                 dispatch(SearchNewsUiAction.Search)
             }
 
@@ -72,7 +69,7 @@ class SearchNewsViewModel @Inject constructor(
             }
 
             is SearchNewsUiAction.DateSelected -> {
-                uiState.value = uiState.value.copy(date = action.date)
+                setUiState { copy(date = action.date) }
                 dispatch(SearchNewsUiAction.Search)
             }
 
@@ -81,12 +78,12 @@ class SearchNewsViewModel @Inject constructor(
             }
 
             is SearchNewsUiAction.LaunchChanged -> {
-                uiState.value = uiState.value.copy(hasLaunch = action.hasLaunch)
+                setUiState { copy(hasLaunch = action.hasLaunch) }
                 dispatch(SearchNewsUiAction.Search)
             }
 
             is SearchNewsUiAction.Search -> {
-                uiState.value = uiState.value.copy(isSearching = true)
+                setUiState { copy(isSearching = true) }
 
                 viewModelScope.launch {
                     cosmosNewsUseCase.getSortedNewsByQuery(
@@ -96,9 +93,9 @@ class SearchNewsViewModel @Inject constructor(
                         date = uiState.value.date,
                         hasLaunch = uiState.value.hasLaunch
                     ).catch {
-                        uiState.value = uiState.value.copy(isError = true, isSearching = false)
+                        setUiState { copy(isError = true, isSearching = false) }
                     }.collectLatest { news ->
-                        uiState.value = uiState.value.copy(news = news, isSearching = false, isError = false)
+                        setUiState { copy(news = news, isSearching = false, isError = false) }
                     }
                 }
             }

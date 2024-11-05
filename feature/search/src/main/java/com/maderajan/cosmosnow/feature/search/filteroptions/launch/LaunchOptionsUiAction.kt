@@ -9,4 +9,5 @@ sealed interface LaunchOptionsUiAction : UiAction {
     data object LaunchedSelected : LaunchOptionsUiAction
     data object NotLaunchedSelected : LaunchOptionsUiAction
     data object ApplyFilter : LaunchOptionsUiAction
+    data object ClearFilter : LaunchOptionsUiAction
 }

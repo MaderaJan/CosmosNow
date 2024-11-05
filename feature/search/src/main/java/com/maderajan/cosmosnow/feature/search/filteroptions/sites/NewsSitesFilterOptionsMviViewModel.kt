@@ -46,6 +46,10 @@ class NewsSitesFilterOptionsMviViewModel @Inject constructor(
                 navigator.navigateUpWithResult(CosmosScreens.SearchNewsFilterNewsSites.RESULT_KEY, uiState.value.selectedSites)
             }
 
+            NewsSitesFilterOptionsUiAction.ClearFilter -> {
+                setUiState { copy(selectedSites = emptyList()) }
+            }
+
             NewsSitesFilterOptionsUiAction.NavigateBack -> {
                 navigator.navigateUp()
             }

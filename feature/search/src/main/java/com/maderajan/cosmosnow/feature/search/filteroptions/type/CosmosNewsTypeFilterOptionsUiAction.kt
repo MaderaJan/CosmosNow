@@ -8,4 +8,5 @@ sealed interface CosmosNewsTypeFilterOptionsUiAction : UiAction {
     data class TypesChanged(val isChecked: Boolean, val type: CosmosNewsType) : CosmosNewsTypeFilterOptionsUiAction
     data object NavigateBack : CosmosNewsTypeFilterOptionsUiAction
     data object ApplyFilter : CosmosNewsTypeFilterOptionsUiAction
+    data object ClearFilter : CosmosNewsTypeFilterOptionsUiAction
 }

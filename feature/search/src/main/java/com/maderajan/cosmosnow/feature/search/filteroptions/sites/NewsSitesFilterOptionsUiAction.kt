@@ -7,4 +7,5 @@ sealed interface NewsSitesFilterOptionsUiAction : UiAction {
     data class SiteChecked(val isChecked: Boolean, val site: String) : NewsSitesFilterOptionsUiAction
     data object NavigateBack : NewsSitesFilterOptionsUiAction
     data object ApplyFilter : NewsSitesFilterOptionsUiAction
+    data object ClearFilter : NewsSitesFilterOptionsUiAction
 }

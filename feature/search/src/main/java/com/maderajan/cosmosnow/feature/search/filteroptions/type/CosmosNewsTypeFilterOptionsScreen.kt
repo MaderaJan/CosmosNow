@@ -20,8 +20,11 @@ fun CosmosNewsTypeFilterOptionsScreen(
         onCancelClick = {
             dispatchAction(CosmosNewsTypeFilterOptionsUiAction.NavigateBack)
         },
-        onCtaClick = {
+        onApplyClick = {
             dispatchAction(CosmosNewsTypeFilterOptionsUiAction.ApplyFilter)
+        },
+        onClearClick = {
+            dispatchAction(CosmosNewsTypeFilterOptionsUiAction.ClearFilter)
         },
         content = {
             CosmosNewsType.entries.map { type ->

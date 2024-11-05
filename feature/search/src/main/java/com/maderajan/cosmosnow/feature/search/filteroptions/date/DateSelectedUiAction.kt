@@ -8,4 +8,5 @@ sealed interface DateSelectedUiAction : UiAction {
     data class DateSelected(val date: SearchDate) : DateSelectedUiAction
     data object NavigateBack : DateSelectedUiAction
     data object ApplyFilter : DateSelectedUiAction
+    data object ClearFilter : DateSelectedUiAction
 }

@@ -19,8 +19,11 @@ fun DateSelectScreen(
         onCancelClick = {
             dispatchAction(DateSelectedUiAction.NavigateBack)
         },
-        onCtaClick = {
+        onApplyClick = {
             dispatchAction(DateSelectedUiAction.ApplyFilter)
+        },
+        onClearClick = {
+            dispatchAction(DateSelectedUiAction.ClearFilter)
         },
         content = {
             SearchDate.entries.map { dateType ->

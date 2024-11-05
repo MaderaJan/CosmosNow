@@ -35,6 +35,10 @@ class CosmosNewsTypeFilterOptionsViewModel @Inject constructor(
                 navigator.navigateUpWithResult(key = CosmosScreens.SearchNewsFilterCosmosNewsType.RESULT_KEY, result = uiState.value)
             }
 
+            CosmosNewsTypeFilterOptionsUiAction.ClearFilter -> {
+                uiState.value = emptyList()
+            }
+
             CosmosNewsTypeFilterOptionsUiAction.NavigateBack -> {
                 navigator.navigateUp()
             }

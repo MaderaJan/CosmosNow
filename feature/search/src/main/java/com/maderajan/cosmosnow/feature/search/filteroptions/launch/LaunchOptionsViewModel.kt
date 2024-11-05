@@ -40,6 +40,10 @@ class LaunchOptionsViewModel @Inject constructor(
             LaunchOptionsUiAction.ApplyFilter -> {
                 navigator.navigateUpWithResult(CosmosScreens.SearchNewsFilterLaunch.RESULT_KEY, uiState.value)
             }
+
+            LaunchOptionsUiAction.ClearFilter -> {
+                uiState.value = null
+            }
         }
     }
 }

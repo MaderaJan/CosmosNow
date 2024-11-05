@@ -29,6 +29,10 @@ class DateSelectedViewModel @Inject constructor(
                 navigator.navigateUpWithResult(CosmosScreens.SearchNewsFilterDate.RESULT_KEY, uiState.value)
             }
 
+            DateSelectedUiAction.ClearFilter -> {
+                uiState.value = null
+            }
+
             DateSelectedUiAction.NavigateBack -> {
                 navigator.navigateUp()
             }

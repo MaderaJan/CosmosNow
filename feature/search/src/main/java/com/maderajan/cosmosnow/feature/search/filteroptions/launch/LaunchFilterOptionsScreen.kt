@@ -20,8 +20,11 @@ fun LaunchFilterOptionsScreen(
             onCancelClick = {
                 dispatchAction(LaunchOptionsUiAction.NavigateBack)
             },
-            onCtaClick = {
+            onApplyClick = {
                 dispatchAction(LaunchOptionsUiAction.ApplyFilter)
+            },
+            onClearClick = {
+                dispatchAction(LaunchOptionsUiAction.ClearFilter)
             },
             content = {
                 RowRadioButton(

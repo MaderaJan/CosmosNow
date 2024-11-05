@@ -29,8 +29,11 @@ fun NewsSitesFilterOptionsScreen(
         onCancelClick = {
             dispatchAction(NewsSitesFilterOptionsUiAction.NavigateBack)
         },
-        onCtaClick = {
+        onApplyClick = {
             dispatchAction(NewsSitesFilterOptionsUiAction.ApplyFilter)
+        },
+        onClearClick = {
+            dispatchAction(NewsSitesFilterOptionsUiAction.ClearFilter)
         },
         content = {
             when {

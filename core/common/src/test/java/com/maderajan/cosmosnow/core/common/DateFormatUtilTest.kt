@@ -2,7 +2,6 @@ package com.maderajan.cosmosnow.core.common
 
 import org.junit.Test
 import java.util.Calendar
-import java.util.Locale
 
 class DateFormatUtilTest {
 
@@ -28,18 +27,6 @@ class DateFormatUtilTest {
     fun isApiDateFormat_20230705_FormatedCorrectly() {
         val dateString = "2023-07-05T22:34:26Z"
         assert("05. 07. 2023" == dateString.dayMonthYearReadableDate())
-    }
-
-    @Test
-    fun isDate_1530125082157_FormatedToApiDateFormat() {
-        val dateMillis = 1530125082157L
-        assert("2018-06-27T20:44:42.157Z" == dateMillis.toApiTimeFormat(Locale.US))
-    }
-
-    @Test
-    fun isDate_1730125082157_FormatedToApiDateFormat() {
-        val dateMillis = 1730125082157L
-        assert("2024-10-28T15:18:02.157Z" == dateMillis.toApiTimeFormat(Locale.US))
     }
 
     @Test

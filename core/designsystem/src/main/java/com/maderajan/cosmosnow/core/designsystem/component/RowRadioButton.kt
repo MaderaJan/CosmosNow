@@ -35,6 +35,7 @@ fun RowRadioButton(
 
         Text(
             text = text,
+            color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.bodyLarge,
         )
 

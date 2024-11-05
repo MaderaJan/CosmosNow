@@ -81,6 +81,7 @@ fun CosmosNewsListScreen(
                                 dispatchAction(CosmosNewsListUiAction.Start)
                             },
                         ),
+                        modifier = Modifier.padding(MaterialTheme.spacing.medium)
                     )
                 }
 
@@ -129,26 +130,6 @@ fun CosmosNewsListScreen(
                     }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun CosmosNewsListScreenSuccessPreview() {
-    CosmosNowTheme {
-        CosmosNewsListScreen(
-            uiState = CosmosNewsListUiState(
-                news = listOf(
-                    CosmosNews.fake(title = "Top News Title"),
-                    CosmosNews.fake(),
-                    CosmosNews.fake(),
-                    CosmosNews.fake(),
-                    CosmosNews.fake(),
-                ),
-                isLoading = false
-            ),
-            dispatchAction = {}
-        )
     }
 }
 
@@ -242,6 +223,26 @@ fun TopNewsListItem(
                 top.linkTo(bookmarkRef.bottom)
                 end.linkTo(parent.end)
             }
+        )
+    }
+}
+
+@Preview
+@Composable
+fun CosmosNewsListScreenPreview(isDarkTheme: Boolean = false) {
+    CosmosNowTheme(isDarkTheme) {
+        CosmosNewsListScreen(
+            uiState = CosmosNewsListUiState(
+                news = listOf(
+                    CosmosNews.fake(title = "Top News Title"),
+                    CosmosNews.fake(),
+                    CosmosNews.fake(),
+                    CosmosNews.fake(),
+                    CosmosNews.fake(),
+                ),
+                isLoading = false
+            ),
+            dispatchAction = {}
         )
     }
 }

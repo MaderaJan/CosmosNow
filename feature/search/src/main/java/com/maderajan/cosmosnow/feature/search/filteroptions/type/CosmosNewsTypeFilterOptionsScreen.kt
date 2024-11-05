@@ -39,8 +39,8 @@ fun CosmosNewsTypeFilterOptionsScreen(
 
 @Preview
 @Composable
-fun CosmosNewsTypeFilterOptionsScreenPreview() {
-    CosmosNowTheme {
+fun CosmosNewsTypeFilterOptionsScreenPreview(isDarkTheme: Boolean = false) {
+    CosmosNowTheme(isDarkTheme) {
         CosmosNewsTypeFilterOptionsScreen(
             selectedTypes = listOf(CosmosNewsType.ARTICLE),
             dispatchAction = {}

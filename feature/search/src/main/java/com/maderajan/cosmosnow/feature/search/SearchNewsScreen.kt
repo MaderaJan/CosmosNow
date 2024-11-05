@@ -118,7 +118,8 @@ fun SearchNewsScreen(
                                 title = stringResource(id = R.string.search_empty_title),
                                 description = stringResource(id = R.string.search_empty_description),
                                 icon = painterResource(id = R.drawable.ic_search)
-                            )
+                            ),
+                            modifier = Modifier.padding(MaterialTheme.spacing.medium)
                         )
                     }
 
@@ -152,7 +153,7 @@ fun SearchNewsScreen(
 
 @Preview
 @Composable
-fun SearchNewsScreenPreview() {
+fun SearchNewsScreenPreview(isDarkTheme: Boolean = false) {
     CosmosNowTheme {
         SearchNewsScreen(
             uiState = SearchNewsUiState(),

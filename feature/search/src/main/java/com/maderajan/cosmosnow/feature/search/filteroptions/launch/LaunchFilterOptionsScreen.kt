@@ -54,8 +54,8 @@ fun LaunchFilterOptionsScreen(
 
 @Composable
 @Preview
-fun LaunchFilterOptionsScreenPreview() {
-    CosmosNowTheme {
+fun LaunchFilterOptionsScreenPreview(isDarkTheme: Boolean = false) {
+    CosmosNowTheme(isDarkTheme) {
         LaunchFilterOptionsScreen(
             launchBoolean = true,
             dispatchAction = {}

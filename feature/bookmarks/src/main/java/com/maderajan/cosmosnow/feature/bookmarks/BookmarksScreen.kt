@@ -62,7 +62,8 @@ fun BookmarksScreen(
                             noContentData = NoContentData(
                                 title = stringResource(id = R.string.bookmarks_empty_title),
                                 description = stringResource(id = R.string.bookmarks_empty_description),
-                                icon = painterResource(id = R.drawable.ic_bookmark)
+                                icon = painterResource(id = R.drawable.ic_bookmark),
+                                modifier = Modifier.padding(MaterialTheme.spacing.medium)
                             )
                         )
                     }
@@ -99,8 +100,8 @@ fun BookmarksScreen(
 
 @Preview
 @Composable
-fun BookmarksScreenPreview() {
-    CosmosNowTheme {
+fun BookmarksScreenPreview(isDarkTheme: Boolean = false) {
+    CosmosNowTheme(isDarkTheme) {
         BookmarksScreen(
             uiState = BookmarkUiState.Success(news = listOf(CosmosNews.fake(), CosmosNews.fake(), CosmosNews.fake(), CosmosNews.fake())),
             dispatchAction = {}

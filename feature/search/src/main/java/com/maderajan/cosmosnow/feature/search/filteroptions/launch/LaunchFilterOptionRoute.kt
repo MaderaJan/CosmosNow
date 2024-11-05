@@ -9,7 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LaunchFilterOptionBottomSheetRoute(
+fun LaunchFilterOptionRoute(
     hasLaunch: Boolean?,
     viewModel: LaunchOptionsViewModel = hiltViewModel()
 ) {

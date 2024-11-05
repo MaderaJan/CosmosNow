@@ -39,3 +39,4 @@ include(":feature:bookmarks")
 
 include(":app")
 include(":core:common")
+include(":screenshots")

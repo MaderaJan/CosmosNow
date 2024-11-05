@@ -50,7 +50,6 @@ dependencies {
     implementation(project(":feature:search"))
     implementation(project(":feature:bookmarks"))
 
-
     implementation(project(":core:designsystem"))
     implementation(project(":core:navigation"))
 

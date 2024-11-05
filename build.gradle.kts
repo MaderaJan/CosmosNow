@@ -8,4 +8,5 @@ plugins {
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.hilt.plugin) apply false
     alias(libs.plugins.kotlin.parcelize) apply false
+    alias(libs.plugins.papparazi) apply false
 }

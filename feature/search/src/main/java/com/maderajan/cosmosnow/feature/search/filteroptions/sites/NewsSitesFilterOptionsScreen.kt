@@ -38,7 +38,11 @@ fun NewsSitesFilterOptionsScreen(
                     NoContent(
                         noContentData = NoContentDefaults.default(onButtonClick = null),
                         modifier = Modifier
-                            .padding(bottom = MaterialTheme.spacing.large)
+                            .padding(
+                                start = MaterialTheme.spacing.large,
+                                end = MaterialTheme.spacing.large,
+                                bottom = MaterialTheme.spacing.large
+                            )
                             .align(Alignment.CenterHorizontally)
                     )
                 }
@@ -70,12 +74,13 @@ fun NewsSitesFilterOptionsScreen(
 
 @Preview
 @Composable
-fun NewsSitesFilterOptionsScreenPreview() {
-    CosmosNowTheme {
+fun NewsSitesFilterOptionsScreenPreview(isDarkTheme: Boolean = false) {
+    CosmosNowTheme(isDarkTheme) {
         NewsSitesFilterOptionsScreen(
             uiState = NewsSitesFilterOptionsUiState(
                 allSites = listOf("NASA", "SpaceX", "SpaceNews"),
                 selectedSites = listOf("NASA", "SpaceNews"),
+                isLoading = false
             ),
             dispatchAction = {}
         )

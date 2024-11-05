@@ -125,8 +125,8 @@ fun CosmosNewsDetailScreen(
 
 @Preview
 @Composable
-fun CosmosNewsDetailScreenPreview() {
-    CosmosNowTheme {
+fun CosmosNewsDetailScreenPreview(isDarkTheme: Boolean = false) {
+    CosmosNowTheme(isDarkTheme) {
         CosmosNewsDetailScreen(
             uiState = CosmosNewsDetailUiState(cosmosNews = CosmosNews.fake(title = "Crew-8 on the Way Home at Last")),
             dispatchAction = {}

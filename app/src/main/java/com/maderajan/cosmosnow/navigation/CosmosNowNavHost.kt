@@ -15,7 +15,7 @@ import com.maderajan.cosmosnow.feature.news.CosmosNewsListRoute
 import com.maderajan.cosmosnow.feature.newsdetail.CosmosNewsDetailRoute
 import com.maderajan.cosmosnow.feature.search.SearchNewsRoute
 import com.maderajan.cosmosnow.feature.search.filteroptions.date.DateSelectedRoute
-import com.maderajan.cosmosnow.feature.search.filteroptions.launch.LaunchFilterOptionBottomSheetRoute
+import com.maderajan.cosmosnow.feature.search.filteroptions.launch.LaunchFilterOptionRoute
 import com.maderajan.cosmosnow.feature.search.filteroptions.sites.NewsSitesFilterOptionsRoute
 import com.maderajan.cosmosnow.feature.search.filteroptions.type.CosmosNewsTypeFilterOptionsRoute
 import kotlin.reflect.typeOf
@@ -50,7 +50,7 @@ fun CosmosNowNavHost(
         }
 
         dialog<CosmosScreens.SearchNewsFilterLaunch> { backStackEntry ->
-            LaunchFilterOptionBottomSheetRoute(
+            LaunchFilterOptionRoute(
                 hasLaunch = backStackEntry.toRoute<CosmosScreens.SearchNewsFilterLaunch>().launch
             )
         }

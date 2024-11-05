@@ -15,8 +15,8 @@ fun String.dayMonthYearReadableDate(): String {
     return dateFormat.format(apiDate)
 }
 
-fun Long.toApiTimeFormat(): String {
-    val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+fun Long.toApiTimeFormat(locale: Locale = Locale.getDefault()): String {
+    val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", locale)
     return format.format(this)
 }
 

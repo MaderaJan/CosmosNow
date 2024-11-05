@@ -1,0 +1,87 @@
+name: Pull request to main
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  domain-unit-test:
+    name: Domain Unit Test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
+
+      - name: Run Domain Unit Test
+        run: ./gradlew :domain:test
+
+  core-common-unit-test:
+    name: Core Common Unit Test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
+
+      - name: Run Core Common Unit Test
+        run: ./gradlew :core:common:test
+
+  webservice-unit-test:
+    name: Webservice Unit Test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
+
+      - name: Run Webservice Unit Test
+        run: ./gradlew :webservice:test
+
+  screenshot-test:
+    name: Screenshots Test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
+
+      - name: Run Screenshot testing
+        run: ./gradlew :screenshots:verifyPaparazzi

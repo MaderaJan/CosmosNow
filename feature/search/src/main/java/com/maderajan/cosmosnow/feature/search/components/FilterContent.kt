@@ -23,15 +23,22 @@ fun FilterContent(
     onCancelClick: () -> Unit,
     onCtaClick: () -> Unit,
     content: @Composable ColumnScope.() -> Unit,
-    isLoading: Boolean = false,
+    modifier: Modifier = Modifier,
+    hideApplyFilter: Boolean = false,
 ) {
-    ConstraintLayout {
+    ConstraintLayout(
+        modifier = modifier
+    ) {
         val (contentRef, ctaRef) = createRefs()
 
         Column(
             modifier = Modifier.constrainAs(contentRef) {
                 top.linkTo(parent.top)
-                bottom.linkTo(ctaRef.top)
+                if (hideApplyFilter) {
+                    bottom.linkTo(parent.bottom)
+                } else {
+                    bottom.linkTo(ctaRef.top)
+                }
             }
         ) {
             BottomSheetHeader(
@@ -44,7 +51,7 @@ fun FilterContent(
             content()
         }
 
-        if (!isLoading) {
+        if (!hideApplyFilter) {
             CosmosNowButton(
                 text = stringResource(id = R.string.search_filter_apply),
                 onClick = onCtaClick,

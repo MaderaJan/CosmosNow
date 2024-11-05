@@ -8,13 +8,16 @@ import com.maderajan.cosmosnow.core.viewmodel.BaseViewModel
 import com.maderajan.cosmosnow.domain.cosmosnews.BookmarkUseCase
 import com.maderajan.cosmosnow.domain.cosmosnews.CosmosNewsListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(FlowPreview::class)
 @HiltViewModel
 class SearchNewsViewModel @Inject constructor(
     private val navigator: Navigator,
@@ -92,8 +95,10 @@ class SearchNewsViewModel @Inject constructor(
                         types = uiState.value.types,
                         date = uiState.value.date,
                         hasLaunch = uiState.value.hasLaunch
-                    ).collectLatest { news ->
-                        uiState.value = uiState.value.copy(news = news, isSearching = false)
+                    ).catch {
+                        uiState.value = uiState.value.copy(isError = true, isSearching = false)
+                    }.collectLatest { news ->
+                        uiState.value = uiState.value.copy(news = news, isSearching = false, isError = false)
                     }
                 }
             }

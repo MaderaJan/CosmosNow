@@ -7,6 +7,7 @@ import com.maderajan.cosmosnow.core.viewmodel.BaseViewModel
 import com.maderajan.cosmosnow.domain.cosmosnews.SearchNewsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,6 +25,9 @@ class NewsSitesFilterOptionsViewModel @Inject constructor(
             is NewsSitesFilterOptionsUiAction.ProvideData -> {
                 viewModelScope.launch {
                     searchNewsUseCase.getNewsSitesOrderByName()
+                        .catch {
+                            uiState.value = NewsSitesFilterOptionsUiState(isError = true)
+                        }
                         .collectLatest { allSites ->
                             uiState.value = NewsSitesFilterOptionsUiState(
                                 selectedSites = action.newsSites,

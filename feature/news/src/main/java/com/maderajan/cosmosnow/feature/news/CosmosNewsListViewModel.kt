@@ -47,17 +47,12 @@ class CosmosNewsListViewModel @Inject constructor(
             is CosmosNewsListUiAction.OpenNews -> {
                 navigator.navigate(NavigationCommand.NavigateToRoute(CosmosScreens.CosmosNewsDetail(action.cosmosNews)))
             }
-
-            is CosmosNewsListUiAction.TryAgain -> {
-                dispatch(CosmosNewsListUiAction.Start)
-            }
         }
     }
 }
 
 sealed interface CosmosNewsListUiAction : UiAction {
     data object Start : CosmosNewsListUiAction
-    data object TryAgain : CosmosNewsListUiAction
     data class OpenNews(val cosmosNews: CosmosNews) : CosmosNewsListUiAction
     data class BookMarkNews(val cosmosNews: CosmosNews) : CosmosNewsListUiAction
 }

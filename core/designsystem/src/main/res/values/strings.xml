@@ -23,4 +23,7 @@
     <string name="search_filter_launched">Launched</string>
     <string name="search_filter_not_launched">Not Launched</string>
     <string name="search_filter_apply">Apply</string>
+
+    <string name="search_empty_title">No Results Found</string>
+    <string name="search_empty_description">"We couldn't find any articles matching your search. Please try different keywords or check your spelling"</string>
 </resources>

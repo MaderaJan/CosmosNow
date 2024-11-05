@@ -74,18 +74,18 @@ fun CosmosNewsListScreen(
                 .fillMaxSize()
         ) {
             when {
-                uiState.isLoading -> {
-                    CircularProgressIndicator()
-                }
-
                 uiState.isError -> {
                     NoContent(
                         noContentData = NoContentDefaults.default(
                             onButtonClick = {
-                                dispatchAction(CosmosNewsListUiAction.TryAgain)
+                                dispatchAction(CosmosNewsListUiAction.Start)
                             },
                         ),
                     )
+                }
+
+                uiState.isLoading -> {
+                    CircularProgressIndicator()
                 }
 
                 else ->

@@ -12,4 +12,5 @@ data class SearchNewsUiState(
     val hasLaunch: Boolean? = null,
     val news: List<CosmosNews> = emptyList(),
     val isSearching: Boolean = false,
+    val isError: Boolean = false,
 )

@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.maderajan.cosmosnow.core.designsystem.R
+import com.maderajan.cosmosnow.core.designsystem.component.NoContent
+import com.maderajan.cosmosnow.core.designsystem.component.NoContentDefaults
 import com.maderajan.cosmosnow.core.designsystem.component.RowCheckbox
 import com.maderajan.cosmosnow.core.designsystem.theme.CosmosNowTheme
 import com.maderajan.cosmosnow.core.designsystem.theme.spacing
@@ -23,7 +25,7 @@ fun NewsSitesFilterOptionsScreen(
 ) {
     FilterContent(
         title = stringResource(id = R.string.search_filter_sites),
-        isLoading = uiState.isLoading,
+        hideApplyFilter = uiState.isLoading || uiState.isError,
         onCancelClick = {
             dispatchAction(NewsSitesFilterOptionsUiAction.NavigateBack)
         },
@@ -31,22 +33,34 @@ fun NewsSitesFilterOptionsScreen(
             dispatchAction(NewsSitesFilterOptionsUiAction.ApplyFilter)
         },
         content = {
-            if (uiState.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .padding(MaterialTheme.spacing.extraLarge)
-                        .align(Alignment.CenterHorizontally)
-                )
-            } else {
-                LazyColumn {
-                    items(uiState.allSites) { site ->
-                        RowCheckbox(
-                            text = site,
-                            isChecked = uiState.selectedSites.any { it == site },
-                            onCheckedChanged = { isChecked ->
-                                dispatchAction(NewsSitesFilterOptionsUiAction.SiteChecked(isChecked = isChecked, site))
-                            }
-                        )
+            when {
+                uiState.isError -> {
+                    NoContent(
+                        noContentData = NoContentDefaults.default(onButtonClick = null),
+                        modifier = Modifier
+                            .padding(bottom = MaterialTheme.spacing.large)
+                            .align(Alignment.CenterHorizontally)
+                    )
+                }
+
+                uiState.isLoading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                    )
+                }
+
+                else -> {
+                    LazyColumn {
+                        items(uiState.allSites) { site ->
+                            RowCheckbox(
+                                text = site,
+                                isChecked = uiState.selectedSites.any { it == site },
+                                onCheckedChanged = { isChecked ->
+                                    dispatchAction(NewsSitesFilterOptionsUiAction.SiteChecked(isChecked = isChecked, site))
+                                }
+                            )
+                        }
                     }
                 }
             }

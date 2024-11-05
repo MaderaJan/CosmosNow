@@ -72,7 +72,7 @@ data class NoContentData(
 data object NoContentDefaults {
 
     @Composable
-    fun default(onButtonClick: (() -> Unit)): NoContentData =
+    fun default(onButtonClick: (() -> Unit)? = null): NoContentData =
         NoContentData(
             title = stringResource(id = R.string.no_content_network_error_title),
             icon = painterResource(id = R.drawable.ic_no_internet),

@@ -26,7 +26,7 @@ Based on Clean Architecture separates app into different layers which makes appl
 <img src="art/architecture.png" align="center"/>
 
 ## GithubAction CI
-- `:domain`: Tests core business logic to ensure correct application behavior.
-- `:core:common`: Validates common utilities and helper functions for consistency and reliability.
-- `:webservice`: Verifies API contracts to ensure endpoints handle requests and responses correctly.
-- `:screenshots`: Ensures screenshot generation maintains visual accuracy and consistency.
+- *Domain Unit Test* - Module `:domain`: Tests core business logic to ensure correct application behavior.
+- *Core Common Unit Test* - Module `:core:common`: Validates common utilities and helper functions for consistency and reliability.
+- *Webservice Unit Test* - Module `:webservice`: Verifies API contracts to ensure endpoints handle requests and responses correctly.
+- *Screenshots Test* - Module `:screenshots`: Ensures screenshot generation maintains visual accuracy and consistency.

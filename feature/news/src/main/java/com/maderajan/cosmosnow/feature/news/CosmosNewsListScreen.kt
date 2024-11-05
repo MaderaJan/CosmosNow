@@ -175,7 +175,7 @@ fun TopNewsListItem(
                 .placeholder(drawableResId = R.drawable.ic_news_placeholder)
                 .build(),
             contentDescription = null,
-            contentScale = ContentScale.FillBounds,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .clip(RoundedCornerShape(16.dp))
                 .height(200.dp)

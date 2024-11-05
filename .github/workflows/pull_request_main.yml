@@ -24,9 +24,6 @@ jobs:
       - name: Make Gradle executable
         run: chmod +x ./gradlew
 
-      - name: Unit Test Setup
-        uses: ./.github/actions/unit-test-setup
-
       - name: Run Domain Unit Test
         run: ./gradlew :domain:test
 
@@ -48,9 +45,6 @@ jobs:
       - name: Make Gradle executable
         run: chmod +x ./gradlew
 
-      - name: Unit Test Setup
-        uses: ./.github/actions/unit-test-setup
-
       - name: Run Core Common Unit Test
         run: ./gradlew :core:common:test
 
@@ -71,9 +65,6 @@ jobs:
       # Allow gradle execution
       - name: Make Gradle executable
         run: chmod +x ./gradlew
-
-      - name: Unit Test Setup
-        uses: ./.github/actions/unit-test-setup
 
       - name: Run Webservice Unit Test
         run: ./gradlew :core:common:test

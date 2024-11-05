@@ -84,7 +84,7 @@ fun CosmosNewsDetailScreen(
                         .placeholder(drawableResId = R.drawable.ic_news_placeholder)
                         .build(),
                     contentDescription = null,
-                    contentScale = ContentScale.FillBounds,
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .padding(
                             top = MaterialTheme.spacing.medium,

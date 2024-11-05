@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: Unit Test Setup
         uses: ./.github/actions/unit-test-setup
 
@@ -24,6 +26,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: Unit Test Setup
         uses: ./.github/actions/unit-test-setup
 
@@ -36,6 +40,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: Unit Test Setup
         uses: ./.github/actions/unit-test-setup
 

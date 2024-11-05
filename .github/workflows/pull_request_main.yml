@@ -13,7 +13,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: ./actions/unit-test-setup
+          # Setup JDK
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      # Allow gradle execution
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
 
       - name: Unit Test Setup
         uses: ./.github/actions/unit-test-setup
@@ -28,7 +37,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: ./actions/unit-test-setup
+          # Setup JDK
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      # Allow gradle execution
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
 
       - name: Unit Test Setup
         uses: ./.github/actions/unit-test-setup
@@ -43,7 +61,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: ./actions/unit-test-setup
+          # Setup JDK
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      # Allow gradle execution
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
 
       - name: Unit Test Setup
         uses: ./.github/actions/unit-test-setup

@@ -27,10 +27,10 @@ class CosmosNewsListViewModel @Inject constructor(
                 viewModelScope.launch {
                     cosmosNewsListUseCase.getSortedNewsFlow()
                         .catch {
-                            setUiState { copy(isError = true) }
+                            setUiState { copy(isError = true, isRefreshing = false) }
                         }
                         .collect { news ->
-                            setUiState(CosmosNewsListUiState(news = news, isLoading = false, isError = false))
+                            setUiState(CosmosNewsListUiState(news = news, isLoading = false, isError = false, isRefreshing = false))
                         }
                 }
             }
@@ -44,6 +44,11 @@ class CosmosNewsListViewModel @Inject constructor(
             is CosmosNewsListUiAction.OpenNews -> {
                 navigator.navigate(NavigationCommand.NavigateToRoute(CosmosScreens.CosmosNewsDetail(action.cosmosNews)))
             }
+
+            is CosmosNewsListUiAction.PullToRefresh -> {
+                setUiState { copy(isRefreshing = true) }
+                dispatch(CosmosNewsListUiAction.Start)
+            }
         }
     }
 }
@@ -52,4 +57,5 @@ sealed interface CosmosNewsListUiAction : UiAction {
     data object Start : CosmosNewsListUiAction
     data class OpenNews(val cosmosNews: CosmosNews) : CosmosNewsListUiAction
     data class BookMarkNews(val cosmosNews: CosmosNews) : CosmosNewsListUiAction
+    data object PullToRefresh : CosmosNewsListUiAction
 }

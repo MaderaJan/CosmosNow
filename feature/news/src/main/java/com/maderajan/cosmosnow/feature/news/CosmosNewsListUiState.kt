@@ -7,4 +7,5 @@ data class CosmosNewsListUiState(
     val news: List<CosmosNews> = emptyList(),
     val isLoading: Boolean = true,
     val isError: Boolean = false,
+    val isRefreshing: Boolean = false,
 ): UiState

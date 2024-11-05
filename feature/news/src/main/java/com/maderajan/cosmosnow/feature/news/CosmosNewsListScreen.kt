@@ -12,9 +12,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.pullToRefresh
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,11 +52,14 @@ import com.maderajan.cosmosnow.core.designsystem.theme.spacing
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import com.maderajan.cosmosnow.data.model.comosnews.getPresentableNameRes
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CosmosNewsListScreen(
     uiState: CosmosNewsListUiState,
     dispatchAction: (CosmosNewsListUiAction) -> Unit
 ) {
+    val pullRefreshState = rememberPullToRefreshState()
+
     Scaffold(
         contentWindowInsets = WindowInsets(0.dp),
         topBar = {
@@ -89,8 +96,16 @@ fun CosmosNewsListScreen(
                     CircularProgressIndicator()
                 }
 
-                else ->
-                    LazyColumn {
+                else -> {
+                    LazyColumn(
+                        modifier = Modifier.pullToRefresh(
+                            state = pullRefreshState,
+                            isRefreshing = uiState.isRefreshing,
+                            onRefresh = {
+                                dispatchAction(CosmosNewsListUiAction.PullToRefresh)
+                            }
+                        )
+                    ) {
                         item {
                             TopNewsListItem(
                                 news = uiState.news.first(),
@@ -128,6 +143,14 @@ fun CosmosNewsListScreen(
                             }
                         }
                     }
+
+                    PullToRefreshDefaults.Indicator(
+                        state = pullRefreshState,
+                        isRefreshing = uiState.isRefreshing,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.align(Alignment.TopCenter),
+                    )
+                }
             }
         }
     }

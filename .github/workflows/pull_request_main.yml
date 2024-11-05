@@ -13,6 +13,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: ./actions/unit-test-setup
 
       - name: Unit Test Setup
         uses: ./.github/actions/unit-test-setup
@@ -27,6 +28,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: ./actions/unit-test-setup
 
       - name: Unit Test Setup
         uses: ./.github/actions/unit-test-setup
@@ -41,6 +43,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: ./actions/unit-test-setup
 
       - name: Unit Test Setup
         uses: ./.github/actions/unit-test-setup

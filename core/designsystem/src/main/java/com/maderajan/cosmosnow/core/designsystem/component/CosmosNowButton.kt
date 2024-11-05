@@ -66,7 +66,7 @@ object CosmosNowButtonDefaults {
     fun outline() =
         CosmosNowButtonData(
             textColor = MaterialTheme.colorScheme.primary,
-            backgroundColor = MaterialTheme.colorScheme.surfaceContainerLow,
+            backgroundColor = Color.Transparent,
             strokeColor = MaterialTheme.colorScheme.primary,
         )
 }

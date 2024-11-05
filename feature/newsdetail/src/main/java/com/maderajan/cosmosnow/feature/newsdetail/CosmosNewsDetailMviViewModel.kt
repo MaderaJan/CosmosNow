@@ -1,9 +1,11 @@
 package com.maderajan.cosmosnow.feature.newsdetail
 
 import androidx.lifecycle.viewModelScope
+import com.maderajan.cosmosnow.core.navigation.CosmosScreens
 import com.maderajan.cosmosnow.core.navigation.Navigator
 import com.maderajan.cosmosnow.core.viewmodel.BaseMviViewModel
 import com.maderajan.cosmosnow.domain.cosmosnews.BookmarkUseCase
+import com.maderajan.cosmosnow.domain.cosmosnews.NewsFontUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -12,6 +14,7 @@ import javax.inject.Inject
 class CosmosNewsDetailMviViewModel @Inject constructor(
     private val navigator: Navigator,
     private val bookmarkUseCase: BookmarkUseCase,
+    private val newsFontUseCase: NewsFontUseCase
 ) : BaseMviViewModel<CosmosNewsDetailUiState, CosmosNewsDetailUiAction>(CosmosNewsDetailUiState()) {
 
     init {
@@ -20,6 +23,13 @@ class CosmosNewsDetailMviViewModel @Inject constructor(
                 .collect { bookmarks ->
                     val isBookmarked = bookmarks.any { it.id == uiState.value.cosmosNews.id }
                     setUiState { copy(cosmosNews = uiState.value.cosmosNews.copy(isBookmarked = isBookmarked)) }
+                }
+        }
+
+        viewModelScope.launch {
+            newsFontUseCase.getFontSize()
+                .collect { fontSize ->
+                    setUiState { copy(fontSize = fontSize) }
                 }
         }
     }
@@ -34,6 +44,10 @@ class CosmosNewsDetailMviViewModel @Inject constructor(
                 viewModelScope.launch {
                     bookmarkUseCase.toggleBookmark(action.cosmosNews)
                 }
+            }
+
+            CosmosNewsDetailUiAction.OpenIncreaseFont -> {
+                navigator.navigate(CosmosScreens.ChangeNewsFont)
             }
 
             CosmosNewsDetailUiAction.NavigateBack -> {

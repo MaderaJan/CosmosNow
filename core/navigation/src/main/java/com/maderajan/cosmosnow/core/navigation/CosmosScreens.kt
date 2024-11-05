@@ -18,6 +18,9 @@ sealed interface CosmosScreens {
     data class CosmosNewsDetail(val cosmosNews: CosmosNews) : CosmosScreens
 
     @Serializable
+    data object ChangeNewsFont : CosmosScreens
+
+    @Serializable
     data object Bookmarks : CosmosScreens
 
     @Serializable

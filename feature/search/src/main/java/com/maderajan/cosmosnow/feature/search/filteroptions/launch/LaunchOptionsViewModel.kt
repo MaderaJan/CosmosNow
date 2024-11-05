@@ -1,7 +1,6 @@
 package com.maderajan.cosmosnow.feature.search.filteroptions.launch
 
 import com.maderajan.cosmosnow.core.navigation.CosmosScreens
-import com.maderajan.cosmosnow.core.navigation.NavigationCommand
 import com.maderajan.cosmosnow.core.navigation.Navigator
 import com.maderajan.cosmosnow.core.viewmodel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,7 +33,7 @@ class LaunchOptionsViewModel @Inject constructor(
             }
 
             LaunchOptionsUiAction.NavigateBack -> {
-                navigator.navigate(NavigationCommand.NavigateUp)
+                navigator.navigateUp()
             }
 
             LaunchOptionsUiAction.ApplyFilter -> {

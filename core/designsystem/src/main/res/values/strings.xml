@@ -27,4 +27,9 @@
 
     <string name="search_empty_title">No Results Found</string>
     <string name="search_empty_description">"We couldn't find any articles matching your search. Please try different keywords or check your spelling"</string>
+
+    <string name="increase_font_size_title">"Font size"</string>
+    <string name="increase_font_size_description">"This is a sample text that demonstrates the text size you have chosen. You can always return the text size to its original value."</string>
+    <string name="increase_font_size_button_reset">"Reset"</string>
+
 </resources>

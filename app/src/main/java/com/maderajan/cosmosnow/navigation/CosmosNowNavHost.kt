@@ -13,6 +13,7 @@ import com.maderajan.cosmosnow.data.model.comosnews.CosmosNewsType
 import com.maderajan.cosmosnow.feature.bookmarks.BookmarksRoute
 import com.maderajan.cosmosnow.feature.news.CosmosNewsListRoute
 import com.maderajan.cosmosnow.feature.newsdetail.CosmosNewsDetailRoute
+import com.maderajan.cosmosnow.feature.newsdetail.changefont.ChangeNewsFontRoute
 import com.maderajan.cosmosnow.feature.search.SearchNewsRoute
 import com.maderajan.cosmosnow.feature.search.filteroptions.date.DateSelectedRoute
 import com.maderajan.cosmosnow.feature.search.filteroptions.launch.LaunchFilterOptionRoute
@@ -37,6 +38,10 @@ fun CosmosNowNavHost(
         ) { backStackEntry ->
             val cosmosNews = backStackEntry.toRoute<CosmosScreens.CosmosNewsDetail>().cosmosNews
             CosmosNewsDetailRoute(cosmosNews)
+        }
+
+        dialog<CosmosScreens.ChangeNewsFont> {
+            ChangeNewsFontRoute()
         }
 
         composable<CosmosScreens.SearchNews> { backStackEntry ->

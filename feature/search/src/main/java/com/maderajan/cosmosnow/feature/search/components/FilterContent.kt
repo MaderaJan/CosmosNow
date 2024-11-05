@@ -36,7 +36,7 @@ fun FilterContent(
 
         Column(
             modifier = Modifier
-                .padding(bottom = MaterialTheme.spacing.medium)
+                .padding(bottom = MaterialTheme.spacing.mediumLarge)
                 .constrainAs(contentRef) {
                     top.linkTo(parent.top)
                     if (hideApplyFilter) {

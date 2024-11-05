@@ -2,7 +2,6 @@ package com.maderajan.cosmosnow.feature.search
 
 import androidx.lifecycle.viewModelScope
 import com.maderajan.cosmosnow.core.navigation.CosmosScreens
-import com.maderajan.cosmosnow.core.navigation.NavigationCommand
 import com.maderajan.cosmosnow.core.navigation.Navigator
 import com.maderajan.cosmosnow.core.viewmodel.BaseMviViewModel
 import com.maderajan.cosmosnow.domain.cosmosnews.BookmarkUseCase
@@ -47,7 +46,7 @@ class SearchNewsViewModel @Inject constructor(
             }
 
             SearchNewsUiAction.OpenNewsSiteOptions -> {
-                navigator.navigate(NavigationCommand.NavigateToRoute(CosmosScreens.SearchNewsFilterNewsSites(uiState.value.newsSites)))
+                navigator.navigate(CosmosScreens.SearchNewsFilterNewsSites(uiState.value.newsSites))
             }
 
             is SearchNewsUiAction.NewsSitesSelected -> {
@@ -56,7 +55,7 @@ class SearchNewsViewModel @Inject constructor(
             }
 
             SearchNewsUiAction.OpenNewsTypeOptions -> {
-                navigator.navigate(NavigationCommand.NavigateToRoute(CosmosScreens.SearchNewsFilterCosmosNewsType(uiState.value.types)))
+                navigator.navigate(CosmosScreens.SearchNewsFilterCosmosNewsType(uiState.value.types))
             }
 
             is SearchNewsUiAction.TypesChanged -> {
@@ -65,7 +64,7 @@ class SearchNewsViewModel @Inject constructor(
             }
 
             SearchNewsUiAction.OpenDateSelect -> {
-                navigator.navigate(NavigationCommand.NavigateToRoute(CosmosScreens.SearchNewsFilterDate(uiState.value.date)))
+                navigator.navigate(CosmosScreens.SearchNewsFilterDate(uiState.value.date))
             }
 
             is SearchNewsUiAction.DateSelected -> {
@@ -74,7 +73,7 @@ class SearchNewsViewModel @Inject constructor(
             }
 
             SearchNewsUiAction.OpenLaunchOptions -> {
-                navigator.navigate(NavigationCommand.NavigateToRoute(CosmosScreens.SearchNewsFilterLaunch(uiState.value.hasLaunch)))
+                navigator.navigate(CosmosScreens.SearchNewsFilterLaunch(uiState.value.hasLaunch))
             }
 
             is SearchNewsUiAction.LaunchChanged -> {
@@ -101,7 +100,7 @@ class SearchNewsViewModel @Inject constructor(
             }
 
             is SearchNewsUiAction.OpenNews -> {
-                navigator.navigate(NavigationCommand.NavigateToRoute(CosmosScreens.CosmosNewsDetail(action.cosmosNews)))
+                navigator.navigate(CosmosScreens.CosmosNewsDetail(action.cosmosNews))
             }
 
             is SearchNewsUiAction.BookMarkNews -> {

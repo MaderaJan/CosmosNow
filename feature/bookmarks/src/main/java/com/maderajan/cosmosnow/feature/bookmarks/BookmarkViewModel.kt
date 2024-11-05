@@ -2,7 +2,6 @@ package com.maderajan.cosmosnow.feature.bookmarks
 
 import androidx.lifecycle.viewModelScope
 import com.maderajan.cosmosnow.core.navigation.CosmosScreens
-import com.maderajan.cosmosnow.core.navigation.NavigationCommand
 import com.maderajan.cosmosnow.core.navigation.Navigator
 import com.maderajan.cosmosnow.core.viewmodel.BaseViewModel
 import com.maderajan.cosmosnow.core.viewmodel.UiAction
@@ -44,7 +43,7 @@ class BookmarkViewModel @Inject constructor(
             }
 
             is BookmarkUiAction.OpenNews -> {
-                navigator.navigate(NavigationCommand.NavigateToRoute(CosmosScreens.CosmosNewsDetail(action.cosmosNews)))
+                navigator.navigate(CosmosScreens.CosmosNewsDetail(action.cosmosNews))
             }
         }
     }

@@ -59,6 +59,18 @@ fun CosmosNewsDetailToolbar(
 
             IconButton(
                 onClick = {
+                    dispatchAction(CosmosNewsDetailUiAction.OpenIncreaseFont)
+                },
+                content = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_change_font_size),
+                        contentDescription = null
+                    )
+                }
+            )
+
+            IconButton(
+                onClick = {
                     context.shareUrl(uiState.cosmosNews.url)
                 },
                 content = {

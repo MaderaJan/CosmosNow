@@ -15,8 +15,8 @@ class Navigator @Inject constructor() {
 
     private val _commands = MutableSharedFlow<NavigationCommand>(extraBufferCapacity = Int.MAX_VALUE)
 
-    fun navigate(command: NavigationCommand) {
-        _commands.tryEmit(command)
+    fun navigate(route: CosmosScreens) {
+        _commands.tryEmit(NavigationCommand.NavigateToRoute(route))
     }
 
     fun <R> navigateUpWithResult(key: String, result: R) {

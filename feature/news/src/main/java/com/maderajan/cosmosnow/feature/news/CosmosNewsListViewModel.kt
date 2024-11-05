@@ -2,7 +2,6 @@ package com.maderajan.cosmosnow.feature.news
 
 import androidx.lifecycle.viewModelScope
 import com.maderajan.cosmosnow.core.navigation.CosmosScreens
-import com.maderajan.cosmosnow.core.navigation.NavigationCommand
 import com.maderajan.cosmosnow.core.navigation.Navigator
 import com.maderajan.cosmosnow.core.viewmodel.BaseMviViewModel
 import com.maderajan.cosmosnow.core.viewmodel.UiAction
@@ -42,7 +41,7 @@ class CosmosNewsListViewModel @Inject constructor(
             }
 
             is CosmosNewsListUiAction.OpenNews -> {
-                navigator.navigate(NavigationCommand.NavigateToRoute(CosmosScreens.CosmosNewsDetail(action.cosmosNews)))
+                navigator.navigate(CosmosScreens.CosmosNewsDetail(action.cosmosNews))
             }
 
             is CosmosNewsListUiAction.PullToRefresh -> {

@@ -2,9 +2,7 @@ package com.maderajan.cosmosnow.data.repository.cosmosnews
 
 import com.maderajan.cosmosnow.data.model.comosnews.CosmosNews
 import com.maderajan.cosmosnow.data.model.comosnews.SearchQuery
-import com.maderajan.cosmosnow.data.repository.mapper.cosmosnews.ArticleResponseToCosmosNewsMapper
-import com.maderajan.cosmosnow.data.repository.mapper.cosmosnews.BlogResponseToCosmosNewsMapper
-import com.maderajan.cosmosnow.data.repository.mapper.cosmosnews.ReportResponseToCosmosNewsMapper
+import com.maderajan.cosmosnow.data.repository.mapper.MapperFacade
 import com.maderajan.cosmosnow.database.preferences.PreferencesStorage
 import com.maderajan.cosmosnow.webservice.api.SpaceFlightsNewsApi
 import kotlinx.coroutines.flow.Flow
@@ -13,9 +11,7 @@ import javax.inject.Inject
 class CosmosNewsRepository @Inject constructor(
     private val spaceFlightsNewsApi: SpaceFlightsNewsApi,
     private val preferencesStorage: PreferencesStorage,
-    private val articleResponseToCosmosNewsMapper: ArticleResponseToCosmosNewsMapper,
-    private val blogResponseToCosmosNewsMapper: BlogResponseToCosmosNewsMapper,
-    private val reportResponseToCosmosNewsMapper: ReportResponseToCosmosNewsMapper
+    private val mapperFacade: MapperFacade
 ) : ICosmosNewsRepository {
 
     override suspend fun getArticles(searchQuery: SearchQuery?): List<CosmosNews> =
@@ -24,7 +20,9 @@ class CosmosNewsRepository @Inject constructor(
             newsSites = searchQuery?.newsSites,
             dateFrom = searchQuery?.dateFrom,
             dateTo = searchQuery?.dateTo,
-        ).results.map(articleResponseToCosmosNewsMapper::map)
+        ).results.map {
+            mapperFacade.articleResponseToCosmosNewsMapper.map(it)
+        }
 
     override suspend fun getBlogs(searchQuery: SearchQuery?): List<CosmosNews> =
         spaceFlightsNewsApi.getBlogs(
@@ -32,7 +30,9 @@ class CosmosNewsRepository @Inject constructor(
             newsSites = searchQuery?.newsSites,
             dateFrom = searchQuery?.dateFrom,
             dateTo = searchQuery?.dateTo,
-        ).results.map(blogResponseToCosmosNewsMapper::map)
+        ).results.map {
+            mapperFacade.blogResponseToCosmosNewsMapper.map(it)
+        }
 
     override suspend fun getReports(searchQuery: SearchQuery?): List<CosmosNews> =
         spaceFlightsNewsApi.getReports(
@@ -40,7 +40,9 @@ class CosmosNewsRepository @Inject constructor(
             newsSites = searchQuery?.newsSites,
             dateFrom = searchQuery?.dateFrom,
             dateTo = searchQuery?.dateTo,
-        ).results.map(reportResponseToCosmosNewsMapper::map)
+        ).results.map {
+            mapperFacade.reportResponseToCosmosNewsMapper.map(it)
+        }
 
     override suspend fun getInfo(): List<String> =
         spaceFlightsNewsApi.getInfo()
